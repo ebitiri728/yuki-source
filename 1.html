@@ -1,16 +1,21 @@
 <div id="options">
   <div>
     <h3>BBSに要素を追加</h3>
+    
     <select id="command_sel">
       <option label="First" value="1"></option>
       <option label="Second" value="2"></option>
     </select>
-    <input type="button" value="Click" onclick="run()">
+    
+    <input type="button" value="Click" onClick="run()">
+    
     <script>
-      function run()
+      function run(){
         let elm = document.getElementById('command_sel');
-        document.getElementById('res').textContent = elm.value
+        document.getElementById('res').textContent = elm.options[elm.selectedIndex].value
+      }
     </script>
+    
     <div id="res"></div>
   </div>
 </div>
