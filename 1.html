@@ -8,7 +8,9 @@
     <input type="button" onclick="run()">
     <script>
       function run()
-        document.getElementById('command_sel')
+        let elm = document.getElementById('command_sel')
+        document.getElementById('res').textContent = elm.options[elm.selectedIndex].value
     </script>
+    <div id="res"></div>
   </div>
 </div>
