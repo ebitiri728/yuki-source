@@ -4,14 +4,18 @@
        case m:
          document.getElementByName('message').focus()
          break
-         
-       case n:
-         
-         break
-         
-        case: h:
 
+       case n:
+         window.scroll({
+           top: 0,
+           behavior: "smooth",
+         });
+         
          break
+         
+       case h:
+          location.href = "/"
+          break
      }
   });
 </script>
