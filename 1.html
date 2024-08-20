@@ -1,21 +1,24 @@
 <script>
-  document.addEventListener('keydown', event => {
-     switch(event.code){
-       case 'KeyM':
-         document.getElementByName('message')[0].focus()
-         break
+  function set__keyboard_shortcut(){
+    document.addEventListener('keydown', event => {
+       switch(event.code){
+         case 'KeyM':
+           document.getElementByName('message')[0].focus()
+           break
 
-       case 'KeyN:
-         window.scroll({
-           top: 0,
-           behavior: "smooth",
-         });
+         case 'KeyN:
+           window.scroll({
+             top: 0,
+             behavior: "smooth",
+           });
          
-         break
+           break
          
-       case 'KeyH:
-          location.href = "/"
-          break
-     }
-  });
+         case 'KeyH:
+           location.href = "/"
+           break
+       }
+    });
+  }
+  set__keyboard_shortcut()
 </script>
