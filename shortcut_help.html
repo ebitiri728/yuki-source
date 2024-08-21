@@ -22,9 +22,7 @@
   document.getElementById('shortcut_help_button_div').innerHTML = '<button onclick="toggleHidden(sh_elm)">ヘルプを表示/非表示</button><'
 </script>
 <script>
-  function toggleHidden(elm){
-   
-  }
+  function toggleHidden(elm){elm.classList.toggle('hiddenElm')}
 </script>
 <div id="shortcut_help" class="hiddenElm">
   <h3>キーボードショートカットヘルプ</h3>
