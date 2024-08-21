@@ -28,7 +28,7 @@ document.addEventListener('keydown', function(event) {
         break
       
       case 'KeyS':
-        if(!(messageElm.value === null)){
+        if(!(messageElm.value === null || messageElm.value == "")){
           formElm.submit()
         }
         break
