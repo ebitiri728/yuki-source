@@ -1,20 +1,22 @@
 <script>
 document.addEventListener('keydown', function(event) {
-  switch(event.code){
-    case 'KeyM':
-      document.getElementsByName('message')[0].focus()
-      break
+  if(event.ctrlKey){
+    switch(event.code){
+      case 'KeyM':
+        document.getElementsByName('message')[0].focus()
+        break
 
-    case 'KeyN':
-      window.scroll({
-        top: 0,
-        behavior: "smooth",
-      });
-      break
+      case 'KeyN':
+        window.scroll({
+          top: 0,
+          behavior: "smooth",
+        });
+        break
          
-    case 'KeyH':
-      location.href = "../"
-      break
+      case 'KeyH':
+        location.href = "../"
+        break
+    }
   }
 });
 </script>
