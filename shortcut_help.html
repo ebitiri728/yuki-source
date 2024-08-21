@@ -11,16 +11,6 @@
     background-color: #fefefe;
   }
 </style>
-<script>
-  let second_a_tag = document.getElementsByTagName('a')[1];
-  let sh_elm = document.getElementById('shortcut_help');
-  
-  let new_div = document.createElement('div');
-  new_div.id = 'shortcut_help_button_div';
-  new_div.innerHTML = '<button onclick="sh_elm.classList.toggle(\'hiddenElm\')">ヘルプを表示/非表示</button>';
-  second_a_tag.after(new_div)
-  
-</script>
 
 <div id="shortcut_help" class="hiddenElm">
   <h3>キーボードショートカットヘルプ</h3>
@@ -49,3 +39,13 @@
     </tr>
   </table>
 </div>
+
+<script>
+  let second_a_tag = document.getElementsByTagName('a')[1];
+  let sh_elm = document.getElementById('shortcut_help');
+  
+  let new_div = document.createElement('div');
+  new_div.id = 'shortcut_help_button_div';
+  new_div.innerHTML = '<button onclick="sh_elm.classList.toggle(\'hiddenElm\')">ヘルプを表示/非表示</button>';
+  second_a_tag.after(new_div)
+</script>
