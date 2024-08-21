@@ -37,6 +37,8 @@ document.addEventListener('keydown', function(event) {
         channelElms[0].toggleAttribute('selected')
         channelElms[1].toggleAttribute('selected')
         break
+      case 'Slash':
+        document.getElementById('shortcut_help').classList.toggle('hiddenElm')
     }
   }
 });
