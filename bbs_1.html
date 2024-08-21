@@ -5,10 +5,10 @@ document.addEventListener('keydown', function(event) {
   if(event.ctrlKey){
     
     console.log(event.code);
-    
+    const messageElm = document.getElementsByName('message')[0]
     switch(event.code){
       case 'KeyM':
-        document.getElementsByName('message')[0].focus()
+        messageElm.focus()
         break
 
       case 'KeyN':
@@ -27,7 +27,9 @@ document.addEventListener('keydown', function(event) {
         break
       
       case 'KeyS':
-        formElm.submit()
+        if(!messageElm.value === null){
+          formElm.submit()
+        }
         break
     }
   }
