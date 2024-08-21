@@ -1,7 +1,7 @@
 <script>
 const formElm = document.getElementsByTagName('form')[0];
-const messageElm = document.getElementsByName('message')[0]
-const channelElms = document.getElementsByTagName('option')
+const messageElm = document.getElementsByName('message')[0];
+const channelElms = document.getElementsByTagName('option');
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -10,7 +10,7 @@ document.addEventListener('keydown', function(event) {
     
     switch(event.code){
       case 'KeyM':
-        messageElm.focus()
+        messageElm.focus();
         break
 
       case 'KeyN':
@@ -21,25 +21,28 @@ document.addEventListener('keydown', function(event) {
         break
         
       case 'KeyH':
-        location.href = "../"
+        location.replace = "/";
         break
         
       case 'KeyR':
-        location.reload()
+        location.reload();
         break
       
       case 'KeyS':
         if(!(messageElm.value == '')){
-          formElm.submit()
+          formElm.submit();
         }
         break
+        
       case 'KeyJ':
-        channelElms[0].toggleAttribute('selected')
-        channelElms[1].toggleAttribute('selected')
+        channelElms[0].toggleAttribute('selected');
+        channelElms[1].toggleAttribute('selected');
         break
+
+      // 端末によっては、Slashの場合既存のキーボードショートカットと重複するのでPeriodを追加した。
       case 'Slash':
       case 'Period':
-        document.getElementById('shortcut_help').classList.toggle('hiddenElm')
+        document.getElementById('shortcut_help').classList.toggle('hiddenElm');
         break
 
     }
