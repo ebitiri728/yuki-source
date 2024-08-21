@@ -1,4 +1,6 @@
 <script>
+const formElm = document.getElementByTagName('form')
+  
 document.addEventListener('keydown', function(event) {
   if(event.ctrlKey){
     switch(event.code){
@@ -19,6 +21,10 @@ document.addEventListener('keydown', function(event) {
         
       case 'KeyR':
         location.reload()
+        break
+      
+      case 'KeyS':
+        formElm.submit()
         break
     }
   }
