@@ -13,6 +13,10 @@
 </style>
 <script>
   const second_a_tag = document.getElementsByTagName('a')[1]
+  let new_div = document.createElement('div');
+  new_div.id = 'shortcut_help_div';
+  second_a_tag.after(new_div)
+  document.getElementById('shortcut_help_div').innerHTML
 </script>
 <div id="shortcut_help" class="hiddenElm">
   <h3>キーボードショートカットヘルプ</h3>
