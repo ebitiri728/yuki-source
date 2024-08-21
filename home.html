@@ -8,9 +8,14 @@ document.addEventListener('keydown', function(event) {
       case 'KeyH':
         document.cookie = "yuki=True;Max-Age=0;";
         break
+        
       case 'KeyB':
         location.replace('/bbs');
-      case 'KeyJ':
+        break
+        
+      case 'KeyR':
+        location.replace(location.href);
+        break
         
     }
   }
