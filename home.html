@@ -1,13 +1,17 @@
 <script>
 document.addEventListener('keydown', function(event) {
-  if(event.ctrlKey){
+  if((event.ctrlKey || event.metaKey) && event.shiftKey){
     
     console.log(event.code);
     
     switch(event.code){
-      case 'KeyB':
-        location.href = '/bbs'
+      case 'KeyH':
+        document.cookie = "yuki=True;Max-Age=0;";
         break
+      case 'KeyB':
+        location.replace = '/bbs';
+      case 'KeyJ':
+        
     }
   }
 });
