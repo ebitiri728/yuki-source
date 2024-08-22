@@ -29,7 +29,7 @@ document.addEventListener('keydown', function(event) {
         break
       
       case 'KeyL':
-        if(!(messageElm.value == '')){
+        if(!(messageElm.value == '' || messageElm.value.includes(document.getElmentsByName('seed')[0].value))){
           formElm.submit();
         }
         break
