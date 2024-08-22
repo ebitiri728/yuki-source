@@ -48,4 +48,9 @@ document.addEventListener('keydown', function(event) {
     }
   }
 });
+
+  function checkForm(){
+    if(formElm.getElementsByName('message')[0].value.includes(formElm.getElementsByName('seed')[0].value)){
+      return false
+    };
 </script>
