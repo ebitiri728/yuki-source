@@ -49,7 +49,7 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-document.getElementsByTagName('form')[0].setAtturibute('onsubmit', 'checkForm(this)')
+document.getElementsByTagName('form')[0].setAttribute('onsubmit', 'checkForm(this)')
   
 function checkForm(elm){
   if(elm.getElementsByName('message')[0].value.includes(elm.getElementsByName('seed')[0].value)){
