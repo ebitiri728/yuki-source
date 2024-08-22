@@ -1,9 +1,10 @@
 <script>
-const getElmsByName = document.getElementsByName
-const getElmsByTag = document.getElementsByTagName
-const formElm = getElmsByTag('form')[0];
-const messageElm = getElmsByName('message')[0];
-const channelElms = getElmsByTag('option')[0];
+let getElmsByName = document.getElementsByName
+let getElmsByTag = document.getElementsByTagName
+
+let formElm = getElmsByTag('form')[0];
+let messageElm = getElmsByName('message')[0];
+let channelElms = getElmsByTag('option')[0];
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -51,7 +52,7 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-getElmsByTag('form')[0].setAttribute('onsubmit', 'return checkForm()')
+formElm.setAttribute('onsubmit', 'return checkForm()')
   
 function checkForm(){
   if(document.getElementsByName('message')[0].value.includes(document.getElementsByName('seed')[0].value)){
