@@ -4,5 +4,5 @@
   
   document.getElementsByTagName('form')[0].after(new_div_elm)
   let script_content = document.getElementsByTagName('script')[4].textContent
-  script_content = a.replace('AutoLink(xhr.responseText);', 'AutoLink(xhr.responseText);document.getElementById(\'comments_num_info\') = `現在のコメント数は${document.getElementsByTagName(\'td\')[0].textContent}です。`')
+  script_content = script_content.replace('AutoLink(xhr.responseText);', 'AutoLink(xhr.responseText);document.getElementById(\'comments_num_info\') = `現在のコメント数は${document.getElementsByTagName(\'td\')[0].textContent}です。`')
 </script>
