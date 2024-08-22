@@ -2,6 +2,7 @@
 let formElm = document.getElementsByTagName('form')[0];
 let messageElm = document.getElementsByName('message')[0];
 let channelElms = document.getElementsByTagName('option');
+let seedElm = document.getElementsByName('seed')[0];
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -39,6 +40,10 @@ document.addEventListener('keydown', function(event) {
         channelElms[1].toggleAttribute('selected');
         break
 
+      case 'KeyB':
+        seedElm.classList.toggle('hiddenElm');
+        break
+        
       // 端末によっては、Slashの場合既存のキーボードショートカットと重複するのでPeriodを追加した。
       case 'Slash':
       case 'Period':
