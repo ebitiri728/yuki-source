@@ -54,7 +54,7 @@ document.addEventListener('keydown', function(event) {
 getElmsByTag('form')[0].setAttribute('onsubmit', 'checkForm()')
   
 function checkForm(){
-  if(getElmsByName('message')[0].value.includes(getElmsByName('seed')[0].value)){
+  if(document.getElementsByName('message')[0].value.includes(document.getElementsByName('seed')[0].value)){
     return false
   }else{
     return true
