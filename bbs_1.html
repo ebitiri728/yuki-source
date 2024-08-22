@@ -1,7 +1,9 @@
 <script>
-const formElm = document.getElementsByTagName('form')[0];
-const messageElm = document.getElementsByName('message')[0];
-const channelElms = document.getElementsByTagName('option');
+const getElmsByName = document.getElementsByName
+const getElmsByTag = document.getElementsByTagName
+const formElm = getElmsByTag('form')[0];
+const messageElm = getElmsByName('message')[0];
+const channelElms = getElmsByTag('option');
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -29,7 +31,7 @@ document.addEventListener('keydown', function(event) {
         break
       
       case 'KeyL':
-        if(!(messageElm.value == '' || messageElm.value.includes(document.getElementsByName('seed')[0].value))){
+        if(!(messageElm.value == '' || messageElm.value.includes(getElmsByName('seed')[0].value))){
           formElm.submit();
         }
         break
@@ -49,10 +51,10 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-document.getElementsByTagName('form')[0].setAttribute('onsubmit', 'checkForm(this)')
+getElmsByTag('form')[0].setAttribute('onsubmit', 'checkForm()')
   
-function checkForm(elm){
-  if(elm.getElementsByName('message')[0].value.includes(elm.getElementsByName('seed')[0].value)){
+function checkForm(){
+  if(getElmsByName('message')[0].value.includes(getElmsByName('seed')[0].value)){
     return false
   }else{
     return true
