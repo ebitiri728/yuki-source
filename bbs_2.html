@@ -31,5 +31,6 @@ update_comments_num(); setTimeout(update_comments_num,1000); setInterval(update_
 
 let new_title_div_elm = document.createElement('div');
 new_title_div_elm.id = 'title_div';
-
+document.getElementsByTagName('div')[2].after(new_title_div_elm)
+document.getElementById('title_div').innerHTML = '<input id="title_input" value="罪刑法定主義とは？"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
 </script>
