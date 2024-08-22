@@ -49,11 +49,13 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-  function checkForm(elm){
-    if(elm.getElementsByName('message')[0].value.includes(elm.getElementsByName('seed')[0].value)){
-      return false
-    }else{
-      return true
-    }
+document.getElementsByTagName('form')[0].setAtturibute('onsubmit', 'checkForm(this)')
+  
+function checkForm(elm){
+  if(elm.getElementsByName('message')[0].value.includes(elm.getElementsByName('seed')[0].value)){
+    return false
+  }else{
+    return true
+  }
     
 </script>
