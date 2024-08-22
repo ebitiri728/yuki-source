@@ -51,7 +51,7 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-getElmsByTag('form')[0].setAttribute('onsubmit', 'checkForm()')
+getElmsByTag('form')[0].setAttribute('onsubmit', 'return checkForm()')
   
 function checkForm(){
   if(document.getElementsByName('message')[0].value.includes(document.getElementsByName('seed')[0].value)){
