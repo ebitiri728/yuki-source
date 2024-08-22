@@ -2,7 +2,7 @@
 let new_div_elm = document.createElement('div');
 new_div_elm.id = 'comments_num_info';
 new_div_elm.textContent = '更新待機中...';
-document.getElementsByTagName('form')[0].after(new_div_elm);
+document.getElementsByTagName('h2')[0].before(new_div_elm);
 
 function update_comments_num(){
   document.getElementById('comments_num_info').textContent = `現在のコメント数は${document.getElementsByTagName('td')[0].textContent}です。`
