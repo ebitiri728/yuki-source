@@ -52,7 +52,7 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
-formElm.setAttribute('onsubmit', 'return checkForm()')
+document.getElementsByTagName('form')[0].setAttribute('onsubmit', 'return checkForm()')
   
 function checkForm(){
   if(document.getElementsByName('message')[0].value.includes(document.getElementsByName('seed')[0].value)){
