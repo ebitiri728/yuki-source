@@ -1,7 +1,7 @@
 <script>
 let formElm = document.getElementsByTagName('form')[0];
 let messageElm = document.getElementsByName('message')[0];
-let channelElms = document.getElementsByTagName('option')[0];
+let channelElms = document.getElementsByTagName('option');
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
