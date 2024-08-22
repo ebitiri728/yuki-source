@@ -1,7 +1,11 @@
 <script>
-  document.getElementsByTagName('script')[4].textContent += ''
-  function alert(){
+  let new_div_elm = document.createElement('div');
+  new_div_elm.id = 'comments_num_info';
+  
+  document.getElementsByTagName('form')[0].after(new_div_elm)
+
+  function update_comment_num(){
     const comments_num = document.getElementsByTagName('td')[0].textContent
-    console.log(`comments_num: ${comments_num}');
+    document.getElementById('comments_num_info') = `現在のコメント数は${comments_num}です。`
   }
 </script>
