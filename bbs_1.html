@@ -3,7 +3,7 @@ const getElmsByName = document.getElementsByName
 const getElmsByTag = document.getElementsByTagName
 const formElm = getElmsByTag('form')[0];
 const messageElm = getElmsByName('message')[0];
-const channelElms = getElmsByTag('option');
+const channelElms = getElmsByTag('option')[0];
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
