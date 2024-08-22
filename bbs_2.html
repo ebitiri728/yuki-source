@@ -3,7 +3,7 @@
     background-color: #b22222;
   }
   .blue{
-    background-color: 
+    background-color: #1e90ff;
   }
 </style>
 <script>
@@ -13,7 +13,10 @@ new_div_elm.textContent = '更新待機中...';
 document.getElementsByTagName('h2')[0].before(new_div_elm);
 
 function update_comments_num(){
-  document.getElementById('comments_num_info').textContent = `現在のコメント数は${document.getElementsByTagName('td')[0].textContent}です。`
+  const comments_num = document.getElementsByTagName('td')[0].textContent
+  const infoElm = document.getElementById('comments_num_info')
+  infoElm.textContent = `現在のコメント数は${comments_num}です。`
+  if(comments_num > 9900){infoElm.
 }
 
 update_comments_num(); setTimeout(update_comments_num,1000); setInterval(update_comments_num,5000);
