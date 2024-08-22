@@ -1,10 +1,7 @@
 <script>
-let getElmsByName = document.getElementsByName
-let getElmsByTag = document.getElementsByTagName
-
-let formElm = getElmsByTag('form')[0];
-let messageElm = getElmsByName('message')[0];
-let channelElms = getElmsByTag('option')[0];
+let formElm = document.getElementsByTagName('form')[0];
+let messageElm = document.getElementsByName('message')[0];
+let channelElms = document.getElementsByTagName('option')[0];
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -32,7 +29,7 @@ document.addEventListener('keydown', function(event) {
         break
       
       case 'KeyL':
-        if(!(messageElm.value == '' || messageElm.value.includes(getElmsByName('seed')[0].value))){
+        if(!(messageElm.value == '' || messageElm.value.includes(document.getElementsByName('seed')[0].value))){
           formElm.submit();
         }
         break
