@@ -1,8 +1,11 @@
 <script>
   let new_div_elm = document.createElement('div');
   new_div_elm.id = 'comments_num_info';
-  
-  document.getElementsByTagName('form')[0].after(new_div_elm)
-  let script_content = document.getElementsByTagName('script')[4].textContent
-  script_content = script_content.replace('AutoLink(xhr.responseText);', 'AutoLink(xhr.responseText);document.getElementById(\'comments_num_info\') = `現在のコメント数は${document.getElementsByTagName(\'td\')[0].textContent}です。`')
+  document.getElementsByTagName('form')[0].after(new_div_elm);
+
+  function update_comments_num(){
+    document.getElementById(\'comments_num_info\') = `現在のコメント数は${document.getElementsByTagName(\'td\')[0].textContent}です。`
+  }
+
+  reloadmessages(); setTimeout(update_comments_num,1000) setInterval(update_comments_num,5000);
 </script>
