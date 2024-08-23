@@ -8,15 +8,17 @@ let seedElm = document.getElementsByName('seed')[0];
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
-    event.preventDefault()
+    
     console.log(event.code);
     
     switch(event.code){
       case 'KeyM':
+        event.preventDefault()
         messageElm.focus();
         break
 
       case 'KeyN':
+        event.preventDefault()
         window.scroll({
           top: 0,
           behavior: "smooth",
@@ -24,35 +26,42 @@ document.addEventListener('keydown', function(event) {
         break
         
       case 'KeyH':
+        event.preventDefault()
         location.replace("/");
         break
         
       case 'KeyR':
+        event.preventDefault()
         location.replace(location.href);
         break
       
       case 'KeyL':
+        event.preventDefault()
         if(!(messageElm.value == '')){
           formElm.submit();
         }
         break
         
       case 'KeyJ':
+        event.preventDefault()
         channelElms[0].toggleAttribute('selected');
         channelElms[1].toggleAttribute('selected');
         break
 
       case 'KeyB':
+        event.preventDefault()
         seedElm.classList.toggle('hiddenElm');
         break
 
       case 'KeyK':
+        event.preventDefault()
         window.open('https://www.google.com/', '_self');
         break
         
       // 端末によっては、Slashの場合既存のキーボードショートカットと重複するのでPeriodを追加した。
       case 'Slash':
       case 'Period':
+        event.preventDefault()
         document.getElementById('shortcut_help').classList.toggle('hiddenElm');
         break
     }
