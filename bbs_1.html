@@ -1,8 +1,9 @@
 <!-- Yuki BBSに追加するコード1（キーボードショートカット・シード送信防止） -->
 
 <script>
-let new_input_elm = document.createElement('input');
-new_input_elm.id = 'message_log'
+let new_input_elm = document.createElement('div');
+new_input_elm.id = 'message_log_div'
+new_input_elm.innerHTML = '<input id="message_log"><button onclick="copy_message_log()">
 document.getElementsByTagName('div')[0].after(new_input_elm);
   
 let formElm = document.getElementsByTagName('form')[0];
@@ -94,4 +95,18 @@ function checkForm(){
   }
 }
 
+function copy_message_log(){
+  if(!navigator.clipboard){
+    alert("非対応");
+    return;
+  }
+  navigator.clipboard.writeText(document.getElementById('message_log').value).then(
+    () => {
+      alert('コピーしました。');
+    },
+    () => {
+      alert('コピーに失敗しました。');
+    });
+  
+}
 </script>
