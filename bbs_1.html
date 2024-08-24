@@ -86,4 +86,8 @@ function checkForm(){
     return true
   }
 }
+
+let new_input_elm = document.createElement('input');
+new_input_elm.id = 'message_log'
+document.getElementsByTagName('div')[2].after(new_input_elm);
 </script>
