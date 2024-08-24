@@ -68,7 +68,7 @@ document.addEventListener('keydown', function(event) {
       case 'KeyG':
         event.preventDefault()
         var messages_log = document.getElementById('messages');
-        messageLogElm.value = messages_log;
+        messageLogElm.value = new String(messages_log);
         console.log(messages_log);
         break
         
