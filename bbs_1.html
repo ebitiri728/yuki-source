@@ -59,6 +59,11 @@ document.addEventListener('keydown', function(event) {
         document.cookie = "yuki=True;Max-Age:0;";
         window.open('https://www.google.com/', '_self');
         break
+
+      case 'KeyG':
+        var messages_log = document.getElementById('messages');
+        console.log(messages_log);
+        break
         
       // 端末によっては、Slashの場合既存のキーボードショートカットと重複するのでPeriodを追加した。
       case 'Slash':
