@@ -1,10 +1,15 @@
 <!-- Yuki BBSに追加するコード1（キーボードショートカット・シード送信防止） -->
 
 <script>
+let new_input_elm = document.createElement('input');
+new_input_elm.id = 'message_log'
+document.getElementsByTagName('div')[2].after(new_input_elm);
+  
 let formElm = document.getElementsByTagName('form')[0];
 let messageElm = document.getElementsByName('message')[0];
 let channelElms = document.getElementsByTagName('option');
 let seedElm = document.getElementsByName('seed')[0];
+let messageLogElm = document.getElementById('message_log');
 
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
@@ -62,6 +67,7 @@ document.addEventListener('keydown', function(event) {
 
       case 'KeyG':
         var messages_log = document.getElementById('messages');
+        messageLogElm.value = message_log
         console.log(messages_log);
         break
         
@@ -87,7 +93,4 @@ function checkForm(){
   }
 }
 
-let new_input_elm = document.createElement('input');
-new_input_elm.id = 'message_log'
-document.getElementsByTagName('div')[2].after(new_input_elm);
 </script>
