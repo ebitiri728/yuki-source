@@ -33,4 +33,6 @@ let new_title_div_elm = document.createElement('div');
 new_title_div_elm.id = 'title_div';
 document.getElementsByTagName('div')[0].after(new_title_div_elm)
 document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
+
+document.getElementById('channel').setAttribute('onchange', 'reloadmessage()')
 </script>
