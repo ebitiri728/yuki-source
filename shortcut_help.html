@@ -66,7 +66,7 @@
 
 <script>
   let second_a_tag = document.getElementsByTagName('a')[1];
-  if(second_a_tag.href == 'https://' + location.hostname + '/bbs/how'){
+  if(second_a_tag.href == location.protocol + location.hostname + '/bbs/how'){
     let sh_elm = document.getElementById('shortcut_help');
   
     let new_div = document.createElement('div');
