@@ -96,11 +96,20 @@ function checkForm(){
 }
 
 function copy_message_log(){
+  
   if(!navigator.clipboard){
-    alert("非対応");
-    return;
+    alert("Error: コピー出来ません。ブラウザが対応していない可能性があります。");
+    return
   }
-  navigator.clipboard.writeText(document.getElementById('message_log').value).then(
+  
+  const content = document.getElementById('message_log').value;
+  
+  if(content == ''){
+    alert('ログがありません。')
+    return
+  }
+  
+  navigator.clipboard.writeText(content).then(
     () => {
       alert('コピーしました。');
     },
