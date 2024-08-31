@@ -71,11 +71,11 @@
 
 <script>
   let second_a_tag = document.getElementsByTagName('a')[1];
-  
+  console.log(second_a_tag.href)
   if(second_a_tag.href == location.protocol + '//' + location.hostname + '/bbs/how'){
     let new_div = document.createElement('div');
     new_div.id = 'shortcut_help_button_div';
-    new_div.innerHTML = '<button onclick="document.getElementById('shortcut_help').classList.toggle(\'hiddenElm\')">キーボードショートカットヘルプを表示/非表示</button>';
+    new_div.innerHTML = '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElm\')">キーボードショートカットヘルプを表示/非表示</button>';
     second_a_tag.after(new_div)
   }
 </script>
