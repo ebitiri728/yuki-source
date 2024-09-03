@@ -16,8 +16,8 @@ new_div_elm.textContent = '更新待機中...';
 document.getElementsByTagName('h2')[0].before(new_div_elm);
 
 function update_comments_num(){
-  const comments_num = document.getElementsByTagName('td')[0].textContent
   let infoElm = document.getElementById('comments_num_info')
+  const comments_num = document.getElementsByTagName('td')[0].textContent
   infoElm.textContent = `現在のコメント数は${comments_num}です。`
   if(comments_num > 9900){
     if(!(infoElm.classList.contains('red'))){
