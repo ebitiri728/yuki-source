@@ -1,10 +1,11 @@
 <script>
   function update_nums(){
-    var tr_num_elms = document.getElementsByTagName('tr')
+    const tr_num_elms = document.getElementsByTagName('tr');
+    const shHelp_td_num = document.getElementById('shortcut_help').getElementsByTagName('td').lenth;
     
-    for(let i = 0; i + 21 < tr_num_elms.length; i++){
+    for(let i = 0; i + shHelp_td_num < tr_num_elms.length; i++){
       if(!i == 0){
-        tr_num_elms[i].getElementsByTagName('td')[0].setAttribute('onclick', `document.getElementsByClassName('message')[0].value += ${tr_num_elms[i].getElementsByTagName('td')[0].textContent}`)
+        tr_num_elms[i].firstElementChild.setAttribute('onclick', `document.getElementsByClassName('message')[0].value += ${tr_num_elms[i].firstElementChild.textContent}`)
       }
     }
   }
