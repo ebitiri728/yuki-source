@@ -1,8 +1,11 @@
 <script>
   function update_nums(){
     var tr_num_elms = document.getElementsByTagName('tr')
+    
     for(let i = 0; i + 21 < tr_num_elms.length; i++){
       if(!i == 0){
-        tr_num_elms[i].getElementsByTagName()
+        tr_num_elms[i].getElementsByTagName('td')[0].setAttribute('onclick', `document.getElementsByClassName('message')[0].value += ${tr_num_elms[i].getElementsByTagName('td')[0].textContent}`)
       }
+    }
+  }
 </script>
