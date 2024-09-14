@@ -5,7 +5,7 @@
     
     for(let i = 0; i + shHelp_td_num < tr_num_elms.length; i++){
       if(!i == 0){
-        tr_num_elms[i].firstElementChild.setAttribute('onclick', `document.getElementsByClassName('message')[0].value += ${tr_num_elms[i].firstElementChild.textContent}`)
+        tr_num_elms[i].firstElementChild.setAttribute('onclick', `document.getElementsByName('message')[0].value += ${tr_num_elms[i].firstElementChild.textContent}`)
       }
     }
   }
