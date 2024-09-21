@@ -5,12 +5,14 @@
 let new_input_elm = document.createElement('div');
 new_input_elm.id = 'message_log_div';
 new_input_elm.innerHTML = '<input id="message_log" style="display: none;"><button onclick="copy_message_log()">Copy message log</button>（キーボードショートカットで保存し（同時に1つのみ可能）、左のボタンからコピーできる）';
-document.getElementsByTagName('div')[0].after(new_input_elm);;
+document.getElementsByTagName('div')[0].after(new_input_elm);
   
 let formElm = document.getElementsByTagName('form')[0];
-let messageElm = document.getElementsByName('message')[0];
 let channelElms = document.getElementsByTagName('option');
+  
+let messageElm = document.getElementsByName('message')[0];
 let seedElm = document.getElementsByName('seed')[0];
+  
 let messageLogElm = document.getElementById('message_log');
 
 document.addEventListener('keydown', function(event) {
@@ -40,12 +42,11 @@ document.addEventListener('keydown', function(event) {
       case 'KeyR':
         event.preventDefault()
         reloadmessages()
-        // location.replace(location.href);
         break
       
       case 'KeyL':
         event.preventDefault()
-        if(!(messageElm.value == '')){
+        if(!messageElm.value == ''){
           formElm.submit();
         }
         break
@@ -68,8 +69,8 @@ document.addEventListener('keydown', function(event) {
 
       case 'KeyK':
         event.preventDefault()
-        document.cookie = "yuki=True;Max-Age:0;";
-        window.open('https://www.google.com/', '_self');
+        document.cookie = "yuki=True;max-age=0;";
+        location.replace('https://www.google.com/');
         break
 
       case 'KeyG':
@@ -90,10 +91,16 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.getElementsByTagName('form')[0].setAttribute('onsubmit', 'return checkForm()')
+
+function getParam(key){
+  let url = new URL(window.location.href);
+  return url.searchParams.get(key);
+}
   
 function checkForm(){
-  if(document.getElementsByName('message')[0].value.includes(document.getElementsByName('seed')[0].value)){
-    console.log('error: メッセージの中にシードが含まれています。')
+  const message = document.getElementsByName('message')[0].value
+  if(message.includes(document.getElementsByName('seed')[0].value) || message.includes(getParam('seed'))){
+    console.log('Error: メッセージの中にシードが含まれています。')
     return false
   }else{
     console.log('confilm')
