@@ -1,24 +1,25 @@
 <!-- Made by LunaKamituki（神月瑠奈） -->
 <script>
-document.addEventListener('keydown', function(event) {
-  if((event.ctrlKey || event.metaKey) && event.shiftKey){
+  // home.htmlに追加する予定
+  document.addEventListener('keydown', function(event) {
+    if((event.ctrlKey || event.metaKey) && event.shiftKey){
     
-    console.log(event.code);
+      console.log(event.code);
     
-    switch(event.code){
-      case 'KeyH':
-        document.cookie = "yuki=True;Max-Age=0;";
-        break
+      switch(event.code){
+        case 'KeyH':
+          document.cookie = "yuki=True;max-age=0;";
+          break
         
-      case 'KeyB':
-        location.replace('/bbs');
-        break
+        case 'KeyB':
+          location.replace('/bbs');
+          break
         
-      case 'KeyR':
-        location.replace(location.href);
-        break
+        case 'KeyR':
+          location.replace(location.href);
+          break
         
+      }
     }
-  }
-});
+  });
 </script>
