@@ -46,7 +46,7 @@ document.addEventListener('keydown', function(event) {
       
       case 'KeyL':
         event.preventDefault()
-        if(!messageElm.value == ''){
+        if(!messageElm.value == '' && checkFrom()){
           formElm.submit();
         }
         break
