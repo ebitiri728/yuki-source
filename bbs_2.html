@@ -40,10 +40,6 @@ document.getElementsByTagName('div')[0].after(new_title_div_elm)
 document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
 */
 
-function replaceBlankCharacters(str){
-  return str.replace(/ /g, '&nbsp;').replace(/　/g, '&emsp;').replace(/\s/g, '&thinsp;')
-}
-
 // 数値文字参照に変換
 function convertToNumericCharacterReference(str){
   let replaced_str = '';
@@ -52,6 +48,12 @@ function convertToNumericCharacterReference(str){
 　 }
   return replaced_str
 }
+  
+function replaceBlankCharacters(str){
+  return str.replace(/(\s)/g, convertToNumericCharacterReference($&))
+}
+
+
   
 function replace_add_input(){
   const content = document.getElementById('add_replace_input').value;
