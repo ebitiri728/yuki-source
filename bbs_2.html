@@ -44,12 +44,27 @@ function replaceBlankCharacters(str){
   return str.replace(/ /g, '&nbsp;').replace(/　/g, '&emsp;').replace(/\s/g, '&thinsp;')
 }
 
-function replace_add_input(){
-  document.getElementsByName('message')[0].value += replaceBlankCharacters(document.getElementById('add_replace_input').value)
+// 数値文字参照に変換
+function convertToNumericCharacterReference(str){
+  for(let i = 0; i < str.length; i++){
+    replaced_str += "&#" + str.charCodeAt(i) + ";";
+　 }
+  return replaced_content
 }
+  
+function replace_add_input(){
+  const content = document.getElementById('add_replace_input').value;
+  
+  if(document.getElementById('all_replace_checkbox').checked){  
+    document.getElementsByName('message')[0].value += convertToNumericCharacterReference(content)
+  }else{
+    document.getElementsByName('message')[0].value += replaceBlankCharacters(content)
+  }
+}
+  
 let new_add_replace_div_elm = document.createElement('div');
 new_add_replace_div_elm.id = 'add_replace_div';
 document.getElementsByTagName('div')[0].after(new_add_replace_div_elm)
-document.getElementById('add_replace_div').innerHTML = '<input id="add_replace_input" placeholder="空白が入っているaddを入力"><button onclick="replace_add_input()">空白を置き換えてメッセージに追加</button>'
+document.getElementById('add_replace_div').innerHTML = '<input id="add_replace_input" placeholder="空白が入っているaddを入力"><input id="all_replace_checkbox" type="checkbox">全て変換 <button onclick="replace_add_input()">数値文字参照に変換してメッセージに追加</button>'
 
 document.getElementById('channel').setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);')</script>
