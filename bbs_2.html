@@ -46,10 +46,11 @@ function replaceBlankCharacters(str){
 
 // 数値文字参照に変換
 function convertToNumericCharacterReference(str){
+  let replaced_str = '';
   for(let i = 0; i < str.length; i++){
     replaced_str += "&#" + str.charCodeAt(i) + ";";
 　 }
-  return replaced_content
+  return replaced_str
 }
   
 function replace_add_input(){
