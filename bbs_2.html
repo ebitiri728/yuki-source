@@ -45,7 +45,7 @@ function replaceBlankCharacters(str){
 }
 
 function replace_add_input(){
-  document.getElementsByClassName('message')[0].value += replaceBlankCharacters(document.getElementById('add_replace_input').value)
+  document.getElementsByName('message')[0].value += replaceBlankCharacters(document.getElementById('add_replace_input').value)
 }
 let new_add_replace_div_elm = document.createElement('div');
 new_add_replace_div_elm.id = 'add_replace_div';
