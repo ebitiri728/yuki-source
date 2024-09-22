@@ -50,7 +50,7 @@ function convertToNumericCharacterReference(str){
 }
   
 function replaceBlankCharacters(str){
-  if(/s/.test(str){
+  if(/s/.test(str)){
     return str.replace(/(\s)/g, convertToNumericCharacterReference('$&'))
   }
   return ''
