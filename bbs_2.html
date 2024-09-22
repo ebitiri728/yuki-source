@@ -51,7 +51,7 @@ function convertToNumericCharacterReference(str){
   
 function replaceBlankCharacters(str){
   if(/\s/.test(str)){
-    return str.replace(/(\s)/g, convertToNumericCharacterReference($&))
+    return str.replace(/(\s)/g, matched => convertToNumericCharacterReference(matched))
   }
   return str
 }
