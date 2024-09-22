@@ -53,7 +53,7 @@ function replaceBlankCharacters(str){
   if(/\s/.test(str)){
     return str.replace(/(\s)/g, convertToNumericCharacterReference('$&'))
   }
-  return ''
+  return str
 }
 
 
