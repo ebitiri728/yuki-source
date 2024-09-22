@@ -44,7 +44,7 @@ document.getElementById('title_div').innerHTML = '<input id="title_input" value=
 function convertToNumericCharacterReference(str){
   let replaced_str = '';
   for(let i = 0; i < str.length; i++){
-    replaced_str += "&#" + str.charCodeAt(i) + ";";
+    replaced_str += "&#" + str.codePointAt(i) + ";";
 　 }
   return replaced_str
 }
