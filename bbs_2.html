@@ -65,8 +65,14 @@ function replace_add_input(){
 
 function replaceInputKeyPressed(event){
   if(event.key === 'Enter'){
-		replace_add_input()
-	}
+    if(event.shiftKey || event.ctrlKey){
+	    const checkbox = document.getElementById('all_replace_checkbox');
+      checkbox.checked = !checkbox.checked
+	replace_add_input()
+    }else{
+      replace_add_input()
+    }
+  }
 }
   
 let new_add_replace_div_elm = document.createElement('div');
