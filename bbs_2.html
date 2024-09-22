@@ -42,9 +42,10 @@ document.getElementById('title_div').innerHTML = '<input id="title_input" value=
 
 // 数値文字参照に変換
 function convertToNumericCharacterReference(str){
+  const splited_str = [...str]
   let replaced_str = '';
-  for(let i = 0; i < str.length; i++){
-    replaced_str += "&#" + str.codePointAt(i) + ";";
+  for(let i = 0; i < splited_str.length; i++){
+    replaced_str += "&#" + splited_str[i].codePointAt(0) + ";";
 　 }
   return replaced_str
 }
