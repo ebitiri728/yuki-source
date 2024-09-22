@@ -80,7 +80,7 @@ function replaceInputKeyPressed(event){
 let new_add_replace_div_elm = document.createElement('div');
 new_add_replace_div_elm.id = 'add_replace_div';
 document.getElementsByTagName('div')[0].after(new_add_replace_div_elm)
-document.getElementById('add_replace_div').innerHTML = '<input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力"><label for="replace_str"><input id="all_replace_checkbox" type="checkbox">全て変換</label><button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>'
+document.getElementById('add_replace_div').innerHTML = '<input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力"><label for="all_replace_checkbox"><input id="all_replace_checkbox" type="checkbox">全て変換</label><button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>'
 document.getElementById('add_replace_input').addEventListener('keydown', replaceInputKeyPressed)
   
 document.getElementById('channel').setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);')</script>
