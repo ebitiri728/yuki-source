@@ -8,13 +8,23 @@ new_input_elm.innerHTML = '<input id="message_log" style="display: none;"><butto
 document.getElementsByTagName('div')[0].after(new_input_elm);
   
 let formElm = document.getElementsByTagName('form')[0];
-let channelElms = document.getElementsByTagName('option');
+let channelElm = document.getElementById('channel')
+let channel_selectElms = document.getElementsByTagName('option');
   
 let messageElm = document.getElementsByName('message')[0];
+let nameElm = document.getElementsByName('name')[0];
 let seedElm = document.getElementsByName('seed')[0];
-  
+let verifyElm = document.getElementById('filter');
 let messageLogElm = document.getElementById('message_log');
 
+  
+let new_ajaxSend_checkbox_div = document.createElement('div');
+new_ajaxSend_checkbox_div.id = 'ajaxSend_checkbox_div';
+new_ajaxSend_checkbox_div.innerHTML = '<label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label>'
+
+let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
+document.getElementById('add_replace_div').after(new_ajaxSend_checkbox_div)
+  
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
     
@@ -47,14 +57,22 @@ document.addEventListener('keydown', function(event) {
       case 'KeyL':
         event.preventDefault()
         if(!messageElm.value == '' && checkForm()){
-          formElm.submit();
+          if(ajaxSend_checkbox.checked){
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
+            xhr.onload = function () {
+              messageElm.value = '';
+            };
+            xhr.send();
+          }else{
+            formElm.submit();
         }
         break
         
       case 'KeyJ':
         event.preventDefault()
-        channelElms[0].toggleAttribute('selected');
-        channelElms[1].toggleAttribute('selected');
+        channel_selectElms[0].toggleAttribute('selected');
+        channel_selectElms[1].toggleAttribute('selected');
         reloadmessages()
         
         setTimeout(function() {
@@ -80,7 +98,6 @@ document.addEventListener('keydown', function(event) {
         console.log(messages_log);
         break
         
-      // 端末によっては、Slashの場合既存のキーボードショートカットと重複するのでPeriodを追加した。
       case 'Slash':
       case 'Period':
         event.preventDefault()
@@ -103,8 +120,17 @@ function checkForm(){
     console.log('Error: メッセージの中にシードが含まれています。')
     return false
   }else{
-    console.log('confilm')
-    return true
+    if(ajaxSend_checkbox.checked){
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
+      xhr.onload = function () {
+        messageElm.value = '';
+      };
+      xhr.send();
+      return false
+    }else{
+      return true
+    }
   }
 }
 
@@ -131,4 +157,6 @@ function copy_message_log(){
     });
   
 }
+
+
 </script>
