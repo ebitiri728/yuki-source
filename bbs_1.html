@@ -22,9 +22,10 @@ let new_ajaxSend_checkbox_div = document.createElement('div');
 new_ajaxSend_checkbox_div.id = 'ajaxSend_checkbox_div';
 new_ajaxSend_checkbox_div.innerHTML = '<label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label>'
 
-let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
 document.getElementsByTagName('div')[0].after(new_ajaxSend_checkbox_div)
-  
+
+let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
+
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
     
