@@ -61,9 +61,7 @@ document.addEventListener('keydown', function(event) {
           if(ajaxSend_checkbox.checked){
             let xhr = new XMLHttpRequest();
             xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
-            xhr.onload = function () {
-              messageElm.value = '';
-            };
+            messageElm.value = '';
             xhr.send();
           }else{
             formElm.submit();
@@ -123,11 +121,10 @@ function checkForm(){
     return false
   }else{
     if(ajaxSend_checkbox.checked){
+      
       let xhr = new XMLHttpRequest();
       xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
-      xhr.onload = function () {
-        messageElm.value = '';
-      };
+      messageElm.value = '';
       xhr.send();
       return false
     }else{
