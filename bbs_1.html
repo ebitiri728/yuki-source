@@ -92,6 +92,11 @@ document.addEventListener('keydown', function(event) {
         location.replace('https://www.google.com/');
         break
 
+      case 'KeyI':
+        event.prentDefault()
+        ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
+        break
+        
       case 'KeyG':
         event.preventDefault()
         var messages_log = document.getElementById('messages').innerHTML;
