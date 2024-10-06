@@ -1,7 +1,11 @@
 <script>
   function urlConvertToLink(str){
-    const pattern = /(?:https?:\/\/[\w\.\\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/
-    // 元々は/\/(?:watch|search|playlist)\?(?:[\w%]+=[\w%]+&?)+/gと/\/(?:channel|hashtag)\/[\w%]+/g
+    const pattern = /(?:https?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/
+    /* これを纏めた
+      /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/
+      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/
+      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/
+    */
     const makeLink = function(matched) {
       return `<a href="${matched}">${matched}</a>`;
     }
