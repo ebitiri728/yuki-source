@@ -1,6 +1,6 @@
 <script>
   function urlConversion(str){
-    const pattern = /\/(?:video|search)\?(?:[^&\/\s<>]+=[^&\/\s<>]+&?)+/g
+    const pattern = /\/(?:video|search)\?(?:[\w%]+=[\w%]+&?)+/g
     const makeLink = function(matched) {
       return `<a href="${matched}">${matched}</a>`;
     }
