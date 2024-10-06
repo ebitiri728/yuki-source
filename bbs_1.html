@@ -2,10 +2,12 @@
 <!-- Yuki BBSに追加するコード1（キーボードショートカット・シード送信防止） -->
 
 <script>
+/*
 let new_input_elm = document.createElement('div');
 new_input_elm.id = 'message_log_div';
 new_input_elm.innerHTML = '<input id="message_log" style="display: none;"><button onclick="copy_message_log()">Copy message log</button>（キーボードショートカットで保存し（同時に1つのみ可能）、左のボタンからコピーできる）';
 document.getElementsByTagName('div')[0].after(new_input_elm);
+*/
   
 let formElm = document.getElementsByTagName('form')[0];
 let channelElm = document.getElementById('channel')
@@ -96,14 +98,16 @@ document.addEventListener('keydown', function(event) {
         event.preventDefault()
         ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
         break
-        
+
+      /*
       case 'KeyG':
         event.preventDefault()
         var messages_log = document.getElementById('messages').innerHTML;
         messageLogElm.value = messages_log.toString();
         console.log(messages_log);
         break
-        
+      */
+      
       case 'Slash':
       case 'Period':
         event.preventDefault()
