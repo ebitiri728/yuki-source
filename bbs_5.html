@@ -1,6 +1,7 @@
 <script>
   function urlConversion(str){
-    const pattern = /\/(?:watch|search|playlist)\?(?:[\w%]+=[\w%]+&?)+/g
+    const pattern = /(?:\/(?:watch|search|playlist)\?(?:[\w%]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w%]+)/g
+    // 元々は/\/(?:watch|search|playlist)\?(?:[\w%]+=[\w%]+&?)+/gと/\/(?:channel|hashtag)\/[\w%]+/g
     const makeLink = function(matched) {
       return `<a href="${matched}">${matched}</a>`;
     }
