@@ -6,5 +6,5 @@
     }
     return str.replace(pattern, makeLink)
   }
-  document.getElementsByTagName('script')[4].textContent = document.getElementsByTagName('script')[4].innerHTML.replace(/return str\.replace(.*);/, 'console.log('test');return urlConversion(str)\.replace$1;')
+  document.getElementsByTagName('script')[4].textContent = document.getElementsByTagName('script')[4].innerHTML.replace(/return str\.replace(.*);/, 'return urlConversion(str)\.replace$1;')
 </script>
