@@ -1,6 +1,6 @@
 <script>
   function urlConversion(str){
-    return str.replace(/(\/watch\?v=\w{7})/g, '<a href="$&">$&</a>'
+    return str.replace(/(\/watch\?v=\w{7})/g, '<a href="$&">$&</a>')
   }
   document.getElementsByTagName('script')[4].innerHTML = document.getElementsByTagName('script')[4].innerHTML.replace(/return str\.replace(.*);/, 'return urlConversion(str)\.replace$1;')
 </script>
