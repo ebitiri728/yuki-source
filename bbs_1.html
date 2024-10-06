@@ -63,7 +63,7 @@ document.addEventListener('keydown', function(event) {
             xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
             xhr.send();
             messageElm.value = '';
-            reloadmessaes()
+            reloadmessages()
           }else{
             formElm.submit();
           }
