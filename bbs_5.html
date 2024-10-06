@@ -1,6 +1,7 @@
 <script>
   function urlConversion(str){
-    return str.replace(/(\/watch\?v=\w{7})/g, '<a href="$&">$&</a>')
+    const pattern = /(\/(|video|search)(\?((\w+)=(.+))*)?)/g
+    return str.replace(pattern, '<a href="$1">$1</a>')
   }
   document.getElementsByTagName('script')[4].textContent = document.getElementsByTagName('script')[4].innerHTML.replace(/return str\.replace(.*);/, 'console.log('test');return urlConversion(str)\.replace$1;')
 </script>
