@@ -1,7 +1,10 @@
 <script>
   function urlConversion(str){
-    const pattern = /(\/(|video|search)(\?((\w+)=(.+))*)?)/g
-    return str.replace(pattern, '<a href="$1">$1</a>')
+    const pattern = /\/(?:video|search)\?(?:[^&\/\s]+=[^&\/\s]+&?)+/g
+    const makeLink = function(matched) {
+      return `<a href="${matched}">${matched}</a>`;
+    }
+    return str.replace(pattern, makeLink)
   }
   document.getElementsByTagName('script')[4].textContent = document.getElementsByTagName('script')[4].innerHTML.replace(/return str\.replace(.*);/, 'console.log('test');return urlConversion(str)\.replace$1;')
 </script>
