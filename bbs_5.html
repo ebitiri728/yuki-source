@@ -42,7 +42,7 @@
   });
   
   function setSrcToPictureInPicture(src_content){
-    pictureInPicture_iframe.setAttribute('src', src_content);
+    document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
 
   /*function urlConvertToLink(str){
@@ -56,7 +56,7 @@
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
-    if(pictureInPicture_checkbox.checked){
+    if(document.getElementById('pictureInPicture_checkbox').checked){
       const makeLink = function(matched) {
         return `<a href="javascript:setSrcToPictureInPicture(${matched})">${matched}</a>`;
       }
