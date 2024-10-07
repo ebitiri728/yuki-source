@@ -13,11 +13,17 @@
   // もし（Ajax使用中かつ）PIPを使う（.checked）なら
   let pictureInPicture_checkbox_div = document.createElement('div')
   pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
-  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャを使用<input id="pictureInPicture_checkbox" type="checkbox"></label>'
+  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャを利用(Ajax使用時のみ利用可能)<input id="pictureInPicture_checkbox" type="checkbox"></label>'
   document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
   
   let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
-
+  let ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
+  
+  pictureInPicture_checkbox.addEventListner('change', () => {
+    if(this.checked && !ajaxSend_checkbox.checked){
+      this.checked = false;
+    }
+  });
   let pictureInPicture_div = document.createElement('div')
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
