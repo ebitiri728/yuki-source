@@ -19,6 +19,7 @@
   let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
   
   let ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
+
   let pictureInPicture_div = document.createElement('div')
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
@@ -31,6 +32,7 @@
       if(!ajaxSend_checkbox.checked){
         this.checked = false;
         pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
+        pictureInPicture_iframe.setAttribute('allow', 'none');
       }else{
         pictureInPicture_iframe.removeAttribute('class');
         pictureInPicture_iframe.removeAttribute('allow');
@@ -39,7 +41,7 @@
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       pictureInPicture_iframe.setAttribute('allow', 'none');
     }
-  });
+  }, false);
   
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
