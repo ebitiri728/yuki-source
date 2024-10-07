@@ -30,13 +30,13 @@
     if(this.checked){
       if(!ajaxSend_checkbox.checked){
         this.checked = false;
-        pictureInPicture_iframe.setAttibute('class', 'hiddenElm');
+        pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       }else{
         pictureInPicture_iframe.removeAttribute('class');
         pictureInPicture_iframe.removeAttribute('allow');
       }
     }else{
-      pictureInPicture_iframe.setAttibute('class', 'hiddenElm');
+      pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       pictureInPicture_iframe.setAttribute('allow', 'none');
     }
   });
@@ -45,6 +45,10 @@
     pictureInPicture_iframe.setAttribute('src', src_content);
   }
 
+  /*function urlConvertToLink(str){
+    return '【エラー発生中】' + sr
+  }*/
+  
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
