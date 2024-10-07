@@ -10,9 +10,10 @@
   }
 </style>
 <script>
+  // もし（Ajax使用中かつ）PIPを使う（.checked）なら
   let pictureInPicture_checkbox_div = document.createElement('div')
   pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
-  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
+  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャを使用<input id="pictureInPicture_checkbox" type="checkbox"></label>'
   document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
   
   let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
@@ -21,7 +22,13 @@
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
   document.getElementById('shortcut_help').after(pictureInPicture_div)
+
+  let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
   
+  function setSrcToPictureInPicture(src_content){
+    pictureInPicture_iframe.setAttribute('src', src_content)
+  }
+
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
@@ -31,9 +38,9 @@
     */
     if(pictureInPicture_checkbox.checked){
       const makeLink = function(matched) {
-        return `<a href="${matched}">${matched}</a>`;
+        return `<a href="javascript:setSrcToPictureInPicture(${matched})">${matched}</a>`;
       }
-      return str.replace(pattern, makeLink)
+      return str.replace(pattern, makeLink);
     }else{
       const makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
