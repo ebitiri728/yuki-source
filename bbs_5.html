@@ -1,4 +1,27 @@
+<style>
+  #pictureInPicture_iframe{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    padding: 5px;
+    background-color: #cfcfcf;
+    border-radius: 15px; 
+  }
+</style>
 <script>
+  let pictureInPicture_checkbox_div = document.createElement('div')
+  pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
+  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
+  document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
+  
+  let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+
+  let pictureInPicture_div = document.createElement('div')
+  pictureInPicture_div.id = 'pictureInPicture_display';
+  pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
+  document.getElementById('shortcut_help').after(pictureInPicture_div)
+  
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
@@ -6,9 +29,16 @@
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
-    const makeLink = function(matched) {
-      return `<a href="${matched}">${matched}</a>`;
+    if(pictureInPicture_checkbox.checked){
+      const makeLink = function(matched) {
+        return `<a href="${matched}">${matched}</a>`;
+      }
+      return str.replace(pattern, makeLink)
+    }else{
+      const makeLink = function(matched) {
+        return `<a href="${matched}">${matched}</a>`;
+      }
+      return str.replace(pattern, makeLink)
     }
-    return str.replace(pattern, makeLink)
   }
 </script>
