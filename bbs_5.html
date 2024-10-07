@@ -58,7 +58,7 @@
     */
     if(document.getElementById('pictureInPicture_checkbox').checked){
       const makeLink = function(matched) {
-        return `<a href="javascript:setSrcToPictureInPicture(${matched})">${matched}</a>`;
+        return `<a href="javascript:setSrcToPictureInPicture('${matched}')">${matched}</a>`;
       }
     }else{
       const makeLink = function(matched) {
