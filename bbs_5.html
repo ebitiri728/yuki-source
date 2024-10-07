@@ -42,7 +42,7 @@
   });
   
   function setSrcToPictureInPicture(src_content){
-    pictureInPicture_iframe.setAttribute('src', src_content)
+    pictureInPicture_iframe.setAttribute('src', src_content);
   }
 
   function urlConvertToLink(str){
@@ -56,12 +56,11 @@
       const makeLink = function(matched) {
         return `<a href="javascript:setSrcToPictureInPicture(${matched})">${matched}</a>`;
       }
-      return str.replace(pattern, makeLink);
     }else{
       const makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
-      return str.replace(pattern, makeLink)
     }
+    return str.replace(pattern, makeLink)
   }
 </script>
