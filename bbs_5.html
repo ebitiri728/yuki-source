@@ -26,7 +26,7 @@
 
   let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
   
-  pictureInPicture_checkbox.addEventListner('change', () => {
+  pictureInPicture_checkbox.addEventListener('change', () => {
     if(this.checked){
       if(!ajaxSend_checkbox.checked){
         this.checked = false;
