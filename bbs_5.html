@@ -76,13 +76,11 @@
     
     if(this.checked && document.getElementById('ajaxSend_checkbox').checked){
       pictureInPicture_iframe.removeAttribute('class');
-      pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self'");
     } else {
       if(this.checked){
         this.checked = false;
       }
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
-      pictureInPicture_iframe.setAttribute('allow', "autoplay 'none'; fullscreen 'none'");
     }
   }
   
