@@ -44,21 +44,21 @@
 -->
 
 <style>
-  #pictureInPicture_iframe{
+  #pictureInPicture_iframe {
     position: fixed;
     bottom: 0;
     right: 0;
     margin: 5px;
     padding: 5px;
-    background-color: #cfcfcf;
-    border-radius: 15px; 
+    background-color: #dfdfdf;
+    border-radius: 15px;
   }
 </style>
 <script>
   // もし（Ajax使用中かつ）PIPを使う（.checked）なら
   let pictureInPicture_checkbox_div = document.createElement('div');
   pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
-  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャを利用(Ajax使用時のみ利用可能)<input id="pictureInPicture_checkbox" type="checkbox" onchange="changePictureInPictureCheckbox(this)"></label>'
+  pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャを利用(Ajax使用時のみ利用可能)<input id="pictureInPicture_checkbox" type="checkbox" onchange="changePictureInPictureCheckbox(this)"></label>';
   document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
   
   let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
@@ -69,13 +69,12 @@
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
   document.getElementById('shortcut_help').after(pictureInPicture_div)
-
-  let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
   
   function changePictureInPictureCheckbox(elem){
+    let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
     if(elem.checked){
       if(!ajaxSend_checkbox.checked){
-        pictureInPicture_checkbox.checked = false;
+        elem.checked = false;
         pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
         pictureInPicture_iframe.setAttribute('allow', 'none');
       }else{
@@ -91,7 +90,8 @@
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
-  
+  function urlConvertToLink(str){return str}
+  /*
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
@@ -109,5 +109,5 @@
       }
     }
     return str.replace(pattern, makeLink)
-  }
+  }*/
 </script>
