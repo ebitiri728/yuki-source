@@ -88,7 +88,7 @@
       pictureInPicture_iframe.setAttribute('allow', '\'none\'');
     }
   }
-  /*
+  
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
@@ -96,10 +96,12 @@
   function urlConvertToLink(str){
     return str
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
-    // これを纏めた
-    //  /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
-    //  /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
-    //  /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+    
+    /* これを纏めた
+      /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
+      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
+      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+    */
     
     if(document.getElementById('pictureInPicture_checkbox').checked){
       var makeLink = function(matched) {
@@ -112,5 +114,5 @@
     }
     return str.replace(pattern, makeLink)
   }
-  */  
+ 
 </script>
