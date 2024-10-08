@@ -75,7 +75,7 @@
     let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
     
     if(elem.checked){
-      if(!ajaxSend_checkbox.checked){
+      if(!document.getElementById('ajaxSend_checkbox').checked){
         elem.checked = false;
         pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
         pictureInPicture_iframe.setAttribute('allow', 'none');
@@ -87,9 +87,8 @@
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       pictureInPicture_iframe.setAttribute('allow', 'none');
     }
-    return
   }
-  
+  /*
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
@@ -113,5 +112,5 @@
     }
     return str.replace(pattern, makeLink)
   }
-  
+  */  
 </script>
