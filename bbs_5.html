@@ -81,7 +81,7 @@
         pictureInPicture_iframe.setAttribute('allow', 'none');
       }else{
         pictureInPicture_iframe.removeAttribute('class');
-        pictureInPicture_iframe.setAttribute('allow', 'autoplay;');
+        pictureInPicture_iframe.setAttribute('allow', 'autoplay');
       }
     }else{
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
@@ -92,16 +92,15 @@
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
-  
+  /*
   function urlConvertToLink(str){
-    return str
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     
-    /* これを纏めた
-      /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
-      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
-      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
-    */
+    //
+    ///((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
+    //  /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
+    //  /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+    
     
     if(document.getElementById('pictureInPicture_checkbox').checked){
       var makeLink = function(matched) {
@@ -114,5 +113,5 @@
     }
     return str.replace(pattern, makeLink)
   }
- 
+ */
 </script>
