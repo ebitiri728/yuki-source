@@ -81,11 +81,11 @@
         pictureInPicture_iframe.setAttribute('allow', 'none');
       }else{
         pictureInPicture_iframe.removeAttribute('class');
-        pictureInPicture_iframe.setAttribute('allow', 'autoplay; \'src\'');
+        pictureInPicture_iframe.setAttribute('allow', 'autoplay fullscreen *;);
       }
     }else{
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
-      pictureInPicture_iframe.setAttribute('allow', '\'none\'');
+      // pictureInPicture_iframe.setAttribute('allow', '\'none\'');
     }
   }
   
