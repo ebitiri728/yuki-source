@@ -73,9 +73,9 @@
   let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
   
   pictureInPicture_checkbox.addEventListener('change', () => {
-    if(this.checked){
+    if(pictureInPicture_checkbox.checked){
       if(!ajaxSend_checkbox.checked){
-        this.checked = false;
+        pictureInPicture_checkbox.checked = false;
         pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
         pictureInPicture_iframe.setAttribute('allow', 'none');
       }else{
