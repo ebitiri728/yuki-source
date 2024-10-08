@@ -74,16 +74,13 @@
   function changePictureInPictureCheckbox(elem){
     let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
     
-    if(elem.checked){
-      if(!document.getElementById('ajaxSend_checkbox').checked){
+    if(elem.checked && document.getElementById('ajaxSend_checkbox').checked){
+      pictureInPicture_iframe.removeAttribute('class');
+      pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self'");
+    } else {
+      if(elem.checked){
         elem.checked = false;
-        pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
-        pictureInPicture_iframe.setAttribute('allow', 'autoplay 'none'; fullscreen 'none'");
-      }else{
-        pictureInPicture_iframe.removeAttribute('class');
-        pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self'");
       }
-    }else{
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       pictureInPicture_iframe.setAttribute('allow', "autoplay 'none'; fullscreen 'none'");
     }
