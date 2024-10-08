@@ -1,3 +1,4 @@
+<!--
 <style>
   #pictureInPicture_iframe{
     position: fixed;
@@ -40,7 +41,8 @@
     return '<h2 class="red">【お知らせ】機能追加のため一時的にBBSが使用できなくなる場合があります。御了承下さい。</h2>' + str.replace(pattern, makeLink)
   }
 </script>
-<!--
+-->
+
 <style>
   #pictureInPicture_iframe{
     position: fixed;
@@ -89,10 +91,6 @@
   function setSrcToPictureInPicture(src_content){
     document.getElementById('pictureInPicture_iframe').setAttribute('src', src_content);
   }
-
-  /*function urlConvertToLink(str){
-    return '【エラー発生中】' + sr
-  }*/
   
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
@@ -102,15 +100,14 @@
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
     if(document.getElementById('pictureInPicture_checkbox').checked){
-      const makeLink = function(matched) {
+      var makeLink = function(matched) {
         return `<a href="javascript:setSrcToPictureInPicture('${matched}')">${matched}</a>`;
       }
     }else{
-      const makeLink = function(matched) {
+      var makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
     }
     return str.replace(pattern, makeLink)
   }
 </script>
--->
