@@ -69,7 +69,8 @@
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
   document.getElementById('shortcut_help').after(pictureInPicture_div)
-  
+
+  /*
   function changePictureInPictureCheckbox(elem){
     let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
     
@@ -95,11 +96,11 @@
   
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
-    /* これを纏めた
-      /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
-      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
-      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
-    */
+    // これを纏めた
+    //  /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
+    //  /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
+    //  /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+    
     if(document.getElementById('pictureInPicture_checkbox').checked){
       var makeLink = function(matched) {
         return `<a href="javascript:setSrcToPictureInPicture('${matched}')">${matched}</a>`;
@@ -111,4 +112,5 @@
     }
     return str.replace(pattern, makeLink)
   }
+  */
 </script>
