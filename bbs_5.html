@@ -78,14 +78,14 @@
       if(!document.getElementById('ajaxSend_checkbox').checked){
         elem.checked = false;
         pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
-        pictureInPicture_iframe.setAttribute('allow', 'autoplay 'none'; fullscreen 'none';");
+        pictureInPicture_iframe.setAttribute('allow', 'autoplay 'none'; fullscreen 'none'");
       }else{
         pictureInPicture_iframe.removeAttribute('class');
-        pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self';");
+        pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self'");
       }
     }else{
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
-      pictureInPicture_iframe.setAttribute('allow', "autoplay 'none'; fullscreen 'none';");
+      pictureInPicture_iframe.setAttribute('allow', "autoplay 'none'; fullscreen 'none'");
     }
   }
   
