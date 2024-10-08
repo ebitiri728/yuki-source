@@ -29,11 +29,11 @@
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
     if(pictureInPicture_checkbox.checked){
-      const makeLink = function(matched) {
+      var makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
     }else{
-      const makeLink = function(matched) {
+      var makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
     }
