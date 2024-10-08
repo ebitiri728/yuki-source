@@ -32,13 +32,12 @@
       const makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
-      return str.replace(pattern, makeLink)
     }else{
       const makeLink = function(matched) {
         return `<a href="${matched}">${matched}</a>`;
       }
-      return str.replace(pattern, makeLink)
     }
+    return '<h2 class="red">【お知らせ】機能追加のため一時的にBBSが使用できなくなる場合があります。御了承下さい。</h2>' + str.replace(pattern, makeLink)
   }
 </script>
 <!--
