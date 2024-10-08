@@ -67,19 +67,19 @@
 
   let pictureInPicture_div = document.createElement('div')
   pictureInPicture_div.id = 'pictureInPicture_display';
-  pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
+  pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>';
   document.getElementById('shortcut_help').after(pictureInPicture_div);
 
   
-  function changePictureInPictureCheckbox(elem){
+  function changePictureInPictureCheckbox(){
     let pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
     
-    if(elem.checked && document.getElementById('ajaxSend_checkbox').checked){
+    if(this.checked && document.getElementById('ajaxSend_checkbox').checked){
       pictureInPicture_iframe.removeAttribute('class');
       pictureInPicture_iframe.setAttribute('allow', "autoplay 'self'; fullscreen 'self'");
     } else {
-      if(elem.checked){
-        elem.checked = false;
+      if(this.checked){
+        this.checked = false;
       }
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
       pictureInPicture_iframe.setAttribute('allow', "autoplay 'none'; fullscreen 'none'");
