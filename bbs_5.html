@@ -27,9 +27,10 @@
   let ajax_checkbox = document.getElementById('new_ajaxSend_checkbox')
   pictureInPicture_checkbox.addEventListener('change', function(e) {
     if(this.checked){
-      
       if(!ajax_checkbox.checked) {
         this.checked = false;
+      } else {
+        reloadmessages()
       }
     } else {
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
