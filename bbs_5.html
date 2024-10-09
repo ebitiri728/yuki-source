@@ -14,12 +14,30 @@
   pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
   pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
   document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
-  
   let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
-  let pictureInPicture_div = document.createElement('div')
+  
+  let pictureInPicture_div = document.createElement('div');
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElm"></iframe>'
   document.getElementById('shortcut_help').after(pictureInPicture_div)
+
+  // あまりしたくないけどグローバル変数に
+  pictureInPicuture_iframe = document.getElementById('pictureInPicture_iframe');
+
+  let ajax_checkbox = document.getElementById('ajaxSend_checkbox')
+  pictureInPicture_checkbox.addEventListener('change', function (e) => {
+    if(this.checked){
+      
+      if(!ajax_checkbox.checked) {
+        this.checked = false;
+      } else {
+        pictureInPicture_iframe.removeAttribute('class')
+      }
+      
+    } else {
+      pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
+    }
+  });
   
   function urlConvertToLink(str){
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
@@ -30,7 +48,7 @@
     */
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        return `<a href="${matched}">${matched}</a>`;
+        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', ${matched})">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
