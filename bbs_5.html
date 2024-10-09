@@ -30,10 +30,7 @@
       
       if(!ajax_checkbox.checked) {
         this.checked = false;
-      } else {
-        pictureInPicture_iframe.removeAttribute('class')
       }
-      
     } else {
       pictureInPicture_iframe.setAttribute('class', 'hiddenElm');
     }
@@ -48,7 +45,7 @@
     */
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', ${matched})">${matched}</a>`;
+        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', ${matched});pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
