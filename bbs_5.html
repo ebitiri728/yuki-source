@@ -25,7 +25,7 @@
   pictureInPicuture_iframe = document.getElementById('pictureInPicture_iframe');
 
   let ajax_checkbox = document.getElementById('ajaxSend_checkbox')
-  pictureInPicture_checkbox.addEventListener('change', function (e) => {
+  pictureInPicture_checkbox.addEventListener('change', function(e) {
     if(this.checked){
       
       if(!ajax_checkbox.checked) {
@@ -39,7 +39,7 @@
     }
   });
   
-  function urlConvertToLink(str){
+  function urlConvertToLink(str) {
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w%]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
       /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
