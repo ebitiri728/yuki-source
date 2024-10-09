@@ -45,11 +45,7 @@
     */
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        if(/\/(watch|search|playlist|channel|hashtag).+/.test(matched)){
-          return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
-        }else{
-          return `<a href="${matched}">${matched}</a>`;
-        }
+        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
