@@ -21,18 +21,14 @@ tools_menu.id = 'tools_menu'
 home_link.before(tools_menu);
 tools_menu.setAttribute('class', 'hiddenElem');
 
-let tools_menu_checkbox_div = document.createElement('div');
-tools_menu_checkbox_div.id = 'tools_menu_checkbox_div';  
-tools_menu_checkbox_div.innerHTML = '<label for="tools_menu_checkbox">メニューを開く<input id="tools_menu_checkbox" type="checkbox"></label>'
-home_link.after(tools_menu_checkbox_div);
-document.getElementById('tools_menu_checkbox').addEventListener('change', function(e){
-  if(this.checked){
-   tools_menu.removeAttribute('class');
-  }else{
-    tools_menu.setAttribute('class', 'hiddenElem');
-  }
-})
+let tools_menu_button_div = document.createElement('div');
+tools_menu_button_div.id = 'tools_menu_checkbox_div';  
+tools_menu_button_div.innerHTML = '<label for="tools_menu_button">メニューを開く<button id="tools_menu_button" type="checkbox" onclick="tools_menu.removeAttribute(\'class\');"></label>'
+home_link.after(tools_menu_button_div);
 
+let tools_menu_close_button = docuement.createElement('button')
+tools_menu_close_button.setAttribute('onclick', 'tools_menu.setAttribute(\'class\', \'hiddenElem\');')
+tools_menu.appendChild(tools_menu_close_button)
 
 
 /*
