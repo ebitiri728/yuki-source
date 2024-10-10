@@ -14,6 +14,7 @@
 </style>
 <script>
 let home_link =  document.getElementsByTagName('a')[0];
+
 // 楽なのでグローバル変数に
 tools_menu = document.createElement('div');
 tools_menu.id = 'tools_menu'
@@ -22,7 +23,7 @@ tools_menu.setAttribute('class', 'hiddenElem');
 
 let tools_menu_checkbox_div = document.createElement('div');
 tools_menu_checkbox_div.id = 'tools_menu_checkbox_div';  
-tools_menu_checkbox_div.inneHTML = '<label for="tools_menu_checkbox">メニューを開く<input id="tools_menu_checkbox" type="checkbox"></label>'
+tools_menu_checkbox_div.innerHTML = '<label for="tools_menu_checkbox">メニューを開く<input id="tools_menu_checkbox" type="checkbox"></label>'
 home_link.after(tools_menu_checkbox_div);
   
 document.getElementById('tools_menu_checkbox').addEventListener('change', function(e){
