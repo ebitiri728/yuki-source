@@ -13,11 +13,28 @@
   }
 </style>
 <script>
+let home_link =  document.getElementsByTagName('a')[0];
 // 楽なのでグローバル変数に
 tools_menu = document.createElement('div');
 tools_menu.id = 'tools_menu'
-document.getElementsByTagName('a')[0].before(tools_menu);
-tools_menu.setAttribute('class', 'hiddenElem')
+home_link.before(tools_menu);
+tools_menu.setAttribute('class', 'hiddenElem');
+
+let tools_menu_checkbox_div = document.createElement('div');
+tools_menu_checkbox_div.id = 'tools_menu_checkbox_div';  
+tools_menu_checkbox_div.inneHTML = '<label for="tools_menu_checkbox">メニューを開く<input id="tools_menu_checkbox" type="checkbox"></label>'
+home_link.after(tools_menu_checkbox_div);
+  
+document.getElementById('tools_menu_checkbox').addEventListener('change', function(e){
+  if(this.checked){
+   tools_menu.removeAttribute('class');
+  }else{
+    tools_menu.setAttribute('class', 'hiddenElem');
+  }
+})
+
+
+
 /*
 let new_input_Elem = document.createElement('div');
 new_input_Elem.id = 'message_log_div';
