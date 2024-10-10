@@ -1,33 +1,39 @@
 <!-- Made by LunaKamituki（神月瑠奈） -->
 <!-- Yuki BBSに追加するコード1（キーボードショートカット・シード送信防止） -->
-
+<style>
+  
+</style>
 <script>
+// 楽なのでグローバル変数に
+tools_menu = document.createElement('div');
+tools_menu.id = 'tools_menu';
+document.getElementsByTagName('a').before(tools_menu);
+  
 /*
-let new_input_elm = document.createElement('div');
-new_input_elm.id = 'message_log_div';
-new_input_elm.innerHTML = '<input id="message_log" style="display: none;"><button onclick="copy_message_log()">Copy message log</button>（キーボードショートカットで保存し（同時に1つのみ可能）、左のボタンからコピーできる）';
-document.getElementsByTagName('div')[0].after(new_input_elm);
+let new_input_Elem = document.createElement('div');
+new_input_Elem.id = 'message_log_div';
+new_input_Elem.innerHTML = '<input id="message_log" style="display: none;"><button onclick="copy_message_log()">Copy message log</button>（キーボードショートカットで保存し（同時に1つのみ可能）、左のボタンからコピーできる）';
+document.getElementsByTagName('div')[0].after(new_input_Elem);
 */
-  
-let formElm = document.getElementsByTagName('form')[0];
-let channelElm = document.getElementById('channel')
-let channel_selectElms = document.getElementsByTagName('option');
-  
-let messageElm = document.getElementsByName('message')[0];
-let nameElm = document.getElementsByName('name')[0];
-let seedElm = document.getElementsByName('seed')[0];
-let verifyElm = document.getElementById('filter');
-let messageLogElm = document.getElementById('message_log');
 
+let formElem = document.getElementsByTagName('form')[0];
+let channelElem = document.getElementById('channel')
+let channel_selectElems = document.getElementsByTagName('option');
+let messageElem = document.getElementsByName('message')[0];
+let nameElem = document.getElementsByName('name')[0];
+let seedElem = document.getElementsByName('seed')[0];
+let verifyElem = document.getElementById('filter');
+// let messageLogElem = document.getElementById('message_log');
+
+formElem.setAttribute('onsubmit', 'return checkForm()');
   
 let new_ajaxSend_checkbox_div = document.createElement('div');
 new_ajaxSend_checkbox_div.id = 'ajaxSend_checkbox_div';
 new_ajaxSend_checkbox_div.innerHTML = '<label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label>'
-
-document.getElementsByTagName('div')[0].after(new_ajaxSend_checkbox_div)
-
+tools_menu.after(new_ajaxSend_checkbox_div)
 let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
 
+  
 document.addEventListener('keydown', function(event) {
   if((event.ctrlKey || event.metaKey) && event.shiftKey){
     
@@ -36,7 +42,7 @@ document.addEventListener('keydown', function(event) {
     switch(event.code){
       case 'KeyM':
         event.preventDefault()
-        messageElm.focus();
+        messageElem.focus();
         break
 
       case 'KeyN':
@@ -59,23 +65,23 @@ document.addEventListener('keydown', function(event) {
       
       case 'KeyL':
         event.preventDefault()
-        if(!messageElm.value == '' && checkForm()){
+        if(!messageElem.value == '' && checkForm()){
           if(ajaxSend_checkbox.checked){
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
+            xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
             xhr.send();
-            messageElm.value = '';
+            messageElem.value = '';
             reloadmessages()
           }else{
-            formElm.submit();
+            formElem.submit();
           }
         }
         break
         
       case 'KeyJ':
         event.preventDefault()
-        channel_selectElms[0].toggleAttribute('selected');
-        channel_selectElms[1].toggleAttribute('selected');
+        channel_selectElems[0].toggleAttribute('selected');
+        channel_selectElems[1].toggleAttribute('selected');
         reloadmessages()
         
         setTimeout(function() {
@@ -85,7 +91,7 @@ document.addEventListener('keydown', function(event) {
 
       case 'KeyB':
         event.preventDefault()
-        seedElm.classList.toggle('hiddenElm');
+        seedElem.classList.toggle('hiddenElem');
         break
 
       case 'KeyK':
@@ -103,7 +109,7 @@ document.addEventListener('keydown', function(event) {
       case 'KeyG':
         event.preventDefault()
         var messages_log = document.getElementById('messages').innerHTML;
-        messageLogElm.value = messages_log.toString();
+        messageLogElem.value = messages_log.toString();
         console.log(messages_log);
         break
       */
@@ -111,13 +117,12 @@ document.addEventListener('keydown', function(event) {
       case 'Slash':
       case 'Period':
         event.preventDefault()
-        document.getElementById('shortcut_help').classList.toggle('hiddenElm');
+        document.getElementById('shortcut_help').classList.toggle('hiddenElem');
         break
     }
   }
 });
 
-document.getElementsByTagName('form')[0].setAttribute('onsubmit', 'return checkForm()')
 
 function getParam(key){
   let url = new URL(window.location.href);
@@ -132,9 +137,9 @@ function checkForm(){
   }else{
     if(ajaxSend_checkbox.checked){
       let xhr = new XMLHttpRequest();
-      xhr.open("GET", `/bbs/result?name=${nameElm.value}&seed=${seedElm.value}&channel=${channelElm.value}&verify=${verifyElm.checked}&message=${messageElm.value}`);
+      xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
       xhr.send();
-      messageElm.value = '';
+      messageElem.value = '';
       reloadmessages()
       return false
     }else{
@@ -142,7 +147,8 @@ function checkForm(){
     }
   }
 }
-
+  
+/*
 function copy_message_log(){
   
   if(!navigator.clipboard){
@@ -166,6 +172,6 @@ function copy_message_log(){
     });
   
 }
-
+*/
 
 </script>
