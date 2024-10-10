@@ -13,7 +13,7 @@
 let new_div_Elem = document.createElement('div');
 new_div_Elem.id = 'comments_num_info';
 new_div_Elem.textContent = '更新待機中...';
-tools_menu.appendChild(new_div_Elem);
+document.getElementsByTagName('form')[0].after(new_div_Elem);
 
 function update_comments_num(){
   let infoElem = document.getElementById('comments_num_info')
