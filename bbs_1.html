@@ -26,7 +26,7 @@ tools_menu_button_div.id = 'tools_menu_checkbox_div';
 tools_menu_button_div.innerHTML = '<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>'
 home_link.after(tools_menu_button_div);
 
-let tools_menu_close_button = docuement.createElement('button')
+let tools_menu_close_button = document.createElement('button')
 tools_menu_close_button.setAttribute('onclick', 'tools_menu.setAttribute(\'class\', \'hiddenElem\');')
 tools_menu.appendChild(tools_menu_close_button)
 
