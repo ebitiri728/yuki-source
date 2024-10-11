@@ -22,7 +22,8 @@
   
   let pictureInPicture_div = document.createElement('div');
   pictureInPicture_div.id = 'pictureInPicture_display';
-  pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElem"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_iframe.removeAttribute(\'class\');">遷移</button></div>'
+  pictureInPicture_div.setAttribute('class', 'hiddenElem')
+  pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_iframe.removeAttribute(\'class\');">遷移</button></div>'
   tools_menu.after(pictureInPicture_div)
 
   // あまりしたくないけどグローバル変数に
