@@ -19,7 +19,7 @@
   let pictureInPicture_div = document.createElement('div');
   pictureInPicture_div.id = 'pictureInPicture_display';
   pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe" class="hiddenElem"></iframe>'
-  tools_menu.appendChild(pictureInPicture_div)
+  tools_menu.after(pictureInPicture_div)
 
   // あまりしたくないけどグローバル変数に
   pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
