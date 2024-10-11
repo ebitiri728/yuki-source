@@ -50,7 +50,7 @@
     */
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
+        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
