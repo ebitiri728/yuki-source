@@ -58,93 +58,97 @@ new_ajaxSend_checkbox_div.innerHTML = '<label for="new_ajaxSend_checkbox">Ajax�
 tools_menu.appendChild(new_ajaxSend_checkbox_div)
 let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
 
+tools_menu.innerHTML += '<label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label>'
+let keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox')
   
 document.addEventListener('keydown', function(event) {
-  if((event.ctrlKey || event.metaKey) && event.shiftKey){
-    
-    console.log(event.code);
-    
-    switch(event.code){
-      case 'KeyM':
-        event.preventDefault()
-        messageElem.focus();
-        break
+  if(keyboardshortcut_checkbox.checked){
+    if((event.ctrlKey || event.metaKey) && event.shiftKey){
+      switch(event.code){
+        case 'KeyM':
+          event.preventDefault()
+          messageElem.focus();
+          break
 
-      case 'KeyN':
-        event.preventDefault()
-        window.scroll({
-          top: 0,
-          behavior: "smooth",
-        });
-        break
+        case 'KeyN':
+          event.preventDefault()
+          window.scroll({
+            top: 0,
+            behavior: "smooth",
+          });
+          break
         
-      case 'KeyH':
-        event.preventDefault()
-        location.replace("/");
-        break
+        case 'KeyH':
+          event.preventDefault()
+          location.replace("/");
+          break
         
-      case 'KeyR':
-        event.preventDefault()
-        reloadmessages()
-        break
+        case 'KeyR':
+          event.preventDefault()
+          reloadmessages()
+          break
       
-      case 'KeyL':
-        event.preventDefault()
-        if(!messageElem.value == '' && checkForm()){
-          if(ajaxSend_checkbox.checked){
-            let xhr = new XMLHttpRequest();
-            xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
-            xhr.send();
-            messageElem.value = '';
-            reloadmessages()
-          }else{
-            formElem.submit();
+        case 'KeyL':
+          event.preventDefault()
+          if(!messageElem.value == '' && checkForm()){
+            if(ajaxSend_checkbox.checked){
+              let xhr = new XMLHttpRequest();
+              xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+              xhr.send();
+              messageElem.value = '';
+              reloadmessages()
+            }else{
+              formElem.submit();
+            }
           }
-        }
-        break
+          break
         
-      case 'KeyJ':
-        event.preventDefault()
-        channel_selectElems[0].toggleAttribute('selected');
-        channel_selectElems[1].toggleAttribute('selected');
-        reloadmessages()
+        case 'KeyJ':
+          event.preventDefault()
+          channel_selectElems[0].toggleAttribute('selected');
+          channel_selectElems[1].toggleAttribute('selected');
+          reloadmessages()
         
-        setTimeout(function() {
-          update_comments_num();
-        }, 300);
-        break
+          setTimeout(function() {
+            update_comments_num();
+          }, 300);
+          break
 
-      case 'KeyB':
-        event.preventDefault()
-        seedElem.classList.toggle('hiddenElem');
-        break
+        case 'KeyB':
+          event.preventDefault()
+          seedElem.classList.toggle('hiddenElem');
+          break
 
-      case 'KeyK':
-        event.preventDefault()
-        document.cookie = "yuki=True;max-age=0;";
-        location.replace('https://www.google.com/');
-        break
+        case 'KeyK':
+          event.preventDefault()
+          document.cookie = "yuki=True;max-age=0;";
+          location.replace('https://www.google.com/');
+          break
 
-      case 'KeyU':
-        event.preventDefault()
-        ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
-        break
+        case 'KeyU':
+          event.preventDefault()
+          ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
+          break
 
-      /*
-      case 'KeyG':
-        event.preventDefault()
-        var messages_log = document.getElementById('messages').innerHTML;
-        messageLogElem.value = messages_log.toString();
-        console.log(messages_log);
-        break
-      */
+        case 'KeyY':
+          event.preventDefault()
+          if(tools_menu.hasAttribute('class')){
+            tools_menu.removeAttribute('class')
+          }else{
+            tools_menu.setAttribute('class', 'hiddenElem');
+          }
+          break
+          
+        case 'Slash':
+        case 'Period':
+          event.preventDefault()
+          document.getElementById('shortcut_help').classList.toggle('hiddenElem');
+          break
+      }
       
-      case 'Slash':
-      case 'Period':
-        event.preventDefault()
-        document.getElementById('shortcut_help').classList.toggle('hiddenElem');
-        break
     }
+
+    
   }
 });
 
