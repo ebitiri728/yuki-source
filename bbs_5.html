@@ -26,7 +26,7 @@
   tools_menu.after(pictureInPicture_div)
 
   // あまりしたくないけどグローバル変数に
-  pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
+  pictureInPicture_div = document.getElementById('pictureInPicture_div');
 
   let ajax_checkbox = document.getElementById('new_ajaxSend_checkbox')
   pictureInPicture_checkbox.addEventListener('change', function(e) {
@@ -50,7 +50,7 @@
     */
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_iframe.removeAttribute('class');">${matched}</a>`;
+        return `<a href="javascript:pictureInPicture_div.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_div.removeAttribute('class');">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
