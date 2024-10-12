@@ -53,7 +53,7 @@
 <script>
   let home_link =  document.getElementsByTagName('a')[0];
 
-  if(home_link.href == '/'){
+  if(home_link.href == location.origin + '/'){
 
     // 元々ある要素を代入
     let formElem = document.getElementsByTagName('form')[0];
@@ -85,6 +85,7 @@
 
     // Ajaxチェックボックス
     tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label></div>';
+    let ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
     let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
 
     // キーボードショートカット使用チェックボックス
@@ -112,7 +113,7 @@
     let pictureInPicture_checkbox_div = document.createElement('div');
     pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
     pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
-    document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
+    ajaxSend_checkbox_div.after(pictureInPicture_checkbox_div)
     
     let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
