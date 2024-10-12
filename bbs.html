@@ -315,7 +315,7 @@
       }else{
         if(ajaxSend_checkbox.checked){
           let xhr = new XMLHttpRequest();
-          xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+          xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
           xhr.send();
           messageElem.value = '';
           reloadmessages()
