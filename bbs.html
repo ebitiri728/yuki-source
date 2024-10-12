@@ -227,7 +227,28 @@
     });
 
     
-    function checkForm(){
+    
+    
+    update_comments_num(); 
+    setTimeout(update_comments_num, 1000);
+    setInterval(update_comments_num, 5000);
+    
+    /*
+      let new_title_div_Elem = document.createElement('div');
+      new_title_div_Elem.id = 'title_div';
+      document.getElementsByTagName('div')[0].after(new_title_div_Elem)
+      document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
+    */
+  
+
+    
+  
+
+    
+    
+    
+  }
+  function checkForm(){
       if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
         console.log('Error: メッセージの中にシードが含まれています。')
         return false
@@ -245,7 +266,7 @@
       }
     }
     
-    function update_comments_num(){
+  function update_comments_num(){
       const comments_num = document.getElementsByTagName('td')[0].textContent;
       infoElem.textContent = `現在のコメント数は${comments_num}です。`
     
@@ -255,23 +276,8 @@
         infoElem.classList.remove('red')
       };
     }
-  
-    update_comments_num(); 
-    setTimeout(update_comments_num, 1000);
-    setInterval(update_comments_num, 5000);
-    
-    /*
-      let new_title_div_Elem = document.createElement('div');
-      new_title_div_Elem.id = 'title_div';
-      document.getElementsByTagName('div')[0].after(new_title_div_Elem)
-      document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
-    */
-  
 
-    
-  
-
-    function replace_add_input(){
+  function replace_add_input(){
       const content = add_replace_input.value;
     
       if(all_replace_checkbox.checked){  
@@ -303,8 +309,8 @@
       }
     }
     */
-    
-    function urlConvertToLink(str) {
+
+  function urlConvertToLink(str) {
       const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
       /* これを纏めた
         /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
@@ -321,9 +327,7 @@
         }
       }
       return '<h2 class="blue" style="text-align: center;">ピクチャインピクチャ機能追加</h2>' + str.replace(pattern, makeLink)
-    }
   }
-
 
   // utils 
 
