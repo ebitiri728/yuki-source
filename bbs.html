@@ -1,1 +1,411 @@
+<!-- Made by LunaKamituki（神月瑠奈） -->
+<style>
+  .hiddenElem{
+    display: none;
+  }
+  .red{
+    background-color: #e55555;
+  }
 
+  .blue{
+    background-color: #2fa1ff;
+  }
+
+
+  #tools_menu{
+    position: fixed;
+    top: 0;
+    left: 5px;
+    margin-right: 5px;
+    margin: 5px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  #pictureInPicture_display{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0px;
+    padding: 3px;
+    background-color: #fcfcfc;
+    border-radius: 15px; 
+  }
+
+  #pictureInPicture_iframe{
+    margin: 0;
+  }
+  
+  #shortcut_help{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    padding: 5px;
+    background-color: #cfcfcf;
+    border-radius: 15px; 
+  }
+</style>
+
+<script>
+  let home_link =  document.getElementsByTagName('a')[0];
+
+  if(home_link.href == '/'){
+
+    // 元々ある要素を代入
+    let formElem = document.getElementsByTagName('form')[0];
+    let channelElem = document.getElementById('channel');
+    let channel_selectElems = document.getElementsByTagName('option');
+    let messageElem = document.getElementsByName('message')[0];
+    let nameElem = document.getElementsByName('name')[0];
+    let seedElem = document.getElementsByName('seed')[0];
+    let verifyElem = document.getElementById('filter');
+
+
+    formElem.setAttribute('onsubmit', 'return checkForm()');
+    channelElem.setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);');
+
+
+    // グローバル変数に
+    tools_menu = document.createElement('div');
+    tools_menu.id = 'tools_menu';
+    tools_menu.setAttribute('class', 'hiddenElem');
+    home_link.before(tools_menu);
+  
+    let tools_menu_button_div = document.createElement('div');
+    tools_menu_button_div.id = 'tools_menu_checkbox_div';  
+    tools_menu_button_div.innerHTML = '<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>'
+    home_link.after(tools_menu_button_div);
+  
+    // メニューを閉じるボタン
+    tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
+
+    // Ajaxチェックボックス
+    tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label></div>';
+    let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
+
+    // キーボードショートカット使用チェックボックス
+    tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
+    let keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox')
+
+    // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
+    tools_menu.innerHTML += '<div id="shortcut_help_button_div"><button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button></div>';
+
+    // 数値文字参照変換ツール
+    tools_menu.innerHTML += '<div id="add_replace_div"><input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力"><label for="all_replace_checkbox"><input id="all_replace_checkbox" type="checkbox">全て変換</label><button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button></div>'
+    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    let add_replace_input = document.getElementById('add_replace_input');
+    
+    add_replace_input.addEventListener('keydown', replaceInputKeyPressed);
+    
+
+    // 投稿番号表示機能
+    let infoElem = document.createElement('div');
+    infoElem.id = 'comments_num_info';
+    infoElem.textContent = '更新待機中...';
+    document.getElementById('filter').after(infoElem);
+
+    // ピクチャインピクチャチェックボックス
+    let pictureInPicture_checkbox_div = document.createElement('div');
+    pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
+    pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
+    document.getElementById('ajaxSend_checkbox_div').after(pictureInPicture_checkbox_div)
+    
+    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+
+    pictureInPicture_div = document.createElement('div')
+    pictureInPicture_div.id = 'pictureInPicture_display';
+    pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_iframe.removeAttribute(\'class\');">遷移</button></div>'
+    document.getElementById('shortcut_help').after(pictureInPicture_div);
+    pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
+    
+    // Ajax機能不利用時にチェックボックスのチェックを外す
+    pictureInPicture_checkbox.addEventListener('change', function(e) {
+      if(this.checked){
+        if(!ajax_checkbox.checked) {
+          this.checked = false;
+        } else {
+          reloadmessages()
+        }
+      } else {
+        pictureInPicture_iframe.setAttribute('class', 'hiddenElem');
+      }
+    });
+    
+
+    document.addEventListener('keydown', function(event) {
+      if(keyboardshortcut_checkbox.checked){
+        if((event.ctrlKey || event.metaKey) && event.shiftKey){
+          switch(event.code){
+            case 'KeyM':
+              event.preventDefault()
+              messageElem.focus();
+              break
+  
+            case 'KeyN':
+              event.preventDefault()
+              window.scroll({
+                top: 0,
+                behavior: "smooth",
+              });
+              break
+          
+            case 'KeyH':
+              event.preventDefault()
+              location.replace("/");
+              break
+          
+            case 'KeyR':
+              event.preventDefault()
+              reloadmessages()
+              break
+        
+            case 'KeyL':
+              event.preventDefault()
+              if(!messageElem.value == '' && checkForm()){
+                if(ajaxSend_checkbox.checked){
+                  let xhr = new XMLHttpRequest();
+                  xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+                  xhr.send();
+                  messageElem.value = '';
+                  reloadmessages()
+                }else{
+                  formElem.submit();
+                }
+              }
+              break
+          
+            case 'KeyJ':
+              event.preventDefault()
+              channel_selectElems[0].toggleAttribute('selected');
+              channel_selectElems[1].toggleAttribute('selected');
+              reloadmessages()
+          
+              setTimeout(function() {
+                update_comments_num();
+              }, 300);
+              break
+  
+            case 'KeyB':
+              event.preventDefault()
+              seedElem.classList.toggle('hiddenElem');
+              break
+  
+            case 'KeyK':
+              event.preventDefault()
+              document.cookie = "yuki=True;max-age=0;";
+              location.replace('https://www.google.com/');
+              break
+  
+            case 'KeyU':
+              event.preventDefault()
+              ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
+              break
+  
+            case 'KeyY':
+              event.preventDefault()
+              if(tools_menu.hasAttribute('class')){
+                tools_menu.removeAttribute('class')
+              }else{
+                tools_menu.setAttribute('class', 'hiddenElem');
+              }
+              break
+            
+            case 'Slash':
+            case 'Period':
+              event.preventDefault()
+              document.getElementById('shortcut_help').classList.toggle('hiddenElem');
+              break
+          }
+        
+        }
+  
+      
+      }
+    });
+
+    
+    function checkForm(){
+      if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
+        console.log('Error: メッセージの中にシードが含まれています。')
+        return false
+      }else{
+        if(ajaxSend_checkbox.checked){
+          let xhr = new XMLHttpRequest();
+          xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+          xhr.send();
+          messageElem.value = '';
+          reloadmessages()
+          return false
+        }else{
+          return true
+        }
+      }
+    }
+    
+    function update_comments_num(){
+      const comments_num = document.getElementsByTagName('td')[0].textContent;
+      infoElem.textContent = `現在のコメント数は${comments_num}です。`
+    
+      if(comments_num > 9900 && !infoElem.classList.contains('red')){
+        infoElem.classList.add('red')
+      }else{
+        infoElem.classList.remove('red')
+      };
+    }
+  
+    update_comments_num(); 
+    setTimeout(update_comments_num, 1000);
+    setInterval(update_comments_num, 5000);
+    
+    /*
+      let new_title_div_Elem = document.createElement('div');
+      new_title_div_Elem.id = 'title_div';
+      document.getElementsByTagName('div')[0].after(new_title_div_Elem)
+      document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
+    */
+  
+
+    
+  
+
+    function replace_add_input(){
+      const content = add_replace_input.value;
+    
+      if(all_replace_checkbox.checked){  
+        document.getElementsByName('message')[0].value += convertToNumericCharacterReference(content)
+      }else{
+        document.getElementsByName('message')[0].value += replaceBlankCharacters(content)
+      }
+    }
+  
+    function replaceInputKeyPressed(event){
+      if(event.key === 'Enter'){
+        if(event.shiftKey || event.ctrlKey || event.metaKey){
+          all_replace_checkbox.checked = !all_replace_checkbox.checked
+        }
+        replace_add_input()
+      }
+    }
+    
+    
+    /*
+    function update_nums(){
+      const tr_num_elems = document.getElementsByTagName('tr');
+      const shHelp_td_num = document.getElementById('shortcut_help').getElementsByTagName('td').lenth;
+      
+      for(let i = 0; i + shHelp_td_num < tr_num_elems.length; i++){
+        if(!i == 0){
+          tr_num_elems[i].firstElementChild.setAttribute('onclick', `document.getElementsByName('message')[0].value += ${tr_num_elems[i].firstElementChild.textContent}`)
+        }
+      }
+    }
+    */
+    
+    function urlConvertToLink(str) {
+      const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+      /* これを纏めた
+        /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
+          /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
+          /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+        */
+      if(pictureInPicture_checkbox.checked){
+        var makeLink = function(matched) {
+          return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_div.removeAttribute('class');">${matched}</a>`;
+        }
+      }else{
+        var makeLink = function(matched) {
+          return `<a href="${matched}">${matched}</a>`;
+        }
+      }
+      return '<h2 class="blue" style="text-align: center;">ピクチャインピクチャ機能追加</h2>' + str.replace(pattern, makeLink)
+    }
+  }
+
+
+  // utils 
+
+  function getParam(key){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(key);
+  }
+
+  // 数値文字参照に変換するだけの関数
+  function convertToNumericCharacterReference(str){
+    const splitted_str = [...str]
+    let replaced_str = '';
+    for(let i = 0; i < splitted_str.length; i++){
+      replaced_str += "&#" + splitted_str[i].codePointAt(0) + ";";
+    }
+    return replaced_str
+  }
+    
+  // /\s/にmatchする文字を全て数値文字参照に変換するだけの関数
+  function replaceBlankCharacters(str){
+    if(/\s/.test(str)){
+      return str.replace(/(\s)/g, matched => convertToNumericCharacterReference(matched))
+    }
+    return str
+  }
+  
+</script>
+
+<div id="shortcut_help" class="hiddenElem">
+  <h3>キーボードショートカットヘルプ</h3>
+  
+  <table border="1" style="background-color: #efefef;">
+    <tr>
+      <th>キー</th>
+      <th>イベント</th>
+    </tr>
+    <tr style="display: none;">
+      <td>更新待機中...</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + R</td>
+      <td>投稿を更新</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + H</td>
+      <td>Yuki Youtubeホームへ移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + L</td>
+      <td>送信</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + N</td>
+      <td>ページトップまで移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + M</td>
+      <td>メッセージ入力状態に変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + J</td>
+      <td>チャンネルを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + B</td>
+      <td>シードを表示/非表示</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + K</td>
+      <td>Googleを開く</td>
+    </tr>
+    <tr>
+      <td>rl(⌘,Windows) + Shift + U</td>
+      <td>送信にAjaxを使用するかを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + Y</td>
+      <td>メニューを開閉</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + /(.)</td>
+      <td>ヘルプを表示</td>
+    </tr>
+  </table>
+</div>
