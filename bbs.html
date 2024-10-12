@@ -265,7 +265,7 @@
         }
       }
     }
-    
+
   function update_comments_num(){
       const comments_num = document.getElementsByTagName('td')[0].textContent;
       infoElem.textContent = `現在のコメント数は${comments_num}です。`
@@ -311,6 +311,7 @@
     */
 
   function urlConvertToLink(str) {
+    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
       const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
       /* これを纏めた
         /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
