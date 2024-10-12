@@ -35,7 +35,7 @@
     border-radius: 15px; 
   }
 
-  #pictureInPicture_iframe{
+  #pictureInPicture_display_iframe{
     margin: 0;
   }
   
@@ -49,6 +49,65 @@
     border-radius: 15px; 
   }
 </style>
+
+
+<div id="shortcut_help" class="hiddenElem">
+  <h3>キーボードショートカットヘルプ</h3>
+  
+  <table border="1" style="background-color: #efefef;">
+    <tr>
+      <th>キー</th>
+      <th>イベント</th>
+    </tr>
+    <tr style="display: none;">
+      <td>更新待機中...</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + R</td>
+      <td>投稿を更新</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + H</td>
+      <td>Yuki Youtubeホームへ移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + L</td>
+      <td>送信</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + N</td>
+      <td>ページトップまで移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + M</td>
+      <td>メッセージ入力状態に変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + J</td>
+      <td>チャンネルを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + B</td>
+      <td>シードを表示/非表示</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + K</td>
+      <td>Googleを開く</td>
+    </tr>
+    <tr>
+      <td>rl(⌘,Windows) + Shift + U</td>
+      <td>送信にAjaxを使用するかを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + Y</td>
+      <td>メニューを開閉</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + /(.)</td>
+      <td>ヘルプを表示</td>
+    </tr>
+  </table>
+</div>
 
 <script>
   let home_link =  document.getElementsByTagName('a')[0];
@@ -84,13 +143,15 @@
     tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
 
     // Ajaxチェックボックス
-    tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="new_ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="new_ajaxSend_checkbox" type="checkbox"></label></div>';
+    tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="ajaxSend_checkbox" type="checkbox"></label></div>';
+
     let ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
-    let ajaxSend_checkbox = document.getElementById('new_ajaxSend_checkbox');
+    let ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // キーボードショートカット使用チェックボックス
     tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
-    let keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox')
+
+    let keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
     tools_menu.innerHTML += '<div id="shortcut_help_button_div"><button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button></div>';
@@ -111,17 +172,17 @@
 
     // ピクチャインピクチャチェックボックス
     let pictureInPicture_checkbox_div = document.createElement('div');
-    pictureInPicture_checkbox_div.id = 'pictureInPicture_div';
+    pictureInPicture_checkbox_div.id = 'pictureInPicture_checkbox_div';
     pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
     ajaxSend_checkbox_div.after(pictureInPicture_checkbox_div)
     
     let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
-    pictureInPicture_div = document.createElement('div')
-    pictureInPicture_div.id = 'pictureInPicture_display';
-    pictureInPicture_div.innerHTML = '<iframe id="pictureInPicture_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_iframe.removeAttribute(\'class\');">遷移</button></div>'
-    document.getElementById('shortcut_help').after(pictureInPicture_div);
-    pictureInPicture_iframe = document.getElementById('pictureInPicture_iframe');
+    pictureInPicture_display = document.createElement('div');
+    pictureInPicture_display.id = 'pictureInPicture_display';
+    pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
+    document.getElementById('shortcut_help').after(pictureInPicture_display);
+    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
     
     // Ajax機能不利用時にチェックボックスのチェックを外す
     pictureInPicture_checkbox.addEventListener('change', function(e) {
@@ -132,7 +193,7 @@
           reloadmessages()
         }
       } else {
-        pictureInPicture_iframe.setAttribute('class', 'hiddenElem');
+        pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
       }
     });
     
@@ -323,7 +384,7 @@
         */
       if(pictureInPicture_checkbox.checked){
         var makeLink = function(matched) {
-          return `<a href="javascript:pictureInPicture_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_div.removeAttribute('class');">${matched}</a>`;
+          return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
         }
       }else{
         var makeLink = function(matched) {
@@ -332,7 +393,8 @@
       }
       return '<h2 class="blue" style="text-align: center;">ピクチャインピクチャ機能追加</h2>' + str.replace(pattern, makeLink)
   }
-
+</script>
+<script>
   // utils 
 
   function getParam(key){
@@ -359,61 +421,3 @@
   }
   
 </script>
-
-<div id="shortcut_help" class="hiddenElem">
-  <h3>キーボードショートカットヘルプ</h3>
-  
-  <table border="1" style="background-color: #efefef;">
-    <tr>
-      <th>キー</th>
-      <th>イベント</th>
-    </tr>
-    <tr style="display: none;">
-      <td>更新待機中...</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + R</td>
-      <td>投稿を更新</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + H</td>
-      <td>Yuki Youtubeホームへ移動</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + L</td>
-      <td>送信</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + N</td>
-      <td>ページトップまで移動</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + M</td>
-      <td>メッセージ入力状態に変更</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + J</td>
-      <td>チャンネルを変更</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + B</td>
-      <td>シードを表示/非表示</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + K</td>
-      <td>Googleを開く</td>
-    </tr>
-    <tr>
-      <td>rl(⌘,Windows) + Shift + U</td>
-      <td>送信にAjaxを使用するかを変更</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + Y</td>
-      <td>メニューを開閉</td>
-    </tr>
-    <tr>
-      <td>Ctrl(⌘,Windows) + Shift + /(.)</td>
-      <td>ヘルプを表示</td>
-    </tr>
-  </table>
-</div>
