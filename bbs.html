@@ -119,7 +119,7 @@
   let nameElem = document.getElementsByName('name')[0];
   let seedElem = document.getElementsByName('seed')[0];
   let verifyElem = document.getElementById('filter');
-  
+
   if(home_link.href == location.origin + '/'){
 
     // 元々ある要素を代入
@@ -173,10 +173,7 @@
     verifyElem.after(infoElem);
     
     // ピクチャインピクチャチェックボックス
-    let pictureInPicture_checkbox_div = document.createElement('div');
-    pictureInPicture_checkbox_div.id = 'pictureInPicture_checkbox_div';
-    pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'
-    ajaxSend_checkbox_div.after(pictureInPicture_checkbox_div);
+    tools_menu.innerHTML += '<div id="pictureInPicture_checkbox_div"><label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label></div>'
     
     let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
