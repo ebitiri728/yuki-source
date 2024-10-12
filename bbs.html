@@ -144,11 +144,38 @@
     // メニューを閉じるボタン
     tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
 
+
+    pictureInPicture_display = document.createElement('div');
+    pictureInPicture_display.id = 'pictureInPicture_display';
+    pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
+    pictureInPicture_display.setAttribute('class', 'hiddenElem');
+    document.getElementById('shortcut_help').after(pictureInPicture_display);
+    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
+    
+    
     // Ajaxチェックボックス
     tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="ajaxSend_checkbox" type="checkbox"></label></div>';
 
     let ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
     let ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
+
+    // ピクチャインピクチャチェックボックス
+    tools_menu.innerHTML += '<div id="pictureInPicture_checkbox_div"><label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label></div>'
+    
+    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+
+    // Ajax機能不利用時にチェックボックスのチェックを外す
+    pictureInPicture_checkbox.addEventListener('change', function(e) {
+      if(this.checked){
+        if(ajaxSend_checkbox.checked) {
+          reloadmessages()
+        } else {
+          this.checked = false;
+        }
+      } else {
+        pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
+      }
+    });
 
     // キーボードショートカット使用チェックボックス
     tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
@@ -172,30 +199,7 @@
     infoElem.textContent = '更新待機中...';
     verifyElem.after(infoElem);
     
-    // ピクチャインピクチャチェックボックス
-    tools_menu.innerHTML += '<div id="pictureInPicture_checkbox_div"><label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label></div>'
     
-    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
-
-    pictureInPicture_display = document.createElement('div');
-    pictureInPicture_display.id = 'pictureInPicture_display';
-    pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
-    pictureInPicture_display.setAttribute('class', 'hiddenElem');
-    document.getElementById('shortcut_help').after(pictureInPicture_display);
-    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
-    
-    // Ajax機能不利用時にチェックボックスのチェックを外す
-    pictureInPicture_checkbox.addEventListener('change', function(e) {
-      if(this.checked){
-        if(!ajaxSend_checkbox.checked) {
-          this.checked = false;
-        } else {
-          reloadmessages()
-        }
-      } else {
-        pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
-      }
-    });
     
 
     document.addEventListener('keydown', function(event) {
