@@ -112,16 +112,18 @@
 <script>
   let home_link =  document.getElementsByTagName('a')[0];
 
+  let formElem = document.getElementsByTagName('form')[0];
+  let channelElem = document.getElementById('channel');
+  let channel_selectElems = document.getElementsByTagName('option');
+  let messageElem = document.getElementsByName('message')[0];
+  let nameElem = document.getElementsByName('name')[0];
+  let seedElem = document.getElementsByName('seed')[0];
+  let verifyElem = document.getElementById('filter');
+  
   if(home_link.href == location.origin + '/'){
 
     // 元々ある要素を代入
-    let formElem = document.getElementsByTagName('form')[0];
-    let channelElem = document.getElementById('channel');
-    let channel_selectElems = document.getElementsByTagName('option');
-    let messageElem = document.getElementsByName('message')[0];
-    let nameElem = document.getElementsByName('name')[0];
-    let seedElem = document.getElementsByName('seed')[0];
-    let verifyElem = document.getElementById('filter');
+    
 
 
     formElem.setAttribute('onsubmit', 'return checkForm()');
@@ -168,26 +170,27 @@
     let infoElem = document.createElement('div');
     infoElem.id = 'comments_num_info';
     infoElem.textContent = '更新待機中...';
-    document.getElementById('filter').after(infoElem);
-
+    verifyElem.after(infoElem);
+    
     // ピクチャインピクチャチェックボックス
     let pictureInPicture_checkbox_div = document.createElement('div');
     pictureInPicture_checkbox_div.id = 'pictureInPicture_checkbox_div';
-    pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox"><input id="pictureInPicture_checkbox" type="checkbox"></label>'
-    ajaxSend_checkbox_div.after(pictureInPicture_checkbox_div)
+    pictureInPicture_checkbox_div.innerHTML = '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'
+    ajaxSend_checkbox_div.after(pictureInPicture_checkbox_div);
     
     let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
     pictureInPicture_display = document.createElement('div');
     pictureInPicture_display.id = 'pictureInPicture_display';
     pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
+    pictureInPicture_display.setAttribute('class', 'hiddenElem');
     document.getElementById('shortcut_help').after(pictureInPicture_display);
     pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
     
     // Ajax機能不利用時にチェックボックスのチェックを外す
     pictureInPicture_checkbox.addEventListener('change', function(e) {
       if(this.checked){
-        if(!ajax_checkbox.checked) {
+        if(!ajaxSend_checkbox.checked) {
           this.checked = false;
         } else {
           reloadmessages()
@@ -302,15 +305,8 @@
       document.getElementsByTagName('div')[0].after(new_title_div_Elem)
       document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
     */
-  
-
-    
-  
-
-    
-    
-    
   }
+  
   function checkForm(){
       if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
         console.log('Error: メッセージの中にシードが含まれています。')
@@ -330,6 +326,7 @@
     }
 
   function update_comments_num(){
+    let infoElem = document.getElementById('comments_num_info')
       const comments_num = document.getElementsByTagName('td')[0].textContent;
       infoElem.textContent = `現在のコメント数は${comments_num}です。`
     
@@ -341,6 +338,7 @@
     }
 
   function replace_add_input(){
+    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
       const content = add_replace_input.value;
     
       if(all_replace_checkbox.checked){  
@@ -351,6 +349,7 @@
     }
   
     function replaceInputKeyPressed(event){
+      let all_replace_checkbox = document.getElementById('all_replace_checkbox');
       if(event.key === 'Enter'){
         if(event.shiftKey || event.ctrlKey || event.metaKey){
           all_replace_checkbox.checked = !all_replace_checkbox.checked
