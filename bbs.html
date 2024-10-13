@@ -109,11 +109,11 @@
 <script>
   // utils
   
-  function createChildElemFromStr(id, inner_html = '', class_str = ''){
+  function createChildElemFromStr({id = '', inner_html = '', class_str = ''}){
     let div_elem = document.createElement('div');
-    div_elem.id = id;
+    if(id != ''){div_elem.id = id};
     if(class_str != ''){div_elem.setAttribute('class', class_str);}
-    div_elem.innerHTML = inner_html;
+    if(inner_html != ''){div_elem.innerHTML = inner_html};
     return div_elem
   }
 
@@ -183,55 +183,56 @@
             | - ConvertToNumericCharacterReference
     */
 
-    menu = createChildElemFromStr('menu', '', 'hiddenElem');
+    menu = createChildElemFromStr({id: 'menu', inner_html: '', class_str: 'hiddenElem'});
     home_link.before(menu);
 
     // グローバル変数に
-    settings_menu = createChildElemFromStr('settings_menu')
+    settings_menu = createChildElemFromStr({id: 'settings_menu'})
     menu.appendChild(settings_menu)
 
-    tools_menu = createChildElemFromStr('tools_menu')
+    tools_menu = createChildElemFromStr({id: 'tools_menu'})
     menu.appendChild(tools_menu)
     
     // メニューを閉じるボタン
-    const menu_close_button_div = createChildElemFromStr('menu_close_button_div', `${none}
+    const menu_close_button_div = createChildElemFromStr({id: 'menu_close_button_div', inner_html: `${none}
       <!-- <label for="menu_close_button"></label> -->
-      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`);
+      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`});
     menu.prependChild(menu_close_button_div)
 
     // メニューを開くボタン
-    const menu_open_button_div = createChildElemFromStr('menu_open_button_div', `${none}
+    const menu_open_button_div = createChildElemFromStr({id: 'menu_open_button_div', inner_html: `${none}
       <!-- <label for="menu_open_button"></label> -->
-      <button id="menu_open_button" onclick="menu.classList.remove(\'hiddenElem\');">メニューを開く</button>`);
+      <button id="menu_open_button" onclick="menu.classList.remove(\'hiddenElem\');">メニューを開く</button>`});
     home_link.after(menu_open_button_div);
     
     
 
 
-    pictureInPicture_display = createChildElemFromStr('pictureInPicture_display', `${none}
+    pictureInPicture_display = createChildElemFromStr({id: 'pictureInPicture_display', inner_html: `${none}
       <iframe id="pictureInPicture_display_iframe"></iframe>
       <div>
         <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
         <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.classLost.remove(\'hiddenElem\');">遷移</button>
-      </div>`, 'hiddenElem');
+      </div>`, class_str: 'hiddenElem'});
     
     document.getElementById('shortcut_help').after(pictureInPicture_display);
     pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
     
 
     // Ajaxチェックボックス
-    settings_menu.appendChild(createChildElemFromStr('ajaxSend_checkbox_div', `${none}
+    settings_menu.appendChild(createChildElemFromStr({id: 'ajaxSend_checkbox_div', inner_html: `${none}
       <input id="ajaxSend_checkbox" type="checkbox">
-      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）</label>`));
+      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）</label>`
+    }));
 
     var ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
     var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // ピクチャインピクチャチェックボックス
-    settings_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', `${none}
+    settings_menu.appendChild(createChildElemFromStr({id: 'pictureInPicture_checkbox_div', inner_html: `${none}
       <input id="pictureInPicture_checkbox" type="checkbox">
       <label for="pictureInPicture_checkbox">ピクチャインピクチャ</label>`
-    ))
+    }))
     
     var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
@@ -249,23 +250,23 @@
     });
 
     // キーボードショートカット使用チェックボックス
-    settings_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', `${none}
+    settings_menu.appendChild(createChildElemFromStr({id: 'keyboardshortcut_checkbox_div', inner_html: `${none}
       <input id="keyboardshortcut_checkbox" type="checkbox" checked>
       <label for="keyboardshortcut_checkbox">キーボードショートカットを利用</label>
-    `))
+    `}))
 
     var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
-    menu.appendChild(createChildElemFromStr('shortcut_help_button_div', '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'))
+    menu.appendChild(createChildElemFromStr({id: 'shortcut_help_button_div', inner_html: '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'}))
 
     // 数値文字参照変換ツール
-    tools_menu.appendChild(createChildElemFromStr('add_replace_div', `${none}
+    tools_menu.appendChild(createChildElemFromStr({id: 'add_replace_div', inner_html: `${none}
       <input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力">
       <input id="all_replace_checkbox" type="checkbox">
       <label for="all_replace_checkbox">全て変換</label>
       <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>
-      `))
+      `}))
 
     var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     var add_replace_input = document.getElementById('add_replace_input');
