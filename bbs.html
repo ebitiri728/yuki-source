@@ -206,7 +206,7 @@
     home_link.after(menu_open_button_div);
     
     
-
+    // settings
 
     pictureInPicture_display = createChildElemFromStr({id: 'pictureInPicture_display', inner_html: `${none}
       <iframe id="pictureInPicture_display_iframe"></iframe>
@@ -257,8 +257,53 @@
 
     var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
+    settings_menu.appendChild(createChildElemFromStr({id: 'enter_send_checkbox_div', inner_html: `${none}
+      <input id="enter_send_checkbox" type="checkbox">
+      <label for="enter_send_checkbox">Enterキーで送信</label>
+    `}))
+    let enter_send_checkbox = document.getElementById('enter_send_checkbox')
+    
+    messageElem.addEventListener('keydown', function (e){
+      if(e.key === 'Enter' && enter_send_checkbox.checked && !messageElem.value == '' && checkForm()){
+        e.preventDefault()
+        if(ajaxSend_checkbox.checked){
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+          xhr.send();
+          messageElem.value = '';
+          reloadmessages()
+        }else{
+          document.getElementsByTagName('form')[0].submit();
+        }
+      }
+    });
+
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
     menu.appendChild(createChildElemFromStr({id: 'shortcut_help_button_div', inner_html: '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'}))
+
+
+
+    // 詳細設定メニュー開閉ボタン
+    settings_menu_advanced_button = createChildElemFromStr({id: 'settings_menu_advanced_button_div', inner_html: '詳細設定'})
+    settings_menu_advanced_button.setAttribute('onclick', 'document.getElementById(\'settings_menu_advanced\').classList.toggle(\'hiddenElem\');')
+
+    // 詳細設定メニュー
+    settings_menu_advanced = createChildElemFromStr({id: 'settings_menu_advanced', class_str: 'hiddenElem'})
+    settings_menu.appendChild(settings_menu_advanced)
+
+    // ホームリンク表示チェックボックス
+    settings_menu_advanced.appendChild(createChildElemFromStr({id: 'home_link_checkbox_div', inner_html: `${none}
+      <input id="home_link_checkbox" type="checkbox" checked>
+      <label for="home_link_checkbox">HomeLinkを表示</label>
+    `}))
+
+    document.getElementById('home_link_checkbox').addEventListener('change', function(e){
+      home_link.classList.toggle('hiddenElem');
+    })
+
+
+
+    // tools
 
     // 数値文字参照変換ツール
     tools_menu.appendChild(createChildElemFromStr({id: 'add_replace_div', inner_html: `${none}
@@ -280,6 +325,8 @@
       }
     });
     
+
+
 
     // 投稿番号表示機能
     var infoElem = document.createElement('div');
