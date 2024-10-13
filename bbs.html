@@ -127,11 +127,11 @@
   }*/
   
  
-  function createElemFromStr(str){
-    let tmp_elem = document.createElement('div');
-    tmp_elem.classList.add('createElemFromStr-tmp-div')
-    tmp_elem.innerHTML = str;
-    return tmp_elem;
+  function createChildElemFromStr(id, inner_html = ''){
+    let div_elem = document.createElement('div');
+    div_elem.id = id;
+    div_elem.innerHTML = inner_html;
+    return div_elem
   }
 
   function getParam(key){
@@ -177,44 +177,42 @@
 
 
     // グローバル変数に
-    tools_menu = createElemFromStr('<div id="tools_menu" class="hiddenElem"></div>')
+    tools_menu = createChildElemFromStr('<div id="tools_menu" class="hiddenElem"></div>')
     home_link.before(tools_menu);
     
-    var tools_menu_button_div = createElemFromStr('<div id=tools_menu_button_div"></div>');
-    var tools_menu_button_label = createElemFromStr('<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>')
-    tools_menu_button_div.innerHTML = tools_menu_button_label;
+    var tools_menu_button_div = createChildElemFromStr('tools_menu_button_div', `${none}
+      <label for="tools_menu_button">
+        <button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button>
+      </label>`);
     home_link.after(tools_menu_button_div);
     
     // メニューを閉じるボタン
     tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
 
 
-    pictureInPicture_display = createElemFromStr(`${none}
-      <div id="pictureInPicture_display" class="hiddenElem">
-        <iframe id="pictureInPicture_display_iframe"></iframe>
-        <div>
-          <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
-          <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button>
-        </div>
+    pictureInPicture_display = createElemFromStr('pictureInPicture_display', `${none}
+      <iframe id="pictureInPicture_display_iframe"></iframe>
+      <div>
+        <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
+        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button>
       </div>`);
+    pictureInPicture_display.classList.add('hiddenElem')
     
     document.getElementById('shortcut_help').after(pictureInPicture_display);
     pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
     
 
     // Ajaxチェックボックス
-    tools_menu.innerHTML += `${none}
-      <div id="ajaxSend_checkbox_div">
-        <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）
-          <input id="ajaxSend_checkbox" type="checkbox">
-        </label>
-      </div>`;
+    tools_menu.appendChild(createChildElemFromStr('ajaxSend_checkbox_div', `${none}
+      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）
+        <input id="ajaxSend_checkbox" type="checkbox">
+      </label>`));
 
     var ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
     var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // ピクチャインピクチャチェックボックス
-    tools_menu.innerHTML += '<div id="pictureInPicture_checkbox_div"><label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label></div>'
+    tools_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'))
     
     var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
@@ -232,15 +230,22 @@
     });
 
     // キーボードショートカット使用チェックボックス
-    tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
+    tools_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', '<label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label>')) 
 
     var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
-    tools_menu.innerHTML += '<div id="shortcut_help_button_div"><button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button></div>';
+    tools_menu.appendChild(createChildElemFromStr('shortcut_help_button_div', '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'))
 
     // 数値文字参照変換ツール
-    tools_menu.innerHTML += '<div id="add_replace_div"><input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力"><label for="all_replace_checkbox"><input id="all_replace_checkbox" type="checkbox">全て変換</label><button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button></div>'
+    tools_menu.appendChild(createChildElemFromStr('add_replace_div', `${none}
+      <input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力">
+      <label for="all_replace_checkbox">
+        <input id="all_replace_checkbox" type="checkbox">全て変換
+      </label>
+      <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>`
+    ))
+
     var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     var add_replace_input = document.getElementById('add_replace_input');
     
@@ -448,7 +453,7 @@
       return '<h2 class="red" style="text-align: center;">修正中</h2>' + str.replace(pattern, makeLink)
   }
 
-  const tmp_divs = document.querySelectorAll('createElemFromStr-tmp-div');
+  /*const tmp_divs = document.querySelectorAll('createElemFromStr-tmp-div');
   tmp_divs.forEach(function(elem) {
     if(elem.hasChildNodes){
       for(let i = 0; i < elem.children.length - 1; i++){
@@ -456,5 +461,5 @@
       }
       elem.remove()
     }
-  });
+  });*/
 </script>
