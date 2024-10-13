@@ -111,7 +111,7 @@
 <script>
   // utils
 
-  function createElmFromStr(str) {
+  function createElemFromStr(str) {
     return new DOMParser().parseFromString(str, "text/html").body.firstElementChild;
   };
 
@@ -137,11 +137,14 @@
     }
     return str
   }
-  
+  function scopeTest(){
+    return 'success'
+  }
 </script>
 <script>
+  console.log(scopeTest())
   none = '';
-  var home_link =  document.getElementsByTagName('a')[0];
+  var home_link = document.getElementsByTagName('a')[0];
 
   // 
 
@@ -160,11 +163,11 @@
 
 
     // グローバル変数に
-    tools_menu = createElmFromStr('<div id="tools_menu" class="hiddenElem"></div>')
+    tools_menu = createElemFromStr('<div id="tools_menu" class="hiddenElem"></div>')
     home_link.before(tools_menu);
     
-    var tools_menu_button_div = createElmFromStr('<div id=tools_menu_button_div"></div>');
-    var tools_menu_button_label = createElmFromStr('<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>')
+    var tools_menu_button_div = createElemFromStr('<div id=tools_menu_button_div"></div>');
+    var tools_menu_button_label = createElemFromStr('<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>')
     tools_menu_button_div.innerHTML = tools_menu_button_label;
     home_link.after(tools_menu_button_div);
     
@@ -172,7 +175,7 @@
     tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
 
 
-    pictureInPicture_display = createElmFromStr(`${none}
+    pictureInPicture_display = createElemFromStr(`${none}
       <div id="pictureInPicture_display" class="hiddenElem">
         <iframe id="pictureInPicture_display_iframe"></iframe>
         <div>
