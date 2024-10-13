@@ -188,7 +188,7 @@
     home_link.after(tools_menu_button_div);
     
     // メニューを閉じるボタン
-    tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
+    tools_menu.innerHTML += '<button onclick="tools_menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>'
 
 
     pictureInPicture_display = createChildElemFromStr('pictureInPicture_display', `${none}
@@ -227,7 +227,7 @@
           this.checked = false;
         }
       } else {
-        pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
+        pictureInPicture_display.classList.add('hiddenElem');
       }
     });
 
@@ -334,11 +334,7 @@
   
             case 'KeyY':
               event.preventDefault()
-              if(tools_menu.hasAttribute('class')){
-                tools_menu.removeAttribute('class')
-              }else{
-                tools_menu.setAttribute('class', 'hiddenElem');
-              }
+              tools_menu.classList.toggle('hiddenElem');
               break
             
             case 'Slash':
