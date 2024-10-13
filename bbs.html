@@ -178,6 +178,7 @@
 
     // グローバル変数に
     tools_menu = createChildElemFromStr('tools_menu')
+    tools_menu.classList.add('hiddenElem')
     home_link.before(tools_menu);
     
     var tools_menu_button_div = createChildElemFromStr('tools_menu_button_div', `${none}
