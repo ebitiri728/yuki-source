@@ -120,13 +120,13 @@
   function unWrap(elem) {
 	  var parentElem = elem.parentNode;
 
-    // 親要素から最初の子要素を取得して親要素の上に子要素を移動
-    while (parentElem.firstChild) {
-	    parentElem.insertBefore(parentElem.firstChild, parentElem);
+
+    for(let i = 0; i < elem.childrenn.length - 1; i++){
+       elem.insertBefore(parentElem.children[i], elem);
     }
 
-    // 空の親要素を削除
-    parentElem.removeChild(parentElem);
+    parentElem.removeChild(elem);
+    return parentElem
   };
   
  
