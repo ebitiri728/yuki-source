@@ -130,13 +130,14 @@
 	  return childElems
   };
   */
+ /*
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
     
     return unWrap(elm);
   }
-
+*/
   function getParam(key){
     const url = new URL(window.location.href);
     return url.searchParams.get(key);
