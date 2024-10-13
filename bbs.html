@@ -111,7 +111,7 @@
 <script>
   // utils
 
-  /*function createElemFromStr(str) {
+  /*function createChildElemFromStr(str) {
     const domParserInstance = new DOMParser()
     return domParserInstance.parseFromString(str, "text/html").body
   }*/
@@ -190,12 +190,13 @@
     tools_menu.innerHTML += '<button onclick="tools_menu.setAttribute(\'class\', \'hiddenElem\');">メニューを閉じる</button>'
 
 
-    pictureInPicture_display = createElemFromStr('pictureInPicture_display', `${none}
+    pictureInPicture_display = createChildElemFromStr('pictureInPicture_display', `${none}
       <iframe id="pictureInPicture_display_iframe"></iframe>
       <div>
         <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
         <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button>
-      </div>`);
+      </div>`
+    );
     pictureInPicture_display.classList.add('hiddenElem')
     
     document.getElementById('shortcut_help').after(pictureInPicture_display);
@@ -453,7 +454,7 @@
       return '<h2 class="red" style="text-align: center;">修正中</h2>' + str.replace(pattern, makeLink)
   }
 
-  /*const tmp_divs = document.querySelectorAll('createElemFromStr-tmp-div');
+  /*const tmp_divs = document.querySelectorAll('createChildElemFromStr-tmp-div');
   tmp_divs.forEach(function(elem) {
     if(elem.hasChildNodes){
       for(let i = 0; i < elem.children.length - 1; i++){
