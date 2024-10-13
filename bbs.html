@@ -111,26 +111,25 @@
 <script>
   // utils
 
-  /*function createElemFromStr(str) {
+  function createElemFromStr(str) {
     const domParserInstance = new DOMParser()
-    return domParserInstance.parseFromString(str, "text/html").body.firstElementChild;
-  }*/
+    return domParserInstance.parseFromString(str, "text/html").body
+  }
 
   
-  function unWrap(elem) {
+  /*function unWrap(elem) {
     if(!elem.hasChildNodes()){return elem}
 
     for(let i = 0; i < elem.children.length - 1; i++){
       elem.before(elem.children[i], )
     }
     return elem
-  }
+  }*/
   
  
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
-    
     return unWrap(elm);
   }
 
