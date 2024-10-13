@@ -110,10 +110,16 @@
 
 <script>
   // utils
-
+  /*
   function createElemFromStr(str) {
     return new DOMParser().parseFromString(str, "text/html").body.firstElementChild;
-  };
+  };*/
+  
+  function createElemFromStr(str){
+    let elm = document.createElement('div');
+    elm.innerHTML = str;
+    return elm.getFirstElementChild();
+  }
 
   function getParam(key){
     const url = new URL(window.location.href);
@@ -137,16 +143,11 @@
     }
     return str
   }
-  function scopeTest(){
-    return 'success'
-  }
 </script>
 <script>
-  console.log(scopeTest())
   none = '';
   var home_link = document.getElementsByTagName('a')[0];
 
-  // 
 
   // 通常のBBSページの場合のみに限定
   if(home_link.href == location.origin + '/'){
