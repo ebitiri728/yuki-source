@@ -111,10 +111,10 @@
 <script>
   // utils
 
-  function createElemFromStr(str) {
+  /*function createElemFromStr(str) {
     const domParserInstance = new DOMParser()
     return domParserInstance.parseFromString(str, "text/html").body
-  }
+  }*/
 
   
   /*function unWrap(elem) {
@@ -128,9 +128,10 @@
   
  
   function createElemFromStr(str){
-    let elm = document.createElement('div');
-    elm.innerHTML = str;
-    return unWrap(elm);
+    let tmp_elem = document.createElement('div');
+    tmp_elem.classList.add('createElemFromStr-tmp-div')
+    tmp_elem.innerHTML = str;
+    return tmp_elem;
   }
 
   function getParam(key){
@@ -446,4 +447,14 @@
       }
       return '<h2 class="red" style="text-align: center;">修正中</h2>' + str.replace(pattern, makeLink)
   }
+
+  const tmp_divs = document.querySelectorAll('createElemFromStr-tmp-div');
+  tmp_divs.forEach(function(elem) {
+    if(elem.hasChildNodes){
+      for(let i = 0; i < elem.children.length - 1; i++){
+        elem.before(elem.children[i])
+      }
+      elem.remove()
+    }
+  });
 </script>
