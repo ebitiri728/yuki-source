@@ -108,26 +108,11 @@
 
 <script>
   // utils
-
-  /*function createChildElemFromStr(str) {
-    const domParserInstance = new DOMParser()
-    return domParserInstance.parseFromString(str, "text/html").body
-  }*/
-
   
-  /*function unWrap(elem) {
-    if(!elem.hasChildNodes()){return elem}
-
-    for(let i = 0; i < elem.children.length - 1; i++){
-      elem.before(elem.children[i], )
-    }
-    return elem
-  }*/
-  
- 
-  function createChildElemFromStr(id, inner_html = ''){
+  function createChildElemFromStr(id, inner_html = '', class_str = ''){
     let div_elem = document.createElement('div');
     div_elem.id = id;
+    if(class_str != ''){div_elem.setAttribute('class', class_str);}
     div_elem.innerHTML = inner_html;
     return div_elem
   }
@@ -198,8 +183,7 @@
             | - ConvertToNumericCharacterReference
     */
 
-    menu = createChildElemFromStr('menu');
-    menu.classList.add('hiddenElem');
+    menu = createChildElemFromStr('menu', '', 'hiddenElem');
     home_link.before(menu);
 
     // グローバル変数に
@@ -211,16 +195,14 @@
     
     // メニューを閉じるボタン
     const menu_close_button_div = createChildElemFromStr('menu_close_button_div', `${none}
-      <label for="menu_close_button">
-        <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>
-      </label>`);
-    menu.appendChild(menu_close_button_div)
+      <!-- <label for="menu_close_button"></label> -->
+      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`);
+    menu.prependChild(menu_close_button_div)
 
     // メニューを開くボタン
     const menu_open_button_div = createChildElemFromStr('menu_open_button_div', `${none}
-      <label for="menu_open_button">
-        <button id="menu_open_button" onclick="menu.removeAttribute(\'class\');">メニューを開く</button>
-      </label>`);
+      <!-- <label for="menu_open_button"></label> -->
+      <button id="menu_open_button" onclick="menu.classList.remove(\'hiddenElem\');">メニューを開く</button>`);
     home_link.after(menu_open_button_div);
     
     
@@ -230,10 +212,8 @@
       <iframe id="pictureInPicture_display_iframe"></iframe>
       <div>
         <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
-        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button>
-      </div>`
-    );
-    pictureInPicture_display.classList.add('hiddenElem')
+        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.classLost.remove(\'hiddenElem\');">遷移</button>
+      </div>`, 'hiddenElem');
     
     document.getElementById('shortcut_help').after(pictureInPicture_display);
     pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
@@ -241,15 +221,17 @@
 
     // Ajaxチェックボックス
     settings_menu.appendChild(createChildElemFromStr('ajaxSend_checkbox_div', `${none}
-      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）
-        <input id="ajaxSend_checkbox" type="checkbox">
-      </label>`));
+      <input id="ajaxSend_checkbox" type="checkbox">
+      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）</label>`));
 
     var ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
     var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // ピクチャインピクチャチェックボックス
-    settings_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'))
+    settings_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', `${none}
+      <input id="pictureInPicture_checkbox" type="checkbox">
+      <label for="pictureInPicture_checkbox">ピクチャインピクチャ</label>`
+    ))
     
     var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
@@ -267,7 +249,10 @@
     });
 
     // キーボードショートカット使用チェックボックス
-    settings_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', '<label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label>')) 
+    settings_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', `${none}
+      <input id="keyboardshortcut_checkbox" type="checkbox" checked>
+      <label for="keyboardshortcut_checkbox">キーボードショートカットを利用</label>
+    `))
 
     var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
@@ -277,19 +262,23 @@
     // 数値文字参照変換ツール
     tools_menu.appendChild(createChildElemFromStr('add_replace_div', `${none}
       <input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力">
-      <label for="all_replace_checkbox">
-        <input id="all_replace_checkbox" type="checkbox">全て変換
-      </label>
-      <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>`
-    ))
+      <input id="all_replace_checkbox" type="checkbox">
+      <label for="all_replace_checkbox">全て変換</label>
+      <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>
+      `))
 
     var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     var add_replace_input = document.getElementById('add_replace_input');
     
-    add_replace_input.addEventListener('keydown', replaceInputKeyPressed);
+    add_replace_input.addEventListener('keydown', function (e){
+      if(e.key === 'Enter'){
+        if(e.shiftKey || e.ctrlKey || e.metaKey){
+          all_replace_checkbox.checked = !all_replace_checkbox.checked
+        }
+        replace_add_input()
+      }
+    });
     
-
-    tools_menu.appendChild
 
     // 投稿番号表示機能
     var infoElem = document.createElement('div');
@@ -403,12 +392,18 @@
   }
   
   function checkForm(){
+    let channelElem = document.getElementById('channel');
+    let messageElem = document.getElementsByName('message')[0];
+    let nameElem = document.getElementsByName('name')[0];
+    let seedElem = document.getElementsByName('seed')[0];
+    let verifyElem = document.getElementById('filter');
+
     if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
       console.log('Error: メッセージの中にシードが含まれています。')
       return false
     }else{
-      if(ajaxSend_checkbox.checked){
-        var xhr = new XMLHttpRequest();
+      if(document.getElementById('ajaxSend_checkbox').checked){
+        let xhr = new XMLHttpRequest();
         xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
         xhr.send();
         messageElem.value = '';
@@ -421,19 +416,19 @@
   }
 
   function update_comments_num(){
-    var infoElem = document.getElementById('comments_num_info');
-    infoElem.textContent = `現在のコメント数は${comments_num}です。`
+    let infoElem = document.getElementById('comments_num_info');
     const comments_num = document.getElementsByTagName('td')[0].textContent;
+    infoElem.textContent = `現在のコメント数は${comments_num}です。`;
     
     if(comments_num > 9900 && !infoElem.classList.contains('red')){
-      infoElem.classList.add('red')
+      infoElem.classList.add('red');
     }else{
-      infoElem.classList.remove('red')
+      infoElem.classList.remove('red');
     };
   }
 
   function replace_add_input(){
-    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
     const content = add_replace_input.value;
     
     if(all_replace_checkbox.checked){  
@@ -443,15 +438,7 @@
     }
   }
   
-  function replaceInputKeyPressed(event){
-    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
-    if(event.key === 'Enter'){
-      if(event.shiftKey || event.ctrlKey || event.metaKey){
-        all_replace_checkbox.checked = !all_replace_checkbox.checked
-      }
-      replace_add_input()
-    }
-  }
+  
     
     
     /*
@@ -468,33 +455,25 @@
     */
 
   function urlConvertToLink(str) {
-    var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
     if(pictureInPicture_checkbox === null){return 'Error: ピクチャインピクチャチェックボックスが見つかりません。' + str}
-      const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
-      /* これを纏めた
-        /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
-          /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
-          /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
-        */
-      if(pictureInPicture_checkbox.checked){
-        var makeLink = function(matched) {
-          return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
-        }
-      }else{
-        var makeLink = function(matched) {
-          return `<a href="${matched}">${matched}</a>`;
-        }
-      }
-      return '<h2 class="red" style="text-align: center;">修正中</h2>' + str.replace(pattern, makeLink)
-  }
 
-  /*const tmp_divs = document.querySelectorAll('createChildElemFromStr-tmp-div');
-  tmp_divs.forEach(function(elem) {
-    if(elem.hasChildNodes){
-      for(let i = 0; i < elem.children.length - 1; i++){
-        elem.before(elem.children[i])
+    const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    /* これを纏めた
+      /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
+      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
+      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+    */
+
+    if(pictureInPicture_checkbox.checked){
+      var makeLink = function(matched) {
+        return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
       }
-      elem.remove()
+    }else{
+      var makeLink = function(matched) {
+        return `<a href="${matched}">${matched}</a>`;
+      }
     }
-  });*/
+    return '<h2 class="blue" style="text-align: center;">アップデート中</h2>' + str.replace(pattern, makeLink)
+  }
 </script>
