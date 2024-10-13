@@ -145,7 +145,9 @@
 
     pictureInPicture_display = document.createElement('div');
     pictureInPicture_display.id = 'pictureInPicture_display';
-    pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe><div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
+    pictureInPicture_display.innerHTML = '<iframe id="pictureInPicture_display_iframe"></iframe>'
+    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
+    pictureInPicture_display.innerHTML += '<div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
     pictureInPicture_display.setAttribute('class', 'hiddenElem');
     document.getElementById('shortcut_help').after(pictureInPicture_display);
     pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
@@ -173,7 +175,7 @@
       } else {
         pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
       }
-    }, false);
+    });
 
     // キーボードショートカット使用チェックボックス
     tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
