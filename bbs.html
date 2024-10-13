@@ -288,7 +288,8 @@
     // 詳細設定メニュー開閉ボタン
     settings_menu_advanced_button = createChildElemFromStr({id: 'settings_menu_advanced_button_div', inner_html: '詳細設定'})
     settings_menu_advanced_button.setAttribute('onclick', 'document.getElementById(\'settings_menu_advanced\').classList.toggle(\'hiddenElem\');')
-
+    settings_menu.appendChild(settings_menu_advanced_button)
+    
     // 詳細設定メニュー
     settings_menu_advanced = createChildElemFromStr({id: 'settings_menu_advanced', class_str: 'hiddenElem'})
     settings_menu.appendChild(settings_menu_advanced)
