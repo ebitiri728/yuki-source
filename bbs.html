@@ -197,7 +197,7 @@
     const menu_close_button_div = createChildElemFromStr({id: 'menu_close_button_div', inner_html: `${none}
       <!-- <label for="menu_close_button"></label> -->
       <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`});
-    menu.prependChild(menu_close_button_div)
+    menu.append(menu_close_button_div)
 
     // メニューを開くボタン
     const menu_open_button_div = createChildElemFromStr({id: 'menu_open_button_div', inner_html: `${none}
