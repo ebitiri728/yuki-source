@@ -115,10 +115,23 @@
     return new DOMParser().parseFromString(str, "text/html").body.firstElementChild;
   };*/
 
+  function unWrap(element) {
+	  if (!element) return;
+
+	  var childElems = element.children;
+
+	  if (childElems.length > 0) {
+		  element.parentNode.insertBefore(childElems, element.nextElementSibling);
+	  }
+
+	  return element.parentNode.removeChild(element);
+  };
+
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
-    return elm.firstElementChild;
+    
+    return unWrap(elm);
   }
 
   function getParam(key){
