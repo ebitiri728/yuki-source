@@ -110,23 +110,26 @@
 
 <script>
   // utils
-  /*
+
   function createElemFromStr(str) {
-    return new DOMParser().parseFromString(str, "text/html").body.firstElementChild;
-  };*/
+    const domParserInstance = new DOMParser()
+    return domParserInstance.parseFromString(str, "text/html").body.firstElementChild;
+  }
 
-  function unWrap(element) {
-	  if (!element) return;
+  /*function unWrap(element) {
+	  if (!element) return element;
 
-	  var childElems = element.children;
+	  const childElems = element.children;
 
-	  if (childElems.length > 0) {
-		  element.parentNode.insertBefore(childElems, element.nextElementSibling);
-	  }
+    if(childElems.length == 0) return element
 
-	  return element.parentNode.removeChild(element);
+	  for(let i = 0; i < childElems.length - 1; i++){
+
+    }
+
+	  return childElems
   };
-
+  */
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
