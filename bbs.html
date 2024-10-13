@@ -110,15 +110,15 @@
 </div>
 
 <script>
-  let home_link =  document.getElementsByTagName('a')[0];
+  var home_link =  document.getElementsByTagName('a')[0];
 
-  let formElem = document.getElementsByTagName('form')[0];
-  let channelElem = document.getElementById('channel');
-  let channel_selectElems = document.getElementsByTagName('option');
-  let messageElem = document.getElementsByName('message')[0];
-  let nameElem = document.getElementsByName('name')[0];
-  let seedElem = document.getElementsByName('seed')[0];
-  let verifyElem = document.getElementById('filter');
+  var formElem = document.getElementsByTagName('form')[0];
+  var channelElem = document.getElementById('channel');
+  var channel_selectElems = document.getElementsByTagName('option');
+  var messageElem = document.getElementsByName('message')[0];
+  var nameElem = document.getElementsByName('name')[0];
+  var seedElem = document.getElementsByName('seed')[0];
+  var verifyElem = document.getElementById('filter');
 
   if(home_link.href == location.origin + '/'){
 
@@ -134,7 +134,7 @@
     tools_menu.setAttribute('class', 'hiddenElem');
     home_link.before(tools_menu);
   
-    let tools_menu_button_div = document.createElement('div');
+    var tools_menu_button_div = document.createElement('div');
     tools_menu_button_div.id = 'tools_menu_checkbox_div';  
     tools_menu_button_div.innerHTML = '<label for="tools_menu_button"><button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button></label>'
     home_link.after(tools_menu_button_div);
@@ -155,13 +155,13 @@
     // Ajaxチェックボックス
     tools_menu.innerHTML += '<div id="ajaxSend_checkbox_div"><label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）<input id="ajaxSend_checkbox" type="checkbox"></label></div>';
 
-    let ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
-    let ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
+    var ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
+    var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // ピクチャインピクチャチェックボックス
     tools_menu.innerHTML += '<div id="pictureInPicture_checkbox_div"><label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label></div>'
     
-    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+    var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
     // Ajax機能不利用時にチェックボックスのチェックを外す
     pictureInPicture_checkbox.addEventListener('change', function(e) {
@@ -179,21 +179,21 @@
     // キーボードショートカット使用チェックボックス
     tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
 
-    let keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
+    var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
     tools_menu.innerHTML += '<div id="shortcut_help_button_div"><button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button></div>';
 
     // 数値文字参照変換ツール
     tools_menu.innerHTML += '<div id="add_replace_div"><input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力"><label for="all_replace_checkbox"><input id="all_replace_checkbox" type="checkbox">全て変換</label><button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button></div>'
-    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
-    let add_replace_input = document.getElementById('add_replace_input');
+    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    var add_replace_input = document.getElementById('add_replace_input');
     
     add_replace_input.addEventListener('keydown', replaceInputKeyPressed);
     
 
     // 投稿番号表示機能
-    let infoElem = document.createElement('div');
+    var infoElem = document.createElement('div');
     infoElem.id = 'comments_num_info';
     infoElem.textContent = '更新待機中...';
     verifyElem.after(infoElem);
@@ -232,7 +232,7 @@
               event.preventDefault()
               if(!messageElem.value == '' && checkForm()){
                 if(ajaxSend_checkbox.checked){
-                  let xhr = new XMLHttpRequest();
+                  var xhr = new XMLHttpRequest();
                   xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
                   xhr.send();
                   messageElem.value = '';
@@ -300,7 +300,7 @@
     setInterval(update_comments_num, 5000);
     
     /*
-      let new_title_div_Elem = document.createElement('div');
+      var new_title_div_Elem = document.createElement('div');
       new_title_div_Elem.id = 'title_div';
       document.getElementsByTagName('div')[0].after(new_title_div_Elem)
       document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
@@ -313,7 +313,7 @@
       return false
     }else{
       if(ajaxSend_checkbox.checked){
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
         xhr.send();
         messageElem.value = '';
@@ -326,7 +326,7 @@
   }
 
   function update_comments_num(){
-    let infoElem = document.getElementById('comments_num_info');
+    var infoElem = document.getElementById('comments_num_info');
     infoElem.textContent = `現在のコメント数は${comments_num}です。`
     const comments_num = document.getElementsByTagName('td')[0].textContent;
     
@@ -338,7 +338,7 @@
   }
 
   function replace_add_input(){
-    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     const content = add_replace_input.value;
     
     if(all_replace_checkbox.checked){  
@@ -349,7 +349,7 @@
   }
   
   function replaceInputKeyPressed(event){
-    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     if(event.key === 'Enter'){
       if(event.shiftKey || event.ctrlKey || event.metaKey){
         all_replace_checkbox.checked = !all_replace_checkbox.checked
@@ -373,7 +373,7 @@
     */
 
   function urlConvertToLink(str) {
-    let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+    var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
     if(pictureInPicture_checkbox === null){return str}
       const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
       /* これを纏めた
@@ -404,7 +404,7 @@
   // 数値文字参照に変換するだけの関数
   function convertToNumericCharacterReference(str){
     const splitted_str = [...str]
-    let replaced_str = '';
+    var replaced_str = '';
     for(let i = 0; i < splitted_str.length; i++){
       replaced_str += "&#" + splitted_str[i].codePointAt(0) + ";";
     }
