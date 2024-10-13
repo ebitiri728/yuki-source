@@ -118,7 +118,7 @@
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
-    return elm.firstElementChild();
+    return elm.firstElementChild;
   }
 
   function getParam(key){
@@ -416,7 +416,7 @@
 
   function urlConvertToLink(str) {
     var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
-    if(pictureInPicture_checkbox === null){return str}
+    if(pictureInPicture_checkbox === null){return 'Error: ピクチャインピクチャチェックボックスが見つかりません。' + str}
       const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
       /* これを纏めた
         /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
