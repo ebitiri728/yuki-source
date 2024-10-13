@@ -183,6 +183,22 @@
                            - KeyboardShortcutCheckbox
            - tools_menu - ConvertToNumericCharacterReference
     */
+    // 上と下で悩んでるけど下の方がファイルっぽくていいかな
+    // 行数は多いけど横は長くないから見やすい
+    /*
+      menu 
+        | - MenuCloseButton
+        |
+        | - ShortcutHelpButton
+        |
+        |- settings_menu
+        |   | - AjaxCheckbox
+        |   | - PictureInPictureCheckbox(Ajax)
+        |   | - KeyboardShortcutCheckbox
+        |
+        | - tools_menu
+            | - ConvertToNumericCharacterReference
+    */
     menu = createChildElemFromStr('menu')
     menu.classList.add('hiddenElem')
     home_link.before(menu);
