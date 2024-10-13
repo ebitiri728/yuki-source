@@ -150,7 +150,6 @@
     pictureInPicture_display.innerHTML += '<div><input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v="><button onclick="pictureInPicture_display_iframe.setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.removeAttribute(\'class\');">遷移</button></div>'
     pictureInPicture_display.setAttribute('class', 'hiddenElem');
     document.getElementById('shortcut_help').after(pictureInPicture_display);
-    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
     
     
     // Ajaxチェックボックス
@@ -309,55 +308,55 @@
   }
   
   function checkForm(){
-      if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
-        console.log('Error: メッセージの中にシードが含まれています。')
+    if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
+      console.log('Error: メッセージの中にシードが含まれています。')
+      return false
+    }else{
+      if(ajaxSend_checkbox.checked){
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
+        xhr.send();
+        messageElem.value = '';
+        reloadmessages()
         return false
       }else{
-        if(ajaxSend_checkbox.checked){
-          let xhr = new XMLHttpRequest();
-          xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${channelElem.value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
-          xhr.send();
-          messageElem.value = '';
-          reloadmessages()
-          return false
-        }else{
-          return true
-        }
+        return true
       }
     }
+  }
 
   function update_comments_num(){
-    let infoElem = document.getElementById('comments_num_info')
-      const comments_num = document.getElementsByTagName('td')[0].textContent;
-      infoElem.textContent = `現在のコメント数は${comments_num}です。`
+    let infoElem = document.getElementById('comments_num_info');
+    infoElem.textContent = `現在のコメント数は${comments_num}です。`
+    const comments_num = document.getElementsByTagName('td')[0].textContent;
     
-      if(comments_num > 9900 && !infoElem.classList.contains('red')){
-        infoElem.classList.add('red')
-      }else{
-        infoElem.classList.remove('red')
-      };
-    }
+    if(comments_num > 9900 && !infoElem.classList.contains('red')){
+      infoElem.classList.add('red')
+    }else{
+      infoElem.classList.remove('red')
+    };
+  }
 
   function replace_add_input(){
     let all_replace_checkbox = document.getElementById('all_replace_checkbox');
-      const content = add_replace_input.value;
+    const content = add_replace_input.value;
     
-      if(all_replace_checkbox.checked){  
-        document.getElementsByName('message')[0].value += convertToNumericCharacterReference(content)
-      }else{
-        document.getElementsByName('message')[0].value += replaceBlankCharacters(content)
-      }
+    if(all_replace_checkbox.checked){  
+      document.getElementsByName('message')[0].value += convertToNumericCharacterReference(content)
+    }else{
+      document.getElementsByName('message')[0].value += replaceBlankCharacters(content)
     }
+  }
   
-    function replaceInputKeyPressed(event){
-      let all_replace_checkbox = document.getElementById('all_replace_checkbox');
-      if(event.key === 'Enter'){
-        if(event.shiftKey || event.ctrlKey || event.metaKey){
-          all_replace_checkbox.checked = !all_replace_checkbox.checked
-        }
-        replace_add_input()
+  function replaceInputKeyPressed(event){
+    let all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    if(event.key === 'Enter'){
+      if(event.shiftKey || event.ctrlKey || event.metaKey){
+        all_replace_checkbox.checked = !all_replace_checkbox.checked
       }
+      replace_add_input()
     }
+  }
     
     
     /*
@@ -391,7 +390,7 @@
           return `<a href="${matched}">${matched}</a>`;
         }
       }
-      return '<h2 class="blue" style="text-align: center;">ピクチャインピクチャ機能追加</h2>' + str.replace(pattern, makeLink)
+      return '<h2 class="red" style="text-align: center;">修正中</h2>' + str.replace(pattern, makeLink)
   }
 </script>
 <script>
