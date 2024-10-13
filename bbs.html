@@ -118,16 +118,13 @@
 
   
   function unWrap(elem) {
-	  var parentElem = elem.parentNode;
-
+    if(!elem.hasChildNodes()){return elem}
 
     for(let i = 0; i < elem.children.length - 1; i++){
-       elem.insertBefore(elem.children[i], parentElem);
+      elem.before(elem.children[i], )
     }
-
-    parentElem.remove(parentElem[parentElem.length])
-    return parentElem
-  };
+    return elem
+  }
   
  
   function createElemFromStr(str){
