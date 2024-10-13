@@ -123,8 +123,6 @@
   if(home_link.href == location.origin + '/'){
 
     // 元々ある要素を代入
-    
-
 
     formElem.setAttribute('onsubmit', 'return checkForm()');
     channelElem.setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);');
@@ -175,7 +173,7 @@
       } else {
         pictureInPicture_display_iframe.setAttribute('class', 'hiddenElem');
       }
-    });
+    }, false);
 
     // キーボードショートカット使用チェックボックス
     tools_menu.innerHTML += '<div id="keyboardshortcut_checkbox_div"><label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label></div>';
