@@ -111,33 +111,32 @@
 <script>
   // utils
 
-  function createElemFromStr(str) {
+  /*function createElemFromStr(str) {
     const domParserInstance = new DOMParser()
     return domParserInstance.parseFromString(str, "text/html").body.firstElementChild;
-  }
+  }*/
 
-  /*function unWrap(element) {
-	  if (!element) return element;
+  
+  function unWrap(elem) {
+	  var parentElem = elem.parentNode;
 
-	  const childElems = element.children;
-
-    if(childElems.length == 0) return element
-
-	  for(let i = 0; i < childElems.length - 1; i++){
-
+    // 親要素から最初の子要素を取得して親要素の上に子要素を移動
+    while (parentElem.firstChild) {
+	    parentElem.insertBefore(parentElem.firstChild, parentElem);
     }
 
-	  return childElems
+    // 空の親要素を削除
+    parentElem.removeChild(parentElem);
   };
-  */
- /*
+  
+ 
   function createElemFromStr(str){
     let elm = document.createElement('div');
     elm.innerHTML = str;
     
     return unWrap(elm);
   }
-*/
+
   function getParam(key){
     const url = new URL(window.location.href);
     return url.searchParams.get(key);
