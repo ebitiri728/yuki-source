@@ -12,7 +12,7 @@
   }
 
 
-  #tools_menu{
+  #settings_menu{
     position: fixed;
     top: 0;
     left: 5px;
@@ -175,20 +175,40 @@
     formElem.setAttribute('onsubmit', 'return checkForm()');
     channelElem.setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);');
 
+    /*
+      menu - MenuCloseButton
+           - ShortcutHelpButton
+           - settings_menu - AjaxCheckbox
+                           - PictureInPictureCheckbox(Ajax)
+                           - KeyboardShortcutCheckbox
+           - tools_menu - ConvertToNumericCharacterReference
+    */
+    menu = createChildElemFromStr('menu')
+    menu.classList.add('hiddenElem')
+    home_link.before(menu);
 
     // グローバル変数に
+    settings_menu = createChildElemFromStr('settings_menu')
+    menu.appendChild(settings_menu)
+
     tools_menu = createChildElemFromStr('tools_menu')
-    tools_menu.classList.add('hiddenElem')
-    home_link.before(tools_menu);
-    
-    var tools_menu_button_div = createChildElemFromStr('tools_menu_button_div', `${none}
-      <label for="tools_menu_button">
-        <button id="tools_menu_button" onclick="tools_menu.removeAttribute(\'class\');">メニューを開く</button>
-      </label>`);
-    home_link.after(tools_menu_button_div);
+    menu.appendChild(tools_menu)
     
     // メニューを閉じるボタン
-    tools_menu.innerHTML += '<button onclick="tools_menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>'
+    const menu_close_button_div = createChildElemFromStr('menu_close_button_div', `${none}
+      <label for="menu_close_button">
+        <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>
+      </label>`);
+    menu.appendChild(menu_close_button_div)
+
+    // メニューを開くボタン
+    const menu_open_button_div = createChildElemFromStr('menu_open_button_div', `${none}
+      <label for="menu_open_button">
+        <button id="menu_open_button" onclick="menu.removeAttribute(\'class\');">メニューを開く</button>
+      </label>`);
+    home_link.after(menu_open_button_div);
+    
+    
 
 
     pictureInPicture_display = createChildElemFromStr('pictureInPicture_display', `${none}
@@ -205,7 +225,7 @@
     
 
     // Ajaxチェックボックス
-    tools_menu.appendChild(createChildElemFromStr('ajaxSend_checkbox_div', `${none}
+    settings_menu.appendChild(createChildElemFromStr('ajaxSend_checkbox_div', `${none}
       <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）
         <input id="ajaxSend_checkbox" type="checkbox">
       </label>`));
@@ -214,7 +234,7 @@
     var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
 
     // ピクチャインピクチャチェックボックス
-    tools_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'))
+    settings_menu.appendChild(createChildElemFromStr('pictureInPicture_checkbox_div', '<label for="pictureInPicture_checkbox">ピクチャインピクチャ<input id="pictureInPicture_checkbox" type="checkbox"></label>'))
     
     var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
 
@@ -232,12 +252,12 @@
     });
 
     // キーボードショートカット使用チェックボックス
-    tools_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', '<label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label>')) 
+    settings_menu.appendChild(createChildElemFromStr('keyboardshortcut_checkbox_div', '<label for="keyboardshortcut_checkbox">キーボードショートカットを利用<input id="keyboardshortcut_checkbox" type="checkbox" checked></label>')) 
 
     var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
-    tools_menu.appendChild(createChildElemFromStr('shortcut_help_button_div', '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'))
+    menu.appendChild(createChildElemFromStr('shortcut_help_button_div', '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'))
 
     // 数値文字参照変換ツール
     tools_menu.appendChild(createChildElemFromStr('add_replace_div', `${none}
@@ -334,7 +354,7 @@
   
             case 'KeyY':
               event.preventDefault()
-              tools_menu.classList.toggle('hiddenElem');
+              settings_menu.classList.toggle('hiddenElem');
               break
             
             case 'Slash':
