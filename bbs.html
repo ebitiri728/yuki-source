@@ -186,6 +186,13 @@
     menu = createChildElemFromStr({id: 'menu', inner_html: '', class_str: 'hiddenElem'});
     home_link.before(menu);
 
+
+    // メニューを閉じるボタン
+    const menu_close_button_div = createChildElemFromStr({id: 'menu_close_button_div', inner_html: `${none}
+      <!-- <label for="menu_close_button"></label> -->
+      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`});
+    menu.appendChild(menu_close_button_div)
+
     // グローバル変数に
     settings_menu = createChildElemFromStr({id: 'settings_menu'})
     menu.appendChild(settings_menu)
@@ -193,11 +200,6 @@
     tools_menu = createChildElemFromStr({id: 'tools_menu'})
     menu.appendChild(tools_menu)
     
-    // メニューを閉じるボタン
-    const menu_close_button_div = createChildElemFromStr({id: 'menu_close_button_div', inner_html: `${none}
-      <!-- <label for="menu_close_button"></label> -->
-      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`});
-    menu.append(menu_close_button_div)
 
     // メニューを開くボタン
     const menu_open_button_div = createChildElemFromStr({id: 'menu_open_button_div', inner_html: `${none}
@@ -262,7 +264,7 @@
       <label for="enter_send_checkbox">Enterキーで送信</label>
     `}))
     let enter_send_checkbox = document.getElementById('enter_send_checkbox')
-    
+
     messageElem.addEventListener('keydown', function (e){
       if(e.key === 'Enter' && enter_send_checkbox.checked && !messageElem.value == '' && checkForm()){
         e.preventDefault()
