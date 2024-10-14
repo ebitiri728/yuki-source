@@ -183,7 +183,7 @@
             | - ConvertToNumericCharacterReference
     */
 
-    menu = createChildElemFromStr({id: 'menu', inner_html: '', class_str: 'hiddenElem'});
+    menu = createChildElemFromStr({id: 'menu', inner_html: '<h4>Menu / メニュー</h4>', class_str: 'hiddenElem'});
     home_link.before(menu);
 
 
@@ -194,10 +194,10 @@
     menu.appendChild(menu_close_button_div)
 
     // グローバル変数に
-    settings_menu = createChildElemFromStr({id: 'settings_menu'})
+    settings_menu = createChildElemFromStr({id: 'settings_menu', inner_html: '<h5>Settings / 設定</h5>'})
     menu.appendChild(settings_menu)
 
-    tools_menu = createChildElemFromStr({id: 'tools_menu'})
+    tools_menu = createChildElemFromStr({id: 'tools_menu', inner_html: '<h5>Tools / ツール</h5>'})
     menu.appendChild(tools_menu)
     
 
@@ -281,14 +281,16 @@
     });
 
     // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
-    menu.appendChild(createChildElemFromStr({id: 'shortcut_help_button_div', inner_html: '<button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>'}))
+    menu.appendChild(createChildElemFromStr({id: 'shortcut_help_button_div', inner_html: `${none}
+      <button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>
+    `}))
 
 
 
     // 詳細設定メニュー開閉ボタン
-    settings_menu_advanced_button = createChildElemFromStr({id: 'settings_menu_advanced_button_div', inner_html: '詳細設定'})
-    settings_menu_advanced_button.setAttribute('onclick', 'document.getElementById(\'settings_menu_advanced\').classList.toggle(\'hiddenElem\');')
-    settings_menu.appendChild(settings_menu_advanced_button)
+    settings_menu.appendChild(createChildElemFromStr({id: 'settings_menu_advanced_button_div', inner_html: `${none}
+      <button id="settings_menu_advanced_button" onclick="document.getElementById(\'settings_menu_advanced\').classList.toggle(\'hiddenElem\');">Advanced settings / 詳細設定</button>
+    `}))
     
     // 詳細設定メニュー
     settings_menu_advanced = createChildElemFromStr({id: 'settings_menu_advanced', class_str: 'hiddenElem'})
