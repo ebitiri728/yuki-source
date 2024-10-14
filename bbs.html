@@ -214,7 +214,7 @@
       <iframe id="pictureInPicture_display_iframe"></iframe>
       <div>
         <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
-        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.classLost.remove(\'hiddenElem\');">遷移</button>
+        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.classList.remove(\'hiddenElem\');">遷移</button>
       </div>`, class_str: 'hiddenElem'});
     
     document.getElementById('shortcut_help').after(pictureInPicture_display);
