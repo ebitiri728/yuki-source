@@ -139,6 +139,7 @@
     }
     return str
   }
+
 </script>
 <script>
   none = '';
@@ -180,6 +181,7 @@
         • FilterMessages
         • 
     */
+
     menu = createChildElemFromStr({id: 'menu', inner_html: '<h4>Menu / メニュー</h4>', class_str: 'hiddenElem'});
     home_link.before(menu);
 
@@ -262,17 +264,22 @@
     `}))
     let enter_send_checkbox = document.getElementById('enter_send_checkbox')
 
-    messageElem.addEventListener('keydown', function (e){
-      if(e.key === 'Enter' && enter_send_checkbox.checked && !messageElem.value == '' && checkForm()){
+    messageElem.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && enter_send_checkbox.checked){
         e.preventDefault()
-        if(ajaxSend_checkbox.checked){
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
-          xhr.send();
-          messageElem.value = '';
-          reloadmessages()
-        }else{
-          document.getElementsByTagName('form')[0].submit();
+
+        if(this.value != '' && !/^(\s|\t|\v)+.$/.test(this.value) && checkForm()){
+          if(ajaxSend_checkbox.checked){
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+            xhr.send();
+
+            this.value = '';
+            reloadmessages()
+
+          }else{
+            formElem.submit();
+          }
         }
       }
     });
