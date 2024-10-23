@@ -267,6 +267,33 @@
     `}))
     let enter_send_checkbox = document.getElementById('enter_send_checkbox')
 
+    settings_menu.appendChild(createChildElemFromStr({id: 'custom_font_div', inner_html: `${none}
+      <label for="custom_font">フォントを変更</label>
+      <select id="custom_font" name="custom_font">
+      </select>
+    `}))
+    
+    const custom_font = settings_menu.getElementById('custom_font');
+    const fonts = ["", "Arial", "'Arial Black'", "'Book Antiqua'", "Century", "'Century Gothic'", "'Comic Sans MS'", "Courier", "'Courier New'", "'Franklin Gothic'", "Georgia", "Helvetica", "Impact", "'Lucida Console'", "'Lucida Sans Unicode'", "'Palatino Linotype'", "Sylfaen", "Tahoma", "Times", "'Times New Roman'", "'Trebuchet MS'", "Verdana", "'Yu Gothic'", "游ゴシック", "游ゴシック体", "YuGothic", "'Yu Mincho'", "游明朝", "游明朝体", "YuMincho", "Meiryo", "メイリオ", "'MS PGothic'", "'MS PMincho'", "'MS Gothic'", "'MS Mincho'", "'Arial unicode ms'", "'MS Sans Serif'", "'MS Serif'", "HiraKakuProN-W3", "'ヒラギノ角ゴ ProN W3'", "HiraKakuProN-W6", "'ヒラギノ角ゴ ProN W6'", "HiraMinProN-W3", "'ヒラギノ明朝 ProN W3'", "HiraMinProN-W6", "'ヒラギノ明朝 ProN W6'", "HiraKakuProN", "'ヒラギノ角ゴ ProN'", "HiraMinProN", "'ヒラギノ明朝 ProN'"]
+    fonts.foreach(function(font) {
+      const formatted_font = customfont.replaceAll("'", '"')
+      
+      const font_option = document.createElement('option')
+      font_option.value = formatted_font;
+      font_option.textContent = formatted_font;
+      
+      custom_font.appendChild(font_option);
+    }
+    )
+    const font_default_option = custom_fonts.firstElementChild
+    font_default_option.selected = true;
+    font_default_option.textContent = 'Default';
+    
+    custom_font.addEventListener('change', function(e) {
+     document.body.style.fontFamily = e.target.value 
+    })
+
+    
     messageElem.addEventListener('keydown', function(e){
       if(e.key === 'Enter' && enter_send_checkbox.checked){
         e.preventDefault()
@@ -313,8 +340,7 @@
       home_link.classList.toggle('hiddenElem');
     })
 
-
-
+    
     // tools
 
     // 数値文字参照変換ツール
