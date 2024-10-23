@@ -273,7 +273,7 @@
       </select>
     `}))
     
-    const custom_font = settings_menu.getElementById('custom_font');
+    const custom_font = document.getElementById('custom_font');
     const fonts = ["", "Arial", "'Arial Black'", "'Book Antiqua'", "Century", "'Century Gothic'", "'Comic Sans MS'", "Courier", "'Courier New'", "'Franklin Gothic'", "Georgia", "Helvetica", "Impact", "'Lucida Console'", "'Lucida Sans Unicode'", "'Palatino Linotype'", "Sylfaen", "Tahoma", "Times", "'Times New Roman'", "'Trebuchet MS'", "Verdana", "'Yu Gothic'", "游ゴシック", "游ゴシック体", "YuGothic", "'Yu Mincho'", "游明朝", "游明朝体", "YuMincho", "Meiryo", "メイリオ", "'MS PGothic'", "'MS PMincho'", "'MS Gothic'", "'MS Mincho'", "'Arial unicode ms'", "'MS Sans Serif'", "'MS Serif'", "HiraKakuProN-W3", "'ヒラギノ角ゴ ProN W3'", "HiraKakuProN-W6", "'ヒラギノ角ゴ ProN W6'", "HiraMinProN-W3", "'ヒラギノ明朝 ProN W3'", "HiraMinProN-W6", "'ヒラギノ明朝 ProN W6'", "HiraKakuProN", "'ヒラギノ角ゴ ProN'", "HiraMinProN", "'ヒラギノ明朝 ProN'"]
     fonts.foreach(function(font) {
       const formatted_font = font.replaceAll("'", '"')
