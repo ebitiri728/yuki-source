@@ -150,7 +150,6 @@
   if(home_link.href == location.origin + '/'){
     var formElem = document.getElementsByTagName('form')[0];
     var channelElem = document.getElementById('channel');
-    var channel_selectElems = document.getElementsByTagName('option');
     var messageElem = document.getElementsByName('message')[0];
     var nameElem = document.getElementsByName('name')[0];
     var seedElem = document.getElementsByName('seed')[0];
@@ -417,8 +416,11 @@
           
             case 'KeyJ':
               event.preventDefault()
-              channel_selectElems[0].toggleAttribute('selected');
-              channel_selectElems[1].toggleAttribute('selected');
+              if(channelElm.value == 'main'){
+                channelElm.value = 'battle';
+              } else {
+                channelElm.value = 'main'
+              }
               reloadmessages()
           
               setTimeout(function() {
