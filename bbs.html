@@ -558,6 +558,7 @@
       }
     }else{
       var makeLink = function(matched) {
+        if (matched.startsWith('ttps://')){return `<a href="h${matched}">${matched}</a>`;}
         return `<a href="${matched}">${matched}</a>`;
       }
     }
@@ -565,7 +566,10 @@
   }
 
   function copyToMessage(td) {
-    if(td.closest('div').id == 'shortcut_help'){return td.onclick = '';}
-    document.getElementsByName('message')[0].value += td.textContent;
+    if(td.closest('div').id == 'messages'){
+      document.getElementsByName('message')[0].value += td.textContent;
+    } else {
+      td.onclick = '';
+    }
   }
 </script>
