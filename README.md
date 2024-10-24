@@ -6,7 +6,7 @@ Yuki Youtubeに機能を追加します。<br>
 # How to Use / 追加方法
 BBS:<br>
     main.pyに<br>
-        ```
+    ```
         @cache(seconds=60)
         def getSource(name):
             return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source/main/{name}.html').text
