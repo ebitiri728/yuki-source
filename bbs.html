@@ -167,7 +167,8 @@
         |   | - UsePictureInPicture(Ajax)
         |   | - UseKeyboardShortcut
         |   | - CustomFont
-        |   | 
+        |   | - EazyCopy
+        |   |
         |   | - AdvancedSettingsMenu
         |       | - DisplayHomeLink
         |
@@ -567,7 +568,12 @@
 
   function copyToMessage(td) {
     if(td.closest('div').id == 'messages'){
-      document.getElementsByName('message')[0].value += td.textContent;
+      if(/^\d+$/.test(td.innerHTML)){
+        document.getElementsByName('message')[0].value += '≫' + td.textContent;
+      } else {
+        document.getElementsByName('message')[0].value += td.textContent;
+      }
+      
     } else {
       td.onclick = '';
     }
