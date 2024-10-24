@@ -15,8 +15,8 @@ BBS:<br>
     ```
     .return ~~~y)}", cookies={"yuki":"True"})
     ```<br>
-    の後に
+    の後に<br>
     ```
     .text.replace('AutoLink(xhr.responseText);','urlConvertToLink(xhr.responseText);') + getSource('bbs')
-    ```
+    ```<br>
     と追加する。
