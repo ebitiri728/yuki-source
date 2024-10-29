@@ -370,8 +370,7 @@
     });
     
 
-
-
+    
     // 投稿番号表示機能
     var infoElem = document.createElement('div');
     infoElem.id = 'comments_num_info';
@@ -553,6 +552,14 @@
     let pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
     if(pictureInPicture_checkbox === null){return 'Error: ピクチャインピクチャチェックボックスが見つかりません。' + str}
 
+    /* safeFilter用
+    const tds = document.getElementsByTagName('td');
+    for(let i = 0; i < tds.length; i++) {
+    if(tds[i].textContent.includes('')) {
+      tds[i].textContent = tds[i].textContent.replace(/+/g, '〔Censored〕')
+      tds[i].classList.add('red')
+     }
+    }*/
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
       /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
