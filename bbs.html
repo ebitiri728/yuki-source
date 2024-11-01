@@ -574,7 +574,7 @@
     
     const message_elem = createChildElemFromStr({inner_html: retval});
 
-    const letest_num = messageElem.querySelector('td').textContent;
+    const letest_num = message_elem.querySelector('td').textContent;
 
     let infoElem = document.getElementById('comments_num_info');
     infoElem.textContent = `現在のコメント数は${latest_num}です。`;
