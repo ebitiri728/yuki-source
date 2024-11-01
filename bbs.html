@@ -156,7 +156,7 @@
     var verifyElem = document.getElementById('filter');
 
     formElem.setAttribute('onsubmit', 'return checkForm()');
-    channelElem.setAttribute('onchange', 'reloadmessages();setTimeout(function(){update_comments_num();},300);');
+    channelElem.setAttribute('onchange', 'reloadmessages()');
 
     /*
       Menu 
@@ -336,6 +336,15 @@
     settings_menu_advanced = createChildElemFromStr({id: 'settings_menu_advanced', class_str: 'hiddenElem'})
     settings_menu.appendChild(settings_menu_advanced)
 
+
+    settings_menu_advanced.appendChild(createChildElemFromStr({id: 'messagesFilter_div', inner_html: `${none}
+      <input id="messagesFilter_checkbox" type="checkbox" checked>
+      <label for="messagesFilter_checkbox">投稿フィルター機能</label>
+      <div id="messagesFilter_block" class="hiddenElem">
+        <input value="">
+      </div>"
+    `}))
+
     // ホームリンク表示チェックボックス
     settings_menu_advanced.appendChild(createChildElemFromStr({id: 'home_link_checkbox_div', inner_html: `${none}
       <input id="home_link_checkbox" type="checkbox" checked>
@@ -430,10 +439,6 @@
                 channelElem.value = 'main'
               }
               reloadmessages()
-          
-              setTimeout(function() {
-                update_comments_num();
-              }, 300);
               break
   
             case 'KeyB':
@@ -469,13 +474,6 @@
       
       }
     });
-
-    
-    
-    
-    update_comments_num(); 
-    setTimeout(update_comments_num, 1000);
-    setInterval(update_comments_num, 5000);
     
     /*
       var new_title_div_Elem = document.createElement('div');
@@ -509,17 +507,6 @@
     }
   }
 
-  function update_comments_num(){
-    let infoElem = document.getElementById('comments_num_info');
-    const comments_num = document.getElementsByTagName('td')[0].textContent;
-    infoElem.textContent = `現在のコメント数は${comments_num}です。`;
-    
-    if(comments_num > 9900 && !infoElem.classList.contains('red')){
-      infoElem.classList.add('red');
-    }else{
-      infoElem.classList.remove('red');
-    };
-  }
 
   function replace_add_input(){
     let all_replace_checkbox = document.getElementById('all_replace_checkbox');
@@ -560,6 +547,7 @@
       tds[i].classList.add('red')
      }
     }*/
+
     const pattern = /(?:h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
       /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
@@ -569,19 +557,35 @@
 
     if(pictureInPicture_checkbox.checked){
       var makeLink = function(matched) {
-        return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
+        return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched.startsWith('ttps://') ? 'h' : ''}${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched.startsWith('ttps://') ? 'h' : ''}${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
       }
     }else{
       var makeLink = function(matched) {
-        if (matched.startsWith('ttps://')){return `<a href="h${matched}">${matched}</a>`;}
-        return `<a href="${matched}">${matched}</a>`;
+        return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
       }
     }
+
+    var retval = str.replace(pattern, makeLink);
+
     if(document.getElementById('eazy_copy_checkbox').checked) {
-      return str.replace(pattern, makeLink).replaceAll('<td>', '<td onclick="copyToMessage(this)">')
-    } else {
-      return str.replace(pattern, makeLink)
+      var retval = retval.replaceAll('<td>', '<td onclick="copyToMessage(this)">')
     }
+
+    
+    const message_elem = createChildElemFromStr({inner_html: retval});
+
+    const letest_num = messageElem.querySelector('td').textContent;
+
+    let infoElem = document.getElementById('comments_num_info');
+    infoElem.textContent = `現在のコメント数は${latest_num}です。`;
+    
+    if(latest_num > 9900 && !infoElem.classList.contains('red')){
+      infoElem.classList.add('red');
+    }else{
+      infoElem.classList.remove('red');
+    };
+
+    return retval
     
   }
 
