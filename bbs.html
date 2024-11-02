@@ -2,7 +2,7 @@
 <!-- Made by LunaKamituki（神月瑠奈） -->
 
 <!--更新用コメント-->
-<!-- aaaa-->
+<!-- bbbb-->
 <p>新機能追加中</p>
 <style>
   .hiddenElem{
@@ -401,7 +401,7 @@
     });
     
     // NamesPreview
-    tools_menu.appendChild(createChildElemFromStr({id: 'names_preview_div', inner_html: `${none}
+    tools_menu.appendChild(createChildElemFromStr({id: 'names_preview_checkbox_div', inner_html: `${none}
       <label>
         <input type="checkbox" onclick="namesPreviewCheck(this)">
         【新機能】名前プレビュー
@@ -424,6 +424,7 @@
         <input placeholder="メッセージ" value="投稿内容">
       </div>
     `}))
+    
     
 
     // 投稿番号表示機能
@@ -655,6 +656,8 @@
 
       const options_div = document.getElementById('names_preview_options');
       const inputs = options_div.getElementsByTagName('input');
+
+      // memo: name color id select add message
 
       // 名前欄に名前、ID、add
       tds[1].innerHTML = `<font color="${inputs[1].value}">${inputs[0].value}</font>`
