@@ -2,7 +2,7 @@
 <!-- Made by LunaKamituki（神月瑠奈） -->
 
 <!--更新用コメント-->
-<!-- bbbb-->
+<!-- cccc-->
 <p>新機能追加中</p>
 <style>
   .hiddenElem{
@@ -408,7 +408,7 @@
       </label>
 
       <button onclick="this.nextElementSibling.classList.toggle('hiddenElem')">詳細設定</button>
-      <div id="names_preview_options" class="hiddenElem">
+      <div id="names_preview_checkbox_options" class="hiddenElem">
         <input placeholder="名前" value="名前">
         <input type="color" placeholder="名前のカラーコード（デフォルトは#000000）" value="#000000">
         <input placeholder="ID" value="@YukiBBS">
@@ -654,7 +654,7 @@
       const preview_div = document.getElementById('names_preview_div');
       const tds = preview_div.getElementsByTagName('td');
 
-      const options_div = document.getElementById('names_preview_options');
+      const options_div = document.getElementById('names_preview_checkbox_options');
       const inputs = options_div.getElementsByTagName('input');
 
       // memo: name color id select add message
