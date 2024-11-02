@@ -111,8 +111,8 @@
   </table>
 </div>
 
-<div id="names_preview_div" class="hiddenElem" border="1">
-  <table>
+<div id="names_preview_div" class="hiddenElem">
+  <table border="1">
     <tbody>
       <tr>
         <th>No</th>
@@ -407,7 +407,7 @@
         【新機能】名前プレビュー
       </label>
 
-      <button onclick="this.nextElementSibling.classList.toggle('hiddenElem')">詳細設定</button>
+      <button onclick="this.nextElementSibling.classList.toggle('hiddenElem');">詳細設定</button>
       <div id="names_preview_checkbox_options" class="hiddenElem">
         <input placeholder="名前" value="名前">
         <input type="color" placeholder="名前のカラーコード（デフォルトは#000000）" value="#000000">
@@ -650,8 +650,8 @@
   }
 
   function namesPreviewCheck(checkbox) {
+    const preview_div = document.getElementById('names_preview_div');
     if(checkbox.checked) {
-      const preview_div = document.getElementById('names_preview_div');
       const tds = preview_div.getElementsByTagName('td');
 
       const options_div = document.getElementById('names_preview_checkbox_options');
