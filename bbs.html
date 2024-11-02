@@ -53,7 +53,7 @@
 
   #names_preview_div {
     position: fixed;
-    top: 300px;
+    top: 150px;
     left: 0;
     margin: 0px;
     padding: 0px;
@@ -420,7 +420,7 @@
       <div id="names_preview_checkbox_options" class="hiddenElem">
         <input placeholder="名前" value="名前">
         <input type="color" placeholder="名前のカラーコード（デフォルトは#000000）" value="#000000">
-        <input placeholder="ID" value="@YukiBBS">
+        <input placeholder="ID" value="YukiBBS">
         <select>
           <option value="blue" selected>青ID</option>
           <option value="darkorange">スピーカー</option>
@@ -670,7 +670,7 @@
 
       // 名前欄に名前、ID、add
       tds[1].innerHTML = `<font color="${inputs[1].value}">${inputs[0].value}</font>`
-      tds[1].innerHTML += `<font color="${options_div.querySelector('select').value}">${inputs[2].value}</font>`
+      tds[1].innerHTML += `<font color="${options_div.querySelector('select').value}">@${inputs[2].value}</font>`
       tds[1].innerHTML += `<font color="magenta">${inputs[3].value}</font>`
 
       tds[2].textContent = inputs[4].value
