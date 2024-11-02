@@ -1,7 +1,8 @@
+<!-- Yuki-Source - bbs.html -->
 <!-- Made by LunaKamituki（神月瑠奈） -->
-<!--
-更新用
--->
+
+<!--更新用コメント-->
+<p>新機能追加中</p>
 <style>
   .hiddenElem{
     display: none;
@@ -106,6 +107,23 @@
       <td>Ctrl(⌘,Windows) + Shift + /(.)</td>
       <td>ヘルプを表示</td>
     </tr>
+  </table>
+</div>
+
+<div id="names_preview_div">
+  <table>
+    <tbody>
+      <tr>
+        <th>No</th>
+        <th>名前</th>
+        <th>投稿</th>
+      </tr>
+      <tr>
+        <td>XXXX</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
   </table>
 </div>
 
@@ -367,7 +385,7 @@
       <input id="all_replace_checkbox" type="checkbox">
       <label for="all_replace_checkbox">全て変換</label>
       <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>
-      `}))
+    `}))
 
     var all_replace_checkbox = document.getElementById('all_replace_checkbox');
     var add_replace_input = document.getElementById('add_replace_input');
@@ -381,8 +399,32 @@
       }
     });
     
+    // NamesPreview
+    tools_menu.appendChild(createChildElemFromStr({id: 'names_preview_div', inner_html: `${none}
+      <label>
+        <input type="checkbox" onclick="namesPreviewCheck(this)">
+        【新機能】名前プレビュー
+      </label>
 
+      <button onclick="this.nextElementSibling.classList.toggle('hiddenElem')">詳細設定</button>
+      <div id="names_preview_options" class="hiddenElem">
+        <input placeholder="名前" value="名前">
+        <input type="color" placeholder="名前のカラーコード（デフォルトは#000000）" value="#000000">
+        <input placeholder="ID" value="@YukiBBS">
+        <select>
+          <option value="blue" selected>青ID</option>
+          <option value="darkorange">スピーカー</option>
+          <option value="red">マネージャー</option>
+          <option value="darkmagenta">モデレーター</option>
+          <option value="darkcyaan">サミット</option>
+          <option value="red">運営</option>
+        </select>
+        <input placeholder="add（任意）">
+        <input placeholder="メッセージ" value="投稿内容">
+      </div>
+    `}))
     
+
     // 投稿番号表示機能
     var infoElem = document.createElement('div');
     infoElem.id = 'comments_num_info';
@@ -575,9 +617,9 @@
     }
 
     
-    const message_elem = createChildElemFromStr({inner_html: retval});
+    const messages_elem = createChildElemFromStr({inner_html: retval});
 
-    const latest_num = message_elem.querySelector('td').textContent;
+    const latest_num = messages_elem.querySelector('td').textContent;
 
     let infoElem = document.getElementById('comments_num_info');
     infoElem.textContent = `現在のコメント数は${latest_num}です。`;
@@ -603,5 +645,24 @@
     } else {
       td.onclick = '';
     }
+  }
+
+  function namesPreviewCheck(checkbox) {
+    if(checkbox.checked) {
+      const preview_div = document.getElementById('names_preview_div');
+      const tds = preview_div.getElementsByTagName('td');
+
+      const options_div = document.getElementById('names_preview_options');
+      const inputs = options_div.getElementsByTagName('input');
+
+      // 名前欄に名前、ID、add
+      tds[1].innerHTML = `<font color="${inputs[1].value}">${inputs[0].value}</font>`
+      tds[1].innerHTML += `<font color="${options_div.querySelector('select').value}">${inputs[2].value}</font>`
+      tds[1].innerHTML += `<font color="magenta">${inputs[3].value}</font>`
+
+      tds[2].textContent = inputs[4].value
+    }
+
+    preview_div.classList.toggle('hiddenElem')
   }
 </script>
