@@ -662,8 +662,10 @@
     let infoElem = document.getElementById('comments_num_info');
     infoElem.textContent = `現在のコメント数は${latest_num}です。`;
     
-    if(latest_num > 9900 && !infoElem.classList.contains('red')){
-      infoElem.classList.add('red');
+    if(latest_num > 9900) {
+      if(!infoElem.classList.contains('red')) {
+        infoElem.classList.add('red');
+      }
     }else{
       infoElem.classList.remove('red');
     };
