@@ -86,8 +86,12 @@
       <td>送信</td>
     </tr>
     <tr>
-      <td>Ctrl(⌘,Windows) + Shift + N</td>
-      <td>ページトップまで移動</td>
+      <td>Ctrl(⌘,Windows) + Shift + N(↑)</td>
+      <td>ページ最上部まで移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + ↓</td>
+      <td>ページ最下部まで移動</td>
     </tr>
     <tr>
       <td>Ctrl(⌘,Windows) + Shift + M</td>
@@ -106,8 +110,12 @@
       <td>Googleを開く</td>
     </tr>
     <tr>
-      <td>rl(⌘,Windows) + Shift + U</td>
+      <td>Ctrl(⌘,Windows) + Shift + U</td>
       <td>送信にAjaxを使用するかを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + ← or →</td>
+      <td>チャンネルを |←:雑談|→:バトルスタジアム| に変更</td>
     </tr>
     <tr>
       <td>Ctrl(⌘,Windows) + Shift + Y</td>
@@ -531,6 +539,12 @@
             case 'Period':
               event.preventDefault()
               document.getElementById('shortcut_help').classList.toggle('hiddenElem');
+              break
+            case 'ArrowRight':
+              channelElem.value = 'battle'
+              break
+            case 'ArrowLeft':
+              channelElem.value = 'main'
               break
           }
         
