@@ -455,13 +455,22 @@
               break
   
             case 'KeyN':
+            case 'ArrowUp':
               event.preventDefault()
               window.scroll({
                 top: 0,
                 behavior: "smooth",
               });
               break
-          
+
+            case 'ArrowDown':
+              event.preventDefault()
+              window.scroll({
+                top: document.documentElement.clientHeight,
+                behavior: "smooth",
+              });
+              break
+              
             case 'KeyH':
               event.preventDefault()
               location.replace("/");
