@@ -114,8 +114,8 @@
       <td>送信にAjaxを使用するかを変更</td>
     </tr>
     <tr>
-      <td>Ctrl(⌘,Windows) + Shift + ← or →</td>
-      <td>チャンネルを |←:雑談|→:バトルスタジアム| に変更</td>
+      <td>Ctrl(⌘,Windows) + Shift + C or V</td>
+      <td>チャンネルを C:雑談|V:バトルスタジアム に変更</td>
     </tr>
     <tr>
       <td>Ctrl(⌘,Windows) + Shift + Y</td>
@@ -540,12 +540,14 @@
               event.preventDefault()
               document.getElementById('shortcut_help').classList.toggle('hiddenElem');
               break
-            case 'ArrowRight':
-              channelElem.value = 'battle'
+              
+            case 'KeyC':
+              channelElem.value = 'main'
               reloadmessages()
               break
-            case 'ArrowLeft':
-              channelElem.value = 'main'
+              
+            case 'KeyV':
+              channelElem.value = 'battle'
               reloadmessages()
               break
           }
