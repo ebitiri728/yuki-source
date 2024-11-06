@@ -15,9 +15,11 @@ return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source
 を追加し、/bbsと/bbs/resultに
 ```Python
 .return ~~~y)}", cookies={"yuki":"True"})
-```<br>
+```
+<br>
 の後に<br>
 ```Python
 .text.replace('AutoLink(xhr.responseText);','urlConvertToLink(xhr.responseText);') + getSource('bbs')
-```<br>
+```
+<br>
 と追加する。
