@@ -11,12 +11,10 @@ main.pyに<br>
 def getSource(name):
 return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source/main/{name}.html').text
 ```
-<br>
 を追加し、/bbsと/bbs/resultに
 ```Python
 .return ~~~y)}", cookies={"yuki":"True"})
 ```
-<br>
 の後に
 ```Python
 .text.replace('AutoLink(xhr.responseText);','urlConvertToLink(xhr.responseText);') + getSource('bbs')
