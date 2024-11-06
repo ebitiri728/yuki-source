@@ -21,5 +21,4 @@ return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source
 ```Python
 .text.replace('AutoLink(xhr.responseText);','urlConvertToLink(xhr.responseText);') + getSource('bbs')
 ```
-<br>
 と追加する。
