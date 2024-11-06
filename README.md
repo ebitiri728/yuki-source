@@ -17,7 +17,7 @@ return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source
 .return ~~~y)}", cookies={"yuki":"True"})
 ```
 <br>
-の後に<br>
+の後に
 ```Python
 .text.replace('AutoLink(xhr.responseText);','urlConvertToLink(xhr.responseText);') + getSource('bbs')
 ```
