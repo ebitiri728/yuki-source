@@ -10,7 +10,8 @@ main.pyに<br>
 @cache(seconds=60)
 def getSource(name):
 return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source/main/{name}.html').text
-```<br>
+```
+<br>
 を追加し、/bbsと/bbs/resultに
 ```Python
 .return ~~~y)}", cookies={"yuki":"True"})
