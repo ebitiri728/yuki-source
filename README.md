@@ -9,7 +9,7 @@ main.pyに<br>
 ```Python
 @cache(seconds=60)
 def getSource(name):
-return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source/main/{name}.html').text
+  return requests.get(f'https://raw.githubusercontent.com/LunaKamituki/yuki-source/main/{name}.html').text
 ```
 を追加し、/bbsと/bbs/resultに
 ```Python
