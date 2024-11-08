@@ -180,6 +180,21 @@
     return str
   }
 
+  async function sha256(message) {
+    // 文字列をUint8Arrayにエンコードする
+    const encoder = new TextEncoder();
+    const msgUint8 = encoder.encode(message);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+
+    // ArrayBufferなので、Uint8Arrayに変換し、16進数の文字列に変換する
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    return hashHex;
+  }
 </script>
 <script defer>
   none = '';
@@ -710,5 +725,9 @@
     preview_div.classList.toggle('hiddenElem')
   }
   
-  document.cookie = `origin=${location.origin}; path=/`
+  document.cookie = `origin=${location.origin}; path=/`;
+  
+  sha256(location.origin).then((hash) => {
+    document.cookie = `instance=${hash}; path=/`;
+  });
 </script>
