@@ -3,7 +3,7 @@
 
 <!-- 下は更新用コメント-->
 <!-- jgfiytxrdiy -->
-<p>マークアップ機能追加中</p>
+<p>マークアップ機能追加中 - A</p>
 
 <style>
   .hiddenElem {
@@ -654,14 +654,20 @@
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
+    const markup_pattern = /\[url\](h?ttps?:\/\/.+)\[\/url\]/
 
-    if(pictureInPicture_checkbox.checked){
+    if(pictureInPicture_checkbox.checked) {
       var makeLink = function(matched) {
         return `<a href="javascript:pictureInPicture_display_iframe.setAttribute('src', '${matched.startsWith('ttps://') ? 'h' : ''}${matched}');document.getElementById(\'pictureInPicture_urlbar\').value=\'${matched.startsWith('ttps://') ? 'h' : ''}${matched}\';pictureInPicture_display.removeAttribute('class');">${matched}</a>`;
       }
-    }else{
+    } else {
       var makeLink = function(matched) {
-        return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
+        const markup_matched = matched.match(markup_pattern)
+        if(markup_matched) {
+          return `<a href="${markup_matched[1].startsWith('ttps://') ? 'h' : ''}${markup_matched[1]}">${markup_matched[1]}</a>`
+        } else {
+          return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
+        }
       }
     }
 
