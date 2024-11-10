@@ -649,15 +649,14 @@
      }
     }*/
 
-    const pattern = /(?:\[(.+)\]((?:.|[\n\r\t\s])*)\[\/\1\]|h?ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    const pattern = /h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    
     /* これを纏めた
-      /\[(.+)\]((?:.|[\w\n])*)\[\/\1\]/g : マークアップ
       /((h?)(ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g : 通常のURL
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g : URLパラメータのリンク
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g : パスパラメータのリンク
     */
 
-    const markup_pattern = /\[(.+)\]((?:.|[\w\n])*)\[\/\1\]/
 
     if(pictureInPicture_checkbox.checked) {
       var makeLink = function(matched) {
@@ -665,36 +664,11 @@
       }
     } else {
       var makeLink = function(matched) {
-
-        const markup_matched = matched.match(markup_pattern)
-        if(markup_matched) {
-          // markup
-          switch(markup_matched[1]) {
-            case 'code':
-              return `<div class="markup markup_code">${markup_matched[2]}</div>`
-              break
-
-            case 'url':
-              if(markup_matched[2].startsWith('https://') || markup_matched[2].startsWith('ttps://')) {
-                return `<a href="${markup_matched[2].startsWith('ttps://') ? 'h' : ''}${markup_matched[2]}">${markup_matched[2]}</a>`
-                break
-              } else {
-                return matched
-                break
-              }
-
-            default:
-              return matched
-          }
-
-        } else {
-          // markupではない
-          return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
-        }
+        return `<a href="${matched.startsWith('ttps://') ? 'h' : matched.startsWith('ttp://') ? 'h' : ''}${matched}">${matched}</a>`
       }
     }
+
     var retval = str.replace(pattern, makeLink);
-    console.log(str.match(pattern))
 
     if(document.getElementById('eazy_copy_checkbox').checked) {
       var retval = retval.replaceAll('<td>', '<td onclick="copyToMessage(this)">')
