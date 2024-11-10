@@ -648,13 +648,14 @@
      }
     }*/
 
-    const pattern = /(?:\[(\!?)url\](h?ttps?:\/\/.+)\[\/url\]|h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    const pattern = /(?:\[(.+)\]([.\m\r\t]*)\[\/\1\]|h?ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
       /((h?)(ttps?:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
-    const markup_pattern = /\[(\!?)url\](h?ttps?:\/\/.+)\[\/url\]/
+
+    const markup_pattern = /\[(.+)\]([.\m\r\t]*)\[\/\1\]/
 
     if(pictureInPicture_checkbox.checked) {
       var makeLink = function(matched) {
@@ -662,12 +663,18 @@
       }
     } else {
       var makeLink = function(matched) {
+
         const markup_matched = matched.match(markup_pattern)
         if(markup_matched) {
-          if(markup_matched[1] == '!') {
-            return `[url]${markup_matched[2]}[/url]`
-          } else {
-            return `<a href="${markup_matched[2].startsWith('ttps://') ? 'h' : ''}${markup_matched[2]}">${markup_matched[2]}</a>`
+          switch(markup_pattern[0]) {
+            case 'code':
+              return `<div class="markup markup_code">${markup_matched[1]}</div>`
+              break
+            case 'url':
+              return `<a href="${markup_matched[1].startsWith('ttps://') ? 'h' : ''}${markup_matched[1]}">${markup_matched[1]}</a>`
+              break
+            default:
+              return matched[0]
           }
         } else {
           return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
