@@ -649,11 +649,12 @@
      }
     }*/
 
-    const pattern = /(?:\[(.+)\]((?:.|[\w\n])*)\[\/\1\]|h?ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    const pattern = /(?:\[(.+)\]((?:.|[\n\r\t\s])*)\[\/\1\]|h?ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
-      /((h?)(ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
-      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
-      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
+      /\[(.+)\]((?:.|[\w\n])*)\[\/\1\]/g : マークアップ
+      /((h?)(ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g : 通常のURL
+      /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g : URLパラメータのリンク
+      /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g : パスパラメータのリンク
     */
 
     const markup_pattern = /\[(.+)\]((?:.|[\w\n])*)\[\/\1\]/
@@ -666,7 +667,6 @@
       var makeLink = function(matched) {
 
         const markup_matched = matched.match(markup_pattern)
-        console.log(matched)
         if(markup_matched) {
           // markup
           switch(markup_matched[1]) {
@@ -693,7 +693,7 @@
         }
       }
     }
-
+    console.log(pattern)
     var retval = str.replace(pattern, makeLink);
 
     if(document.getElementById('eazy_copy_checkbox').checked) {
