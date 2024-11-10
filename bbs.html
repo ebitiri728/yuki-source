@@ -667,14 +667,14 @@
         const markup_matched = matched.match(markup_pattern)
         if(markup_matched) {
 
-          switch(markup_matched[0]) {
+          switch(markup_matched[1]) {
             case 'code':
-              return `<div class="markup markup_code">${markup_matched[1]}</div>`
+              return `<div class="markup markup_code">${markup_matched[2]}</div>`
               break
 
             case 'url':
-              if(markup_matched[1].startsWith('https://') || markup_matched[1].startsWith('ttps://')) {
-                  return `<a href="${markup_matched[1].startsWith('ttps://') ? 'h' : ''}${markup_matched[1]}">${markup_matched[1]}</a>`
+              if(markup_matched[2].startsWith('https://') || markup_matched[2].startsWith('ttps://')) {
+                  return `<a href="${markup_matched[2].startsWith('ttps://') ? 'h' : ''}${markup_matched[2]}">${markup_matched[2]}</a>`
                   break
               }
 
