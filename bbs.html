@@ -648,14 +648,14 @@
      }
     }*/
 
-    const pattern = /(?:\[(.+)\]([.\m\r\t]*)\[\/\1\]|h?ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
+    const pattern = /(?:\[(.+)\]((?:.|[\w\n])*)\[\/\1\]|h?ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+|\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+|\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+)/g
     /* これを纏めた
       /((h?)(ttps:\/\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+))/g
       /\/(?:watch|search|playlist)\?(?:[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+=[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+&?)+/g
       /\/(?:channel|hashtag)\/[\w\.\-_@:\/~\?%&;=\+#',\(\)\*\!]+/g
     */
 
-    const markup_pattern = /\[(.+)\]([.\m\r\t]*)\[\/\1\]/
+    const markup_pattern = /\[(.+)\]((?:.|[\w\n])*)\[\/\1\]/g
 
     if(pictureInPicture_checkbox.checked) {
       var makeLink = function(matched) {
@@ -677,7 +677,7 @@
                   return `<a href="${markup_matched[1].startsWith('ttps://') ? 'h' : ''}${markup_matched[1]}">${markup_matched[1]}</a>`
                   break
               }
-              
+
             default:
               return matched
           }
