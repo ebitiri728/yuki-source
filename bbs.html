@@ -3,7 +3,7 @@
 
 <!-- 下は更新用コメント-->
 <!-- vludot7etytyo7i546 -->
-<p>マークアップ機能追加中 - C2</p>
+<p>マークアップ機能追加中 - C3</p>
 
 <style>
   .hiddenElem {
@@ -667,7 +667,7 @@
           if(markup_matched[1] == '!') {
             return `[url]${markup_matched[2]}[/url]`
           } else {
-            return `<a href="${markup_matched[1].startsWith('ttps://') ? 'h' : ''}${markup_matched[1]}">${markup_matched[1]}</a>`
+            return `<a href="${markup_matched[2].startsWith('ttps://') ? 'h' : ''}${markup_matched[2]}">${markup_matched[2]}</a>`
           }
         } else {
           return `<a href="${matched.startsWith('ttps://') ? 'h' : ''}${matched}">${matched}</a>`
