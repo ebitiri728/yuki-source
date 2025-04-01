@@ -1,445 +1,610 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuki-Source BBS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2fa1ff;
-            --danger: #e55555;
-            --light-gray: #f5f5f5;
-            --gray: #cfcfcf;
-            --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --spacing: 1rem;
+<!-- Yuki-Source - bbs.html -->
+<!-- Made by LunaKamituki（神月瑠奈） -->
+
+<!-- 下は更新用コメント-->
+<!-- reergvytf6dgvht  -->
+
+<style>
+  .hiddenElem {
+    display: none;
+  }
+  .red {
+    background-color: #e55555;
+  }
+
+  .blue {
+    background-color: #2fa1ff;
+  }
+
+
+  #menu{
+    position: fixed;
+    top: 0;
+    margin: 5px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  #pictureInPicture_display {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0px;
+    padding: 3px;
+    background-color: #fcfcfc;
+    border-radius: 15px; 
+  }
+
+  #pictureInPicture_display_iframe {
+    margin: 0;
+  }
+  
+  #shortcut_help {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    padding: 5px;
+    background-color: #cfcfcf;
+    border-radius: 15px; 
+  }
+
+  #names_preview_div {
+    position: fixed;
+    top: 150px;
+    left: 0;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+  }
+</style>
+
+
+<div id="shortcut_help" class="hiddenElem">
+  <h3>キーボードショートカットヘルプ</h3>
+  
+  <table border="1" style="background-color: #efefef;">
+    <tr>
+      <th>キー</th>
+      <th>イベント</th>
+    </tr>
+    <tr style="display: none;">
+      <td>更新待機中...</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + R</td>
+      <td>投稿を更新</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + H</td>
+      <td>Yuki Youtubeホームへ移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + L</td>
+      <td>送信</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + N(↑)</td>
+      <td>ページ最上部まで移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + ↓</td>
+      <td>ページ最下部まで移動</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + M</td>
+      <td>メッセージ入力状態に変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + J</td>
+      <td>チャンネルを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + B</td>
+      <td>シードを表示/非表示</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + K</td>
+      <td>Googleを開く</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + U</td>
+      <td>送信にAjaxを使用するかを変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + C or V</td>
+      <td>チャンネルを C:雑談|V:バトルスタジアム に変更</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + Y</td>
+      <td>メニューを開閉</td>
+    </tr>
+    <tr>
+      <td>Ctrl(⌘,Windows) + Shift + /(.)</td>
+      <td>ヘルプを表示</td>
+    </tr>
+  </table>
+</div>
+
+<div id="names_preview_div" class="hiddenElem">
+  <table border="1">
+    <tbody>
+      <tr>
+        <th>No</th>
+        <th>名前</th>
+        <th>投稿</th>
+      </tr>
+      <tr>
+        <td>0000</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script defer>
+  // utils
+  
+  function createChildElemFromStr({id = '', inner_html = '', class_str = ''}){
+    let div_elem = document.createElement('div');
+    if(id != ''){div_elem.id = id};
+    if(class_str != ''){div_elem.setAttribute('class', class_str);}
+    if(inner_html != ''){div_elem.innerHTML = inner_html};
+    return div_elem
+  }
+
+  function getParam(key){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(key);
+  }
+
+  // 数値文字参照に変換するだけの関数
+  function convertToNumericCharacterReference(str){
+    const splitted_str = [...str]
+    var replaced_str = '';
+    for(let i = 0; i < splitted_str.length; i++){
+      replaced_str += "&#" + splitted_str[i].codePointAt(0) + ";";
+    }
+    return replaced_str
+  }
+    
+  // /\s/にmatchする文字を全て数値文字参照に変換するだけの関数
+  function replaceBlankCharacters(str){
+    if(/\s/.test(str)){
+      return str.replace(/(\s)/g, matched => convertToNumericCharacterReference(matched))
+    }
+    return str
+  }
+
+  async function sha256(message) {
+    // 文字列をUint8Arrayにエンコードする
+    const encoder = new TextEncoder();
+    const msgUint8 = encoder.encode(message);
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+
+    // ArrayBufferなので、Uint8Arrayに変換し、16進数の文字列に変換する
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    return hashHex;
+  }
+</script>
+<script defer>
+  none = '';
+  var home_link = document.getElementsByTagName('a')[0];
+
+
+  // 通常のBBSページの場合のみに限定
+  if(home_link.href == location.origin + '/'){
+    var formElem = document.getElementsByTagName('form')[0];
+    var channelElem = document.getElementById('channel');
+    var messageElem = document.getElementsByName('message')[0];
+    var nameElem = document.getElementsByName('name')[0];
+    var seedElem = document.getElementsByName('seed')[0];
+    var verifyElem = document.getElementById('filter');
+
+    formElem.setAttribute('onsubmit', 'return checkForm()');
+    channelElem.setAttribute('onchange', 'reloadmessages()');
+
+    /*
+      Menu 
+        | - MenuCloseButton
+        |
+        | - SettingsMenu
+        |   | - UseAjax
+        |   | - UsePictureInPicture(Ajax)
+        |   | - UseKeyboardShortcut
+        |   | - CustomFont
+        |   | - EazyCopy
+        |   |
+        |   | - AdvancedSettingsMenu
+        |       | - DisplayHomeLink
+        |
+        | - ToolsMenu
+        |   | - ConvertToNumericCharacterReference
+        |
+        | - DisplayShortcutHelp
+    */
+    /*
+     Future
+        •messagesFilter（投稿フィルター機能）
+        •menu make improvements（メニューの改善）
+        •messageTemplate（顔文字等を簡単にメッセージに追加できるように）
+        •customKeyboardshortcuts（キーボードショートカットをカスタマイズできるように）
+      Already added
+        •copyMessage and replayNo（expectなどと類似）
+    */
+
+    menu = createChildElemFromStr({id: 'menu', inner_html: '<h4>Menu / メニュー</h4>', class_str: 'hiddenElem'});
+    home_link.before(menu);
+
+
+    // メニューを閉じるボタン
+    const menu_close_button_div = createChildElemFromStr({id: 'menu_close_button_div', inner_html: `${none}
+      <!-- <label for="menu_close_button"></label> -->
+      <button id="menu_close_button" onclick="menu.classList.add(\'hiddenElem\');">メニューを閉じる</button>`});
+    menu.appendChild(menu_close_button_div)
+
+    // グローバル変数に
+    settings_menu = createChildElemFromStr({id: 'settings_menu', inner_html: '<h5>Settings / 設定</h5>'})
+    menu.appendChild(settings_menu)
+
+    tools_menu = createChildElemFromStr({id: 'tools_menu', inner_html: '<h5>Tools / ツール</h5>'})
+    menu.appendChild(tools_menu)
+    
+
+    // メニューを開くボタン
+    const menu_open_button_div = createChildElemFromStr({id: 'menu_open_button_div', inner_html: `${none}
+      <!-- <label for="menu_open_button"></label> -->
+      <button id="menu_open_button" onclick="menu.classList.remove(\'hiddenElem\');">メニューを開く</button>`});
+    home_link.after(menu_open_button_div);
+    
+    
+    // settings
+
+    pictureInPicture_display = createChildElemFromStr({id: 'pictureInPicture_display', inner_html: `${none}
+      <iframe id="pictureInPicture_display_iframe"></iframe>
+      <div>
+        <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
+        <button onclick="document.getElementById(\'pictureInPicture_display_iframe\').setAttribute(\'src\', document.getElementById(\'pictureInPicture_urlbar\').value);pictureInPicture_display_iframe.classList.remove(\'hiddenElem\');">遷移</button>
+      </div>`, class_str: 'hiddenElem'});
+    
+    document.getElementById('shortcut_help').after(pictureInPicture_display);
+    pictureInPicture_display_iframe = document.getElementById('pictureInPicture_display_iframe');
+    
+
+    // Ajaxチェックボックス
+    settings_menu.appendChild(createChildElemFromStr({id: 'ajaxSend_checkbox_div', inner_html: `${none}
+      <input id="ajaxSend_checkbox" type="checkbox">
+      <label for="ajaxSend_checkbox">Ajaxを使って送信する（リロードなし）</label>`
+    }));
+
+    var ajaxSend_checkbox_div = document.getElementById('ajaxSend_checkbox_div');
+    var ajaxSend_checkbox = document.getElementById('ajaxSend_checkbox');
+
+    // ピクチャインピクチャチェックボックス
+    settings_menu.appendChild(createChildElemFromStr({id: 'pictureInPicture_checkbox_div', inner_html: `${none}
+      <input id="pictureInPicture_checkbox" type="checkbox">
+      <label for="pictureInPicture_checkbox">ピクチャインピクチャ</label>`
+    }))
+    
+    var pictureInPicture_checkbox = document.getElementById('pictureInPicture_checkbox');
+
+    // Ajax機能不利用時にチェックボックスのチェックを外す
+    pictureInPicture_checkbox.addEventListener('change', function(e) {
+      if(this.checked){
+        if(ajaxSend_checkbox.checked) {
+          reloadmessages()
+        } else {
+          this.checked = false;
         }
+      } else {
+        pictureInPicture_display.classList.add('hiddenElem');
+      }
+    });
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    // キーボードショートカット使用チェックボックス
+    settings_menu.appendChild(createChildElemFromStr({id: 'keyboardshortcut_checkbox_div', inner_html: `${none}
+      <input id="keyboardshortcut_checkbox" type="checkbox" checked>
+      <label for="keyboardshortcut_checkbox">キーボードショートカットを利用</label>
+    `}))
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: var(--light-gray);
-            color: #333;
-            line-height: 1.6;
-        }
+    var keyboardshortcut_checkbox = document.getElementById('keyboardshortcut_checkbox');
 
-        .hidden {
-            display: none;
-        }
+    settings_menu.appendChild(createChildElemFromStr({id: 'enter_send_checkbox_div', inner_html: `${none}
+      <input id="enter_send_checkbox" type="checkbox">
+      <label for="enter_send_checkbox">Enterキーで送信</label>
+    `}))
+    let enter_send_checkbox = document.getElementById('enter_send_checkbox')
 
-        #menu {
-            position: sticky;
-            top: 0;
-            margin: var(--spacing);
-            padding: var(--spacing);
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            z-index: 100;
-        }
+    settings_menu.appendChild(createChildElemFromStr({id: 'custom_font_div', inner_html: `${none}
+      <label for="custom_font">フォントを変更</label>
+      <select id="custom_font" name="custom_font">
+      </select>
+    `}))
+    
+    // CustomFont
+    const custom_font = document.getElementById('custom_font');
+    const fonts = ["", "Arial", "'Arial Black'", "'Book Antiqua'", "Century", "'Century Gothic'", "'Comic Sans MS'", "Courier", "'Courier New'", "'Franklin Gothic'", "Georgia", "Helvetica", "Impact", "'Lucida Console'", "'Lucida Sans Unicode'", "'Palatino Linotype'", "Sylfaen", "Tahoma", "Times", "'Times New Roman'", "'Trebuchet MS'", "Verdana", "'Yu Gothic'", "游ゴシック", "游ゴシック体", "YuGothic", "'Yu Mincho'", "游明朝", "游明朝体", "YuMincho", "Meiryo", "メイリオ", "'MS PGothic'", "'MS PMincho'", "'MS Gothic'", "'MS Mincho'", "'Arial unicode ms'", "'MS Sans Serif'", "'MS Serif'", "HiraKakuProN-W3", "'ヒラギノ角ゴ ProN W3'", "HiraKakuProN-W6", "'ヒラギノ角ゴ ProN W6'", "HiraMinProN-W3", "'ヒラギノ明朝 ProN W3'", "HiraMinProN-W6", "'ヒラギノ明朝 ProN W6'", "HiraKakuProN", "'ヒラギノ角ゴ ProN'", "HiraMinProN", "'ヒラギノ明朝 ProN'"]
+    fonts.forEach(function(font) {
+      const font_option = document.createElement('option')
+      font_option.value = font.replaceAll("'", '"');
+      font_option.textContent = font.replaceAll("'", "")
+      
+      custom_font.appendChild(font_option);
+    }
+    )
+    const font_default_option = custom_font.firstElementChild;
+    font_default_option.selected = true;
+    font_default_option.textContent = 'Default';
+    
+    custom_font.addEventListener('change', function(e) {
+     document.body.style.fontFamily = e.currentTarget.value
+    })
 
-        #menu h4, .menu-section h5 {
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
+    // EazyCopy
+    settings_menu.appendChild(createChildElemFromStr({id: 'eazy_copy_div', inner_html: `${none}
+      <input id="eazy_copy_checkbox" type="checkbox">
+      <label for="eazy_copy_checkbox">メッセージコピー機能</label>
+    `}))
+    
 
-        #menu button, .menu-section button {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0.3rem 0;
-            transition: background 0.3s ease;
-        }
+    messageElem.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && enter_send_checkbox.checked){
+        e.preventDefault()
 
-        #menu button:hover, .menu-section button:hover {
-            background: #1d8de0;
-        }
-
-        .menu-section {
-            padding: 0.5rem 0;
-            border-top: 1px solid var(--light-gray);
-        }
-
-        #shortcut_help {
-            position: fixed;
-            bottom: var(--spacing);
-            left: var(--spacing);
-            background: var(--gray);
-            padding: var(--spacing);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            max-width: 90vw;
-            overflow-x: auto;
-        }
-
-        #shortcut_help table {
-            background: #efefef;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #shortcut_help th, #shortcut_help td {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-        }
-
-        #shortcut_help th {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        #pictureInPicture_display {
-            position: fixed;
-            bottom: var(--spacing);
-            right: var(--spacing);
-            background: var(--white);
-            padding: 0.5rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
-
-        #pictureInPicture_display_iframe {
-            width: 300px;
-            height: 200px;
-            border: none;
-            border-radius: 10px;
-        }
-
-        #names_preview_div {
-            position: fixed;
-            top: 100px;
-            left: var(--spacing);
-            background: var(--white);
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            padding: 0.5rem;
-        }
-
-        #names_preview_div table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #names_preview_div th, #names_preview_div td {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-        }
-
-        #names_preview_div th {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        label {
-            display: block;
-            margin: 0.5rem 0;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 0.5rem;
-        }
-
-        select, input[type="text"], input[type="color"] {
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: 1px solid var(--light-gray);
-            width: 100%;
-            max-width: 200px;
-            margin: 0.3rem 0;
-        }
-
-        #main-content {
-            padding: var(--spacing);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        #post-form {
-            background: var(--white);
-            padding: var(--spacing);
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: var(--spacing);
-        }
-
-        #post-form input, #post-form select {
-            display: block;
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-
-        #post-form button {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            #menu { margin: 0.5rem; padding: 0.5rem; }
-            #pictureInPicture_display_iframe { width: 200px; height: 150px; }
-            #shortcut_help { max-width: 85vw; }
-            #names_preview_div { top: 80px; }
-        }
-
-        @media (max-width: 480px) {
-            #pictureInPicture_display_iframe { width: 150px; height: 100px; }
-            #shortcut_help { font-size: 0.9rem; }
-            select, input[type="text"], input[type="color"] { max-width: 100%; }
-            #main-content { padding: 0.5rem; }
-        }
-    </style>
-</head>
-<body>
-    <!-- Menu -->
-    <div id="menu" class="hidden">
-        <h4>Menu / メニュー</h4>
-        <button onclick="this.parentElement.classList.add('hidden')">メニューを閉じる</button>
-        
-        <div id="settings_menu" class="menu-section">
-            <h5>Settings / 設定</h5>
-            <label><input type="checkbox" id="ajaxSend_checkbox"> Ajaxを使って送信する</label>
-            <label><input type="checkbox" id="pictureInPicture_checkbox"> ピクチャインピクチャ</label>
-            <label><input type="checkbox" id="keyboardshortcut_checkbox" checked> キーボードショートカットを利用</label>
-            <label><input type="checkbox" id="enter_send_checkbox"> Enterキーで送信</label>
-            <label>
-                フォントを変更
-                <select id="custom_font"></select>
-            </label>
-            <label><input type="checkbox" id="eazy_copy_checkbox"> メッセージコピー機能</label>
-            <button onclick="document.getElementById('settings_menu_advanced').classList.toggle('hidden')">詳細設定</button>
-            <div id="settings_menu_advanced" class="hidden">
-                <label><input type="checkbox" id="messagesFilter_checkbox" checked> 投稿フィルター機能</label>
-                <label><input type="checkbox" id="home_link_checkbox" checked> HomeLinkを表示</label>
-            </div>
-        </div>
-
-        <div id="tools_menu" class="menu-section">
-            <h5>Tools / ツール</h5>
-            <label>
-                <input id="add_replace_input" placeholder="数値文字参照に変換したい文字列">
-                <input type="checkbox" id="all_replace_checkbox"> 全て変換
-                <button onclick="replace_add_input()">変換してメッセージに追加</button>
-            </label>
-            <label>
-                <input type="checkbox" onclick="namesPreviewCheck(this)"> 【新機能】名前プレビュー
-                <button onclick="this.nextElementSibling.classList.toggle('hidden')">詳細設定</button>
-                <div id="names_preview_checkbox_options" class="hidden">
-                    <input placeholder="名前" value="名前">
-                    <input type="color" value="#000000">
-                    <input placeholder="ID" value="YukiBBS">
-                    <select>
-                        <option value="blue" selected>青ID</option>
-                        <option value="darkorange">スピーカー</option>
-                        <option value="red">マネージャー</option>
-                        <option value="darkmagenta">モデレーター</option>
-                        <option value="darkcyan">サミット</option>
-                        <option value="red">運営</option>
-                    </select>
-                    <input placeholder="add（任意）">
-                    <input placeholder="メッセージ" value="投稿内容">
-                </div>
-            </label>
-        </div>
-    </div>
-    <button id="menu_open_button" onclick="document.getElementById('menu').classList.remove('hidden')">メニューを開く</button>
-
-    <!-- Main Content -->
-    <div id="main-content">
-        <a href="/" id="home-link">ホームに戻る</a>
-        <form id="post-form" onsubmit="return checkForm(event)">
-            <input type="text" name="name" placeholder="名前" required>
-            <input type="text" name="seed" placeholder="シード">
-            <select id="channel" onchange="reloadmessages()">
-                <option value="main">雑談</option>
-                <option value="battle">バトルスタジアム</option>
-            </select>
-            <input type="text" name="message" placeholder="メッセージを入力" required>
-            <label><input type="checkbox" id="filter"> フィルターを適用</label>
-            <button type="submit">送信</button>
-        </form>
-        <div id="comments_num_info">更新待機中...</div>
-    </div>
-
-    <!-- Shortcut Help -->
-    <div id="shortcut_help" class="hidden">
-        <h3>キーボードショートカットヘルプ</h3>
-        <table>
-            <tr><th>キー</th><th>イベント</th></tr>
-            <tr><td>Ctrl+Shift+R</td><td>投稿を更新</td></tr>
-            <tr><td>Ctrl+Shift+H</td><td>Yuki Youtubeホームへ移動</td></tr>
-            <tr><td>Ctrl+Shift+L</td><td>送信</td></tr>
-            <tr><td>Ctrl+Shift+N(↑)</td><td>ページ最上部まで移動</td></tr>
-            <tr><td>Ctrl+Shift+↓</td><td>ページ最下部まで移動</td></tr>
-            <tr><td>Ctrl+Shift+M</td><td>メッセージ入力状態に変更</td></tr>
-            <tr><td>Ctrl+Shift+J</td><td>チャンネルを変更</td></tr>
-            <tr><td>Ctrl+Shift+B</td><td>シードを表示/非表示</td></tr>
-            <tr><td>Ctrl+Shift+K</td><td>Googleを開く</td></tr>
-            <tr><td>Ctrl+Shift+U</td><td>Ajax使用を切り替え</td></tr>
-            <tr><td>Ctrl+Shift+C/V</td><td>チャンネルを雑談/バトルに変更</td></tr>
-            <tr><td>Ctrl+Shift+Y</td><td>メニューを開閉</td></tr>
-            <tr><td>Ctrl+Shift+/</td><td>ヘルプを表示</td></tr>
-        </table>
-    </div>
-
-    <!-- Picture in Picture -->
-    <div id="pictureInPicture_display" class="hidden">
-        <iframe id="pictureInPicture_display_iframe"></iframe>
-        <div>
-            <input id="pictureInPicture_urlbar" placeholder="URLを入力" value="/watch?v=">
-            <button onclick="document.getElementById('pictureInPicture_display_iframe').src = document.getElementById('pictureInPicture_urlbar').value; this.parentElement.previousElementSibling.classList.remove('hidden')">遷移</button>
-        </div>
-    </div>
-
-    <!-- Names Preview -->
-    <div id="names_preview_div" class="hidden">
-        <table>
-            <tr><th>No</th><th>名前</th><th>投稿</th></tr>
-            <tr><td>0000</td><td></td><td></td></tr>
-        </table>
-    </div>
-
-    <script defer>
-        // Utility Functions
-        const createElement = ({ tag = 'div', id = '', className = '', innerHTML = '' }) => {
-            const elem = document.createElement(tag);
-            if (id) elem.id = id;
-            if (className) elem.className = className;
-            if (innerHTML) elem.innerHTML = innerHTML;
-            return elem;
-        };
-
-        const getParam = (key) => new URL(window.location.href).searchParams.get(key);
-
-        const convertToNumericCharacterReference = (str) => [...str].map(char => `&#${char.codePointAt(0)};`).join('');
-
-        const replaceBlankCharacters = (str) => /\s/.test(str) ? str.replace(/\s/g, match => convertToNumericCharacterReference(match)) : str;
-
-        async function sha256(message) {
-            const msgUint8 = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // Main Logic
-        const form = document.getElementById('post-form');
-        const channel = document.getElementById('channel');
-        const message = document.querySelector('[name="message"]');
-        const name = document.querySelector('[name="name"]');
-        const seed = document.querySelector('[name="seed"]');
-        const verify = document.getElementById('filter');
-        const homeLink = document.getElementById('home-link');
-
-        const ajaxSendCheckbox = document.getElementById('ajaxSend_checkbox');
-        const pictureInPictureCheckbox = document.getElementById('pictureInPicture_checkbox');
-        const keyboardShortcutCheckbox = document.getElementById('keyboardshortcut_checkbox');
-        const enterSendCheckbox = document.getElementById('enter_send_checkbox');
-        const customFont = document.getElementById('custom_font');
-
-        // Font Options
-        const fonts = ["", "Arial", "Comic Sans MS", "Courier New", "Georgia", "Helvetica", "Impact", "Times New Roman", "Verdana", "Yu Gothic", "Meiryo"];
-        fonts.forEach(font => {
-            const option = document.createElement('option');
-            option.value = font;
-            option.textContent = font || 'Default';
-            customFont.appendChild(option);
-        });
-        customFont.addEventListener('change', (e) => document.body.style.fontFamily = e.target.value);
-
-        // Event Listeners
-        pictureInPictureCheckbox.addEventListener('change', function() {
-            const pipDisplay = document.getElementById('pictureInPicture_display');
-            if (this.checked && ajaxSendCheckbox.checked) {
-                reloadmessages();
-                pipDisplay.classList.remove('hidden');
-            } else {
-                this.checked = false;
-                pipDisplay.classList.add('hidden');
-            }
-        });
-
-        message.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && enterSendCheckbox.checked) {
-                e.preventDefault();
-                if (this.value && !/^\s+$/.test(this.value) && checkForm(e)) {
-                    if (ajaxSendCheckbox.checked) sendAjaxMessage();
-                    else form.submit();
-                }
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!keyboardShortcutCheckbox.checked || !(e.ctrlKey || e.metaKey) || !e.shiftKey) return;
-            e.preventDefault();
-            switch (e.code) {
-                case 'KeyM': message.focus(); break;
-                case 'KeyN': case 'ArrowUp': window.scrollTo({ top: 0, behavior: 'smooth' }); break;
-                case 'ArrowDown': window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); break;
-                case 'KeyH': location.replace('/'); break;
-                case 'KeyR': reloadmessages(); break;
-                case 'KeyL': if (message.value && checkForm(e)) ajaxSendCheckbox.checked ? sendAjaxMessage() : form.submit(); break;
-                case 'KeyJ': channel.value = channel.value === 'main' ? 'battle' : 'main'; reloadmessages(); break;
-                case 'KeyB': seed.classList.toggle('hidden'); break;
-                case 'KeyK': location.replace('https://www.google.com/'); break;
-                case 'KeyU': ajaxSendCheckbox.checked = !ajaxSendCheckbox.checked; break;
-                case 'KeyY': document.getElementById('menu').classList.toggle('hidden'); break;
-                case 'Slash': case 'Period': document.getElementById('shortcut_help').classList.toggle('hidden'); break;
-                case 'KeyC': channel.value = 'main'; reloadmessages(); break;
-                case 'KeyV': channel.value = 'battle'; reloadmessages(); break;
-            }
-        });
-
-        document.getElementById('home_link_checkbox').addEventListener('change', (e) => {
-            homeLink.classList.toggle('hidden', !e.target.checked);
-        });
-
-        // Functions
-        function checkForm(event) {
-            if (message.value.includes(seed.value) || message.value.includes(getParam('seed'))) {
-                console.log('Error: メッセージの中にシードが含まれています。');
-                return false;
-            }
-            if (ajaxSendCheckbox.checked) {
-                event.preventDefault();
-                sendAjaxMessage();
-                return false;
-            }
-            return true;
-        }
-
-        function sendAjaxMessage() {
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", `/bbs/result?name=${encodeURIComponent(name.value)}&seed=${encodeURIComponent(seed.value)}&channel=${channel.value}&verify=${verify.checked}&message=${encodeURIComponent(message.value)}`);
+        if(this.value != '' && !/^(\s|\t|\v)+.$/.test(this.value) && checkForm()){
+          if(ajaxSend_checkbox.checked){
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
             xhr.send();
-            message.value = '';
-            reloadmessages();
-        }
 
-        function reloadmessages() {
-            console.log('Messages reloaded'); // 実際の更新ロジックをここに
-        }
+            this.value = '';
+            reloadmessages()
 
-        function replace_add_input() {
-            const input = document.getElementById('add_replace_input');
-            const all = document.getElementById('all_replace_checkbox').checked;
-            message.value += all ? convertToNumericCharacterReference(input.value) : replaceBlankCharacters(input.value);
-            input.value = '';
+          }else{
+            formElem.submit();
+          }
         }
+      }
+    });
 
-        function namesPreviewCheck(checkbox) {
-            document.getElementById('names_preview_div').classList.toggle('hidden', !checkbox.checked);
+    // ショートカットヘルプ表示非表示ボタン　<= チェックボックスに変更予定
+    menu.appendChild(createChildElemFromStr({id: 'shortcut_help_button_div', inner_html: `${none}
+      <button onclick="document.getElementById(\'shortcut_help\').classList.toggle(\'hiddenElem\')">キーボードショートカットヘルプを表示/非表示</button>
+    `}))
+
+
+
+    // 詳細設定メニュー開閉ボタン
+    settings_menu.appendChild(createChildElemFromStr({id: 'settings_menu_advanced_button_div', inner_html: `${none}
+      <button id="settings_menu_advanced_button" onclick="document.getElementById(\'settings_menu_advanced\').classList.toggle(\'hiddenElem\');">Advanced settings / 詳細設定</button>
+    `}))
+    
+    // 詳細設定メニュー
+    settings_menu_advanced = createChildElemFromStr({id: 'settings_menu_advanced', class_str: 'hiddenElem'})
+    settings_menu.appendChild(settings_menu_advanced)
+
+
+    settings_menu_advanced.appendChild(createChildElemFromStr({id: 'messagesFilter_div', inner_html: `${none}
+      <input id="messagesFilter_checkbox" type="checkbox" checked>
+      <label for="messagesFilter_checkbox">投稿フィルター機能</label>
+      <div id="messagesFilter_block" class="hiddenElem">
+        <input value="">
+      </div>"
+    `}))
+
+    // ホームリンク表示チェックボックス
+    settings_menu_advanced.appendChild(createChildElemFromStr({id: 'home_link_checkbox_div', inner_html: `${none}
+      <input id="home_link_checkbox" type="checkbox" checked>
+      <label for="home_link_checkbox">HomeLinkを表示</label>
+    `}))
+
+    document.getElementById('home_link_checkbox').addEventListener('change', function(e){
+      home_link.classList.toggle('hiddenElem');
+    })
+
+    
+    // tools
+
+    // 数値文字参照変換ツール
+    tools_menu.appendChild(createChildElemFromStr({id: 'add_replace_div', inner_html: `${none}
+      <input id="add_replace_input" placeholder="数値文字参照に変換したい文字列を入力">
+      <input id="all_replace_checkbox" type="checkbox">
+      <label for="all_replace_checkbox">全て変換</label>
+      <button id="replace_str" onclick="replace_add_input()">変換してメッセージに追加</button>
+    `}))
+
+    var all_replace_checkbox = document.getElementById('all_replace_checkbox');
+    var add_replace_input = document.getElementById('add_replace_input');
+    
+    add_replace_input.addEventListener('keydown', function (e){
+      if(e.key === 'Enter'){
+        if(e.shiftKey || e.ctrlKey || e.metaKey){
+          all_replace_checkbox.checked = !all_replace_checkbox.checked
         }
-    </script>
-</body>
-</html>
+        replace_add_input()
+      }
+    });
+    
+    // NamesPreview
+    tools_menu.appendChild(createChildElemFromStr({id: 'names_preview_checkbox_div', inner_html: `${none}
+      <label>
+        <input type="checkbox" onclick="namesPreviewCheck(this)">
+        【新機能】名前プレビュー
+      </label>
+
+      <button onclick="this.nextElementSibling.classList.toggle('hiddenElem');">詳細設定</button>
+      <div id="names_preview_checkbox_options" class="hiddenElem">
+        <input placeholder="名前" value="名前">
+        <input type="color" placeholder="名前のカラーコード（デフォルトは#000000）" value="#000000">
+        <input placeholder="ID" value="YukiBBS">
+        <select>
+          <option value="blue" selected>青ID</option>
+          <option value="darkorange">スピーカー</option>
+          <option value="red">マネージャー</option>
+          <option value="darkmagenta">モデレーター</option>
+          <option value="darkcyaan">サミット</option>
+          <option value="red">運営</option>
+        </select>
+        <input placeholder="add（任意）">
+        <input placeholder="メッセージ" value="投稿内容">
+      </div>
+    `}))
+    
+    
+
+    // 投稿番号表示機能
+    var infoElem = document.createElement('div');
+    infoElem.id = 'comments_num_info';
+    infoElem.textContent = '更新待機中...';
+    verifyElem.after(infoElem);
+    
+    
+    
+
+    document.addEventListener('keydown', function(event) {
+      if(keyboardshortcut_checkbox.checked){
+        if((event.ctrlKey || event.metaKey) && event.shiftKey){
+          switch(event.code){
+            case 'KeyM':
+              event.preventDefault()
+              messageElem.focus();
+              break
+  
+            case 'KeyN':
+            case 'ArrowUp':
+              event.preventDefault()
+              window.scroll({
+                top: 0,
+                behavior: "smooth",
+              });
+              break
+
+            case 'ArrowDown':
+              event.preventDefault()
+              window.scroll({
+                top: document.documentElement.clientHeight,
+                behavior: "smooth",
+              });
+              break
+              
+            case 'KeyH':
+              event.preventDefault()
+              location.replace("/");
+              break
+          
+            case 'KeyR':
+              event.preventDefault()
+              reloadmessages()
+              break
+        
+            case 'KeyL':
+              event.preventDefault()
+              if(!messageElem.value == '' && checkForm()){
+                if(ajaxSend_checkbox.checked){
+                  var xhr = new XMLHttpRequest();
+                  xhr.open("GET", `/bbs/result?name=${nameElem.value}&seed=${seedElem.value}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${messageElem.value}`);
+                  xhr.send();
+                  messageElem.value = '';
+                  reloadmessages()
+                }else{
+                  document.getElementsByTagName('form')[0].submit();
+                }
+              }
+              break
+          
+            case 'KeyJ':
+              event.preventDefault()
+              if(channelElem.value == 'main'){
+                channelElem.value = 'battle';
+              } else {
+                channelElem.value = 'main'
+              }
+              reloadmessages()
+              break
+  
+            case 'KeyB':
+              event.preventDefault()
+              seedElem.classList.toggle('hiddenElem');
+              break
+  
+            case 'KeyK':
+              event.preventDefault()
+              document.cookie = "yuki=True;max-age=0;";
+              location.replace('https://www.google.com/');
+              break
+  
+            case 'KeyU':
+              event.preventDefault()
+              ajaxSend_checkbox.checked = !ajaxSend_checkbox.checked;
+              break
+  
+            case 'KeyY':
+              event.preventDefault()
+              menu.classList.toggle('hiddenElem');
+              break
+            
+            case 'Slash':
+            case 'Period':
+              event.preventDefault()
+              document.getElementById('shortcut_help').classList.toggle('hiddenElem');
+              break
+              
+            case 'KeyC':
+              channelElem.value = 'main'
+              reloadmessages()
+              break
+              
+            case 'KeyV':
+              channelElem.value = 'battle'
+              reloadmessages()
+              break
+          }
+        
+        }
+  
+      
+      }
+    });
+    
+    /*
+      var new_title_div_Elem = document.createElement('div');
+      new_title_div_Elem.id = 'title_div';
+      document.getElementsByTagName('div')[0].after(new_title_div_Elem)
+      document.getElementById('title_div').innerHTML = '<input id="title_input" value="連番を簡単に生成！！"><button onclick="document.getElementsByTagName(\'title\')[0].textContent = document.getElementById(\'title_input\').value">titleを変更</button>'
+    */
+  }
+  
+  function checkForm(){
+    let channelElem = document.getElementById('channel');
+    let messageElem = document.getElementsByName('message')[0];
+    let nameElem = document.getElementsByName('name')[0];
+    let seedElem = document.getElementsByName('seed')[0];
+    let verifyElem = document.getElementById('filter');
+
+    if(messageElem.value.includes(seedElem.value) || messageElem.value.includes(getParam('seed'))){
+      console.log('Error: メッセージの中にシードが含まれています。')
+      return false
+    }else{
+      if(document.getElementById('ajaxSend_checkbox').checked){
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", `/bbs/result?name=${encodeURIComponent(nameElem.value)}&seed=${encodeURIComponent(seedElem.value)}&channel=${document.getElementById('channel').value}&verify=${verifyElem.checked}&message=${encodeURIComponent(messageElem.value)}`);
+        xhr.send();
+        messageElem.value = '';
+        reloadmessages()
+        return false
+      }else{
+        return true
+      }
+    }
+  }
+
+
+  function replace_add
